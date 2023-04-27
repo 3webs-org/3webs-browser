@@ -1,5 +1,3 @@
-console.log("Imported module: src\\main\\main.ts");
-
 import { app } from 'electron';
 import BrowserLikeWindow from 'electron-as-browser';
 import { fileURLToPath } from 'url';
@@ -15,13 +13,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 function createWindow() {
-    console.log('createWindow');
     if (browser) {
         throw new Error('Browser window already exists');
     }
 
     let controlPanel = fileUrl(`${__apppath}/renderer/index.html`);
-    console.log(controlPanel);
     
     browser = new BrowserLikeWindow({
         controlHeight: 99,
@@ -42,7 +38,6 @@ function createWindow() {
 }
 
 app.once('ready', async () => {
-    console.log('ready');
     createWindow();
 });
 
@@ -54,7 +49,6 @@ if (process.platform !== 'darwin') {
     });
 } else {
     app.on('activate', () => {
-        console.log('activate');
         if (browser === null) {
             createWindow();
         }

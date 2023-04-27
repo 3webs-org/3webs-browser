@@ -49,4 +49,27 @@ type BrowserLikeWindow = {
     once(event: 'controlpanel-devtools-blurred', callback: () => void): void;
     once(event: 'controlpanel-message', callback: (channel: string, ...args: any[]) => void): void;
     once(event: 'controlpanel-ready', callback: () => void): void;
+
+    options: ConstructorParameters<BrowserLikeWindow>[0];
+    win: Electron.BrowserWindow;
+    currentViewId: number | null;
+    tabConfigs: {
+        [key: number]: {
+            title: string;
+            url: string;
+            href: string;
+            favicon: string;
+            canGoBack: boolean;
+            canGoForward: boolean;
+            isLoading: boolean;
+        }
+    };
+    views: {
+        [key: number]: {
+            webContents: Electron.WebContents;
+        };
+    };
+    tabs: number[];
+    ipc: Electron.IpcMain | null;
+    controlView: Electron.BrowserView | null;
 }

@@ -130,6 +130,25 @@ function createWindow() {
 
                 return oldEmit.apply(tab.webContents, [i, event, ...args]);
             };
+            // Monkey patch loadURL function
+            const oldLoadURL = tab.webContents.loadURL;
+            tab.webContents.loadURL = function (url: string, options) {
+                ipcMain.emit(`update-contents`, i, {
+                    url
+                });
+                oldData.url = url;
+                return oldLoadURL.apply(tab.webContents, [url, options]);
+            };
+            // Monkey patch loadFile function
+            const oldLoadFile = tab.webContents.loadFile;
+            tab.webContents.loadFile = function (file: string, options) {
+                ipcMain.emit(`update-contents`, i, {
+                    url: `file://${file}`
+                });
+                oldData.url = `file://${file}`;
+                return oldLoadFile.apply(tab.webContents, [file, options]);
+            };
+            // Add the tab to the browser window
             browser.addBrowserView(tab);
 
             for (let otherTab of Object.values(tabs)) {
@@ -148,6 +167,7 @@ function createWindow() {
             });
 
             event.reply('new-tab-created', key, i);
+            event.reply(`set-active-tab`, key, i);
         } catch (e) {
             event.reply('new-tab-error', key, e);
         }
@@ -175,6 +195,7 @@ function createWindow() {
             });
 
             event.reply(`selected-tab-${id}`, key);
+            event.reply(`set-active-tab`, key, id);
         } catch (e) {
             event.reply(`select-tab-error-${id}`, e);
         }

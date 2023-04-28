@@ -58,8 +58,76 @@ function createWindow() {
             
             // Monkey patch emit function
             const oldEmit = tab.webContents.emit;
+            let oldData: any = {};
             tab.webContents.emit = function (event: string | symbol, ...args: any[]) {
-                ipcMain.emit(`emit-contents`, )
+                ipcMain.emit(`emit-contents`, i, event, ...args);
+
+                // Fetch data and forward it to the control view
+                let allowableOffsetMinusLower = tab.webContents.canGoBack() ? -1 : 0;
+                let allowableOffsetPlusUpper = tab.webContents.canGoForward() ? 1 : 0;
+                while (tab.webContents.canGoToOffset(allowableOffsetMinusLower)) {
+                    allowableOffsetMinusLower *= 2;
+                }
+                while (tab.webContents.canGoToOffset(allowableOffsetPlusUpper)) {
+                    allowableOffsetPlusUpper *= 2;
+                }
+                allowableOffsetMinusLower /= 2;
+                allowableOffsetPlusUpper /= 2;
+                let allowableOffsetMinusUpper = allowableOffsetMinusLower / 2;
+                let allowableOffsetPlusLower = allowableOffsetPlusUpper / 2;
+                // Binary search
+                while (allowableOffsetMinusLower < allowableOffsetMinusUpper) {
+                    let mid = Math.floor((allowableOffsetMinusLower + allowableOffsetMinusUpper) / 2);
+                    if (tab.webContents.canGoToOffset(mid)) {
+                        allowableOffsetMinusLower = mid + 1;
+                    } else {
+                        allowableOffsetMinusUpper = mid;
+                    }
+                }
+                while (allowableOffsetPlusLower < allowableOffsetPlusUpper) {
+                    let mid = Math.floor((allowableOffsetPlusLower + allowableOffsetPlusUpper) / 2);
+                    if (tab.webContents.canGoToOffset(mid)) {
+                        allowableOffsetPlusUpper = mid;
+                    } else {
+                        allowableOffsetPlusLower = mid + 1;
+                    }
+                }
+                let allowableOffsetMinus = allowableOffsetMinusLower - 1;
+                let allowableOffsetPlus = allowableOffsetPlusUpper - 1;
+                // Actually get new data
+                let newData = {
+                    title: tab.webContents.getTitle(),
+                    focused: tab.webContents.isFocused(),
+                    loading: tab.webContents.isLoading(),
+                    loadingMainFrame: tab.webContents.isLoadingMainFrame(),
+                    waitingForResponse: tab.webContents.isWaitingForResponse(),
+                    canGoBack: tab.webContents.canGoBack(),
+                    canGoForward: tab.webContents.canGoForward(),
+                    allowableOffsetMinus,
+                    allowableOffsetPlus,
+                    audioMuted: tab.webContents.isAudioMuted(),
+                    currentlyAudible: tab.webContents.isCurrentlyAudible(),
+                    zoomFactor: tab.webContents.getZoomFactor(),
+                    zoomLevel: tab.webContents.getZoomLevel(),
+                    beingCaptured: tab.webContents.isBeingCaptured(),
+                    devToolsOpened: tab.webContents.isDevToolsOpened(),
+                    devToolsFocused: tab.webContents.isDevToolsFocused(),
+                    offscreen: tab.webContents.isOffscreen(),
+                    painting: tab.webContents.isPainting(),
+                    userAgent: tab.webContents.getUserAgent(),
+                };
+                // Get the difference between the old data and the new data
+                let diff: any = {};
+                for (let key in newData) {
+                    if ((newData as any)[key] !== oldData[key]) {
+                        diff[key] = (newData as any)[key];
+                    }
+                }
+                // Send the difference to the control view
+                ipcMain.emit(`update-contents`, i, diff);
+                // Update the old data
+                oldData = newData;
+
                 return oldEmit.apply(tab.webContents, [i, event, ...args]);
             };
             browser.addBrowserView(tab);

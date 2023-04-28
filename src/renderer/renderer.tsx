@@ -9,6 +9,7 @@ import { WebContents, ipcRenderer } from 'electron';
 let tabs: { [key: number]: WebContents } = {};
 let tabData: { [key: number]: {
 	title: string;
+	favicons: string[];
 	focused: boolean;
 	loading: boolean;
 	loadingMainFrame: boolean;
@@ -859,6 +860,52 @@ ipcRenderer.on('emit-contents', (event, id, name, ...args) => {
 		tabs[id].emit(name, ...args);
 	}
 	// Handle special events, to update tabData
+	if (name === 'did-finish-load') {
+		tabData[id].loading = false;
+		tabData[id].loadingMainFrame = false;
+	}
+	if (name === 'did-fail-load') {
+		tabData[id].loading = false;
+		tabData[id].loadingMainFrame = false;
+	}
+	if (name === 'did-fail-provisional-load') {
+		tabData[id].loading = false;
+		tabData[id].loadingMainFrame = false;
+	}
+	if (name === 'did-start-loading') {
+		tabData[id].loading = true;
+		tabData[id].loadingMainFrame = true;
+	}
+	if (name === 'did-stop-loading') {
+		tabData[id].loading = false;
+		tabData[id].loadingMainFrame = false;
+	}
+	if (name === 'will-navigate') {
+		if (!args[3]) {
+			tabData[id].loading = true;
+		}
+	}
+	if (name === 'did-frame-navigate') {
+		tabData[id].loading = false;
+	}
+	if (name === 'page-title-updated') {
+		tabData[id].title = args[0];
+	}
+	if (name === 'page-favicon-updated') {
+		tabData[id].favicons = args[0];
+	}
+	if (name == 'blur') {
+		tabData[id].focused = false;
+	}
+	if (name == 'focus') {
+		tabData[id].focused = true;
+	}
+});
+
+ipcRenderer.on('update-tab-data', (event, id: number, data) => {
+	for (let key of Object.keys(data)) {
+		(tabData[id] as any)[key] = data[key];
+	}
 });
 
 const Css = () => {

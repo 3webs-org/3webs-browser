@@ -1,40 +1,43 @@
-import { app } from 'electron';
-import BrowserLikeWindow from 'electron-as-browser';
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-import fileUrl from 'file-url';
-
-let browser: BrowserLikeWindow | null = null;
+import { BrowserWindow, BrowserView, app, screen } from 'electron';
 
 const __apppath = app.getAppPath();
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+let browser: BrowserWindow | null = null;
+
+let tab: BrowserView[] = [];
+
+let controlView: BrowserView | null = null;
 
 function createWindow() {
     if (browser) {
         throw new Error('Browser window already exists');
     }
 
-    let controlPanel = fileUrl(`${__apppath}/renderer/index.html`);
-    
-    browser = new BrowserLikeWindow({
-        controlHeight: 99,
-        controlPanel,
-        startPage: 'https://google.com',
-        blankTitle: 'New tab',
-        controlReferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-            enableRemoteModule: true,
-        },
-        debug: isDevelopment,
+    // Get the screen size
+    browser = new BrowserWindow({
+        width: screen.getPrimaryDisplay().workAreaSize.width,
+        height: screen.getPrimaryDisplay().workAreaSize.height,
+        frame: false,
+        fullscreen: true
     });
 
-    browser?.on('closed', () => {
-        browser = null;
+    // Load the control view
+    controlView = new BrowserView({
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
+    controlView.webContents.loadFile(`${__apppath}/renderer/index.html`);
+    controlView.setBounds({
+        x: 0,
+        y: 0,
+        width: browser.getBounds().width,
+        height: 130
+    });
+
+    // Add the control view to the browser window
+    browser.addBrowserView(controlView);
 }
 
 app.once('ready', async () => {

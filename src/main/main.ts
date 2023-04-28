@@ -1,13 +1,14 @@
-import { BrowserWindow, WBrowserView, app, screen, ipcMain } from 'electron';
+(await import('@electron/remote/main')).initialize(); // Cross-context communication
+import { BrowserWindow, BrowserView, app, screen, ipcMain } from 'electron/main';
 
 const __apppath = app.getAppPath();
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 let browser: BrowserWindow | null = null;
 
-let tabs: { [key: number]: WBrowserView } = {};
+let tabs: { [key: number]: BrowserView } = {};
 
-let controlView: WBrowserView | null = null;
+let controlView: BrowserView | null = null;
 
 function createWindow() {
     if (browser) {
@@ -23,7 +24,7 @@ function createWindow() {
     });
 
     // Load the control view
-    controlView = new WBrowserView({
+    controlView = new BrowserView({
         webPreferences: {
             nodeIntegration: true
         }
@@ -42,7 +43,7 @@ function createWindow() {
     // Load IPC
     ipcMain.on('new-tab', (event, key) => {
         try {
-            const tab = new WBrowserView({
+            const tab = new BrowserView({
                 webPreferences: {
                     nodeIntegration: false
                 }

@@ -32,7 +32,7 @@ let tabData: { [key: number]: {
 ipcRenderer.on('update-contents', (event, id, data) => {
 	if (!tabs[id]) {
 		// Make fake WebContents, that acts like a real one
-		// TODO: Important: Make sure that async methods wait for the response from the main process, and throw errors if the response is an error
+		// TODO: Enforce concurrency with nonces
 		tabs[id] = (new EventEmitter()) as WebContents;
 		tabData[id] = {} as any;
 		tabs[id].loadURL = async (url, options) => {
@@ -272,26 +272,90 @@ ipcRenderer.on('update-contents', (event, id, data) => {
 		tabs[id].insertCSS = async (css, options) => {
 			let key = uuid();
 			ipcRenderer.send('insert-css-tab', id, key, css, options);
-			return key;
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`inserted-css-tab-${id}`, (event, key2, key3) => {
+					if (key !== key2) return;
+					resolve(key3);
+				});
+				ipcRenderer.once(`insert-css-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
-		tabs[id].removeInsertedCSS = async (key) => {
-			ipcRenderer.send('remove-inserted-css-by-key-tab', id, key);
+		tabs[id].removeInsertedCSS = async (key3) => {
+			let key = uuid();
+			ipcRenderer.send('remove-inserted-css-by-key-tab', id, key, key3);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`removed-inserted-css-by-key-tab-${id}`, (event, key2, key3) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`remove-inserted-css-by-key-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].executeJavaScript = async (code, userGesture) => {
-			ipcRenderer.send('execute-javascript-tab', id, code, userGesture);
+			let key = uuid();
+			ipcRenderer.send('execute-javascript-tab', id, key, code, userGesture);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`executed-javascript-tab-${id}`, (event, key2, result) => {
+					if (key !== key2) return;
+					resolve(result);
+				});
+				ipcRenderer.once(`execute-javascript-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].executeJavaScriptInIsolatedWorld = async (worldId, scripts, userGesture) => {
-			ipcRenderer.send('execute-javascript-in-isolated-world-tab', id, worldId, scripts, userGesture);
+			let key = uuid();
+			ipcRenderer.send('execute-javascript-in-isolated-world-tab', id, key, worldId, scripts, userGesture);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`executed-javascript-in-isolated-world-tab-${id}`, (event, key2, result) => {
+					if (key !== key2) return;
+					resolve(result);
+				});
+				ipcRenderer.once(`execute-javascript-in-isolated-world-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].setIgnoreMenuShortcuts = async (ignore) => {
-			ipcRenderer.send('set-ignore-menu-shortcuts-tab', id, ignore);
+			let key = uuid();
+			ipcRenderer.send('set-ignore-menu-shortcuts-tab', id, key, ignore);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`set-ignore-menu-shortcuts-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`set-ignore-menu-shortcuts-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].setWindowOpenHandler = async (handler) => {
 			throw new Error('Not implemented: setWindowOpenHandler');
 		}
 		tabs[id].setAudioMuted = async (muted) => {
-			ipcRenderer.send('set-audio-muted-tab', id, muted);
-			tabData[id].audioMuted = muted;
+			let key = uuid();
+			ipcRenderer.send('set-audio-muted-tab', id, key, muted);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`set-audio-muted-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					tabData[id].audioMuted = muted;
+					resolve();
+				});
+				ipcRenderer.once(`set-audio-muted-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].isAudioMuted = () => {
 			return tabData[id].audioMuted;
@@ -300,121 +364,459 @@ ipcRenderer.on('update-contents', (event, id, data) => {
 			return tabData[id].currentlyAudible;
 		}
 		tabs[id].setZoomFactor = async (factor) => {
-			ipcRenderer.send('set-zoom-factor-tab', id, factor);
-			tabData[id].zoomFactor = factor;
+			let key = uuid();
+			ipcRenderer.send('set-zoom-factor-tab', id, key, factor);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`set-zoom-factor-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					tabData[id].zoomFactor = factor;
+					resolve();
+				});
+				ipcRenderer.once(`set-zoom-factor-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].getZoomFactor = () => {
 			return tabData[id].zoomFactor;
 		}
 		tabs[id].setZoomLevel = async (level) => {
-			ipcRenderer.send('set-zoom-level-tab', id, level);
-			tabData[id].zoomLevel = level;
+			let key = uuid();
+			ipcRenderer.send('set-zoom-level-tab', id, key, level);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`set-zoom-level-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					tabData[id].zoomLevel = level;
+					resolve();
+				});
+				ipcRenderer.once(`set-zoom-level-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].getZoomLevel = () => {
 			return tabData[id].zoomLevel;
 		}
 		tabs[id].setVisualZoomLevelLimits = async (minimumLevel, maximumLevel) => {
-			ipcRenderer.send('set-visual-zoom-level-limits-tab', id, minimumLevel, maximumLevel);
+			let key = uuid();
+			ipcRenderer.send('set-visual-zoom-level-limits-tab', id, key, minimumLevel, maximumLevel);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`set-visual-zoom-level-limits-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`set-visual-zoom-level-limits-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].undo = async () => {
-			ipcRenderer.send('undo-tab', id);
+			let key = uuid();
+			ipcRenderer.send('undo-tab', id, key);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`undo-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`undo-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].redo = async () => {
-			ipcRenderer.send('redo-tab', id);
+			let key = uuid();
+			ipcRenderer.send('redo-tab', id, key);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`redo-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`redo-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].cut = async () => {
-			ipcRenderer.send('cut-tab', id);
+			let key = uuid();
+			ipcRenderer.send('cut-tab', id, key);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`cut-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`cut-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].copy = async () => {
-			ipcRenderer.send('copy-tab', id);
+			let key = uuid();
+			ipcRenderer.send('copy-tab', id, key);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`copy-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`copy-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].copyImageAt = async (x, y) => {
-			ipcRenderer.send('copy-image-at-tab', id, x, y);
+			let key = uuid();
+			ipcRenderer.send('copy-image-at-tab', id, key, x, y);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`copy-image-at-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`copy-image-at-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
 		tabs[id].paste = async () => {
-			ipcRenderer.send('paste-tab', id);
+			let key = uuid();
+			ipcRenderer.send('paste-tab', id, key);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`paste-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`paste-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`paste-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`paste-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].pasteAndMatchStyle = async () => {
-			ipcRenderer.send('paste-and-match-style-tab', id);
+			let key = uuid();
+			ipcRenderer.send('paste-and-match-style-tab', id, key);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`paste-and-match-style-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`paste-and-match-style-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`paste-and-match-style-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`paste-and-match-style-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].delete = async () => {
-			ipcRenderer.send('edit-delete-tab', id); // To avoid confusion with actual delete
+			let key = uuid();
+			ipcRenderer.send('edit-delete-tab', id, key);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`edit-delete-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`edit-deleted-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`edit-delete-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`edit-delete-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].selectAll = async () => {
-			ipcRenderer.send('select-all-tab', id);
+			let key = uuid();
+			ipcRenderer.send('select-all-tab', id, key);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`select-all-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`select-all-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`select-all-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`select-all-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].unselect = async () => {
-			ipcRenderer.send('unselect-tab', id);
+			let key = uuid();
+			ipcRenderer.send('unselect-tab', id, key);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`unselect-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`unselect-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`unselect-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`unselect-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].replace = async (text) => {
-			ipcRenderer.send('replace-tab', id, text);
+			let key = uuid();
+			ipcRenderer.send('replace-tab', id, key, text);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`replace-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`replace-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`replace-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`replace-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].replaceMisspelling = async (text) => {
-			ipcRenderer.send('replace-misspelling-tab', id, text);
+			let key = uuid();
+			ipcRenderer.send('replace-misspelling-tab', id, key, text);
 			return await new Promise((resolve, reject) => {
-				ipcRenderer.once(`replace-misspelling-tab-${id}`, (event, result) => {
-					resolve(result);
+				ipcRenderer.once(`replace-misspelling-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
 				});
-				ipcRenderer.once(`replace-misspelling-tab-${id}-error`, (event, error) => {
+				ipcRenderer.once(`replace-misspelling-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
 					reject(error);
 				});
 			});
 		}
 		tabs[id].insertText = async (text) => {
-			ipcRenderer.send('insert-text-tab', id, text);
+			let key = uuid();
+			ipcRenderer.send('insert-text-tab', id, key, text);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`insert-text-tab-${id}`, (event, key2) => {
+					if (key !== key2) return;
+					resolve();
+				});
+				ipcRenderer.once(`insert-text-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
 		}
-		tabs[id].findInPage = (async (text: string, options: any) => {
+		tabs[id].findInPage = (text, options) => {
 			throw new Error('Not implemented: findInPage');
-		}) as any; // ew gross
-		
+		}
+		tabs[id].stopFindInPage = (action) => {
+			throw new Error('Not implemented: stopFindInPage');
+		}
+		tabs[id].capturePage = async (rect) => {
+			let key = uuid();
+			ipcRenderer.send('capture-page-tab', id, key, rect);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`capture-page-tab-${id}`, (event, key2, image) => {
+					if (key !== key2) return;
+					resolve(image);
+				});
+				ipcRenderer.once(`capture-page-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
+		}
+		tabs[id].isBeingCaptured = () => {
+			return tabData[id].beingCaptured;
+		}
+		tabs[id].getPrintersAsync = async () => {
+			let key = uuid();
+			ipcRenderer.send('get-printers-tab', id, key);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`get-printers-tab-${id}`, (event, key2, printers) => {
+					if (key !== key2) return;
+					resolve(printers);
+				});
+				ipcRenderer.once(`get-printers-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
+		}
+		tabs[id].print = (options, callback) => {
+			let key = uuid();
+			ipcRenderer.send('print-tab', id, key, options);
+			ipcRenderer.once(`print-tab-${id}`, (event, key2) => {
+				if (key !== key2) return;
+				callback(true, null);
+			});
+			ipcRenderer.once(`print-tab-error-${id}`, (event, key2, error) => {
+				if (key !== key2) return;
+				callback(false, error);
+			});
+		}
+		tabs[id].printToPDF = async (options) => {
+			let key = uuid();
+			ipcRenderer.send('print-to-pdf-tab', id, key, options);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`print-to-pdf-tab-${id}`, (event, key2, data) => {
+					if (key !== key2) return;
+					resolve(data);
+				});
+				ipcRenderer.once(`print-to-pdf-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
+		}
+		tabs[id].addWorkSpace = (workspace) => {
+			throw new Error('Not implemented: addWorkSpace');
+		}
+		tabs[id].removeWorkSpace = (workspace) => {
+			throw new Error('Not implemented: removeWorkSpace');
+		}
+		tabs[id].setDevToolsWebContents = (webContents) => {
+			throw new Error('Not implemented: setDevToolsWebContents');
+		}
+		tabs[id].openDevTools = (options) => {
+			let key = uuid();
+			ipcRenderer.send('open-dev-tools-tab', id, key, options);
+			// ignore response, hope it works
+		}
+		tabs[id].isDevToolsOpened = () => {
+			return tabData[id].devToolsOpened;
+		}
+		tabs[id].isDevToolsFocused = () => {
+			return tabData[id].devToolsFocused;
+		}
+		tabs[id].toggleDevTools = () => {
+			let key = uuid();
+			ipcRenderer.send('toggle-dev-tools-tab', id, key);
+			// ignore response, hope it works
+		}
+		tabs[id].closeDevTools = () => {
+			let key = uuid();
+			ipcRenderer.send('close-dev-tools-tab', id, key);
+			// ignore response, hope it works
+		}
+		tabs[id].inspectElement = (x, y) => {
+			let key = uuid();
+			ipcRenderer.send('inspect-element-tab', id, key, x, y);
+			// ignore response, hope it works
+		}
+		tabs[id].inspectServiceWorker = () => {
+			let key = uuid();
+			ipcRenderer.send('inspect-service-worker-tab', id, key);
+			// ignore response, hope it works
+		}
+		tabs[id].getAllSharedWorkers = () => {
+			throw new Error('Not implemented: getAllSharedWorkers');
+		}
+		tabs[id].inspectServiceWorker = () => {
+			let key = uuid();
+			ipcRenderer.send('inspect-service-worker-tab', id, key);
+			// ignore response, hope it works
+		}
+		tabs[id].send = (channel, ...args) => {
+			ipcRenderer.send('send-tab', id, channel, ...args);
+		}
+		tabs[id].sendToFrame = (frameId, channel, ...args) => {
+			ipcRenderer.send('send-to-frame-tab', id, frameId, channel, ...args);
+		}
+		tabs[id].postMessage = (message, targetOrigin, transfer) => {
+			ipcRenderer.send('post-message-tab', id, message, targetOrigin, transfer);
+		}
+		tabs[id].enableDeviceEmulation = (parameters) => {
+			throw new Error('Not implemented: enableDeviceEmulation');
+		}
+		tabs[id].disableDeviceEmulation = () => {
+			throw new Error('Not implemented: disableDeviceEmulation');
+		}
+		tabs[id].sendInputEvent = (event) => {
+			throw new Error('Not implemented: sendInputEvent');
+		}
+		tabs[id].beginFrameSubscription = (onlyDirty, callback = null) => {
+			if (callback == null) {
+				callback = onlyDirty;
+				onlyDirty = false;
+			}
+			let key = uuid();
+			ipcRenderer.send('begin-frame-subscription-tab', id, key, onlyDirty);
+			ipcRenderer.on(`begin-frame-subscription-tab-${id}`, (event, key2, image, dirtyRect) => {
+				if (key !== key2) return;
+				(callback as any)(image, dirtyRect);
+			});
+			ipcRenderer.once(`begin-frame-subscription-tab-error-${id}`, (event, key2, error) => {
+				if (key !== key2) return;
+				throw error;
+			});
+		}
+		tabs[id].endFrameSubscription = () => {
+			let key = uuid();
+			ipcRenderer.send('end-frame-subscription-tab', id, key);
+			// ignore response, hope it works
+		}
+		tabs[id].startDrag = () => {
+			throw new Error('Not implemented: startDrag');
+		}
+		tabs[id].savePage = async (fullPath, saveType) => {
+			let key = uuid();
+			ipcRenderer.send('save-page-tab', id, key, fullPath, saveType);
+			return await new Promise((resolve, reject) => {
+				ipcRenderer.once(`save-page-tab-${id}`, (event, key2, data) => {
+					if (key !== key2) return;
+					resolve(data);
+				});
+				ipcRenderer.once(`save-page-tab-error-${id}`, (event, key2, error) => {
+					if (key !== key2) return;
+					reject(error);
+				});
+			});
+		}
+		tabs[id].isOffscreen = () => {
+			return tabData[id].offscreen;
+		}
+		tabs[id].startPainting = () => {
+			throw new Error('Not implemented: startPainting');
+		}
+		tabs[id].stopPainting = () => {
+			throw new Error('Not implemented: stopPainting');
+		}
+		tabs[id].isPainting = () => {
+			return tabData[id].painting;
+		}
+		tabs[id].setFrameRate = (fps) => {
+			throw new Error('Not implemented: setFrameRate');
+		}
+		tabs[id].getFrameRate = () => {
+			throw new Error('Not implemented: getFrameRate');
+		}
+		tabs[id].invalidate = () => {
+			let key = uuid();
+			ipcRenderer.send('invalidate-tab', id, key);
+			// ignore response, hope it works
+		}
+		tabs[id].getWebRTCIPHandlingPolicy = () => {
+			throw new Error('Not implemented: getWebRTCIPHandlingPolicy');
+		}
+		tabs[id].setWebRTCIPHandlingPolicy = (policy) => {
+			throw new Error('Not implemented: setWebRTCIPHandlingPolicy');
+		}
+		tabs[id].getMediaSourceId = (requestWebContents) => {
+			throw new Error('Not implemented: getMediaSourceId');
+		}
+		tabs[id].getProcessId = () => {
+			throw new Error('Not implemented: getProcessId');
+		}
+		tabs[id].getOSProcessId = () => {
+			throw new Error('Not implemented: getOSProcessId');
+		}
+		tabs[id].takeHeapSnapshot = (filePath) => {
+			throw new Error('Not implemented: takeHeapSnapshot');
+		}
+		tabs[id].getBackgroundThrottling = () => {
+			throw new Error('Not implemented: getBackgroundThrottling');
+		}
+		tabs[id].setBackgroundThrottling = (allowed) => {
+			let key = uuid();
+			ipcRenderer.send('set-background-throttling-tab', id, key, allowed);
+			// ignore response, hope it works
+		}
+		tabs[id].getType = () => {
+			return "browserView";
+		}
+		tabs[id].setImageAnimationPolicy = (policy) => {
+			throw new Error('Not implemented: setImageAnimationPolicy');
+		}
 	}
 	for (let key of Object.keys(data)) {
 		(tabs as any)[id][key] = data[key];

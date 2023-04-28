@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import cx, { Mapping } from 'classnames';
+import cx from 'classnames';
 import { KeyboardEventHandler, ChangeEventHandler, MouseEventHandler } from 'react';
 import { EventEmitter } from 'events';
 import { v4 as uuid } from 'uuid';
@@ -28,6 +28,36 @@ let tabData: { [key: number]: {
 	painting: boolean;
 	userAgent: string;
 } } = {};
+
+async function newTab() {
+	let key = uuid();
+	ipcRenderer.send('new-tab', key);
+	return await new Promise((resolve, reject) => {
+		ipcRenderer.once('new-tab-created', (event, key2, id) => {
+			if (key !== key2) return;
+			resolve(id);
+		});
+		ipcRenderer.once('new-tab-error', (event, key2, error) => {
+			if (key !== key2) return;
+			reject(error);
+		});
+	});
+}
+
+async function selectTab(id: number) {
+	let key = uuid();
+	ipcRenderer.send('select-tab', key, id);
+	return await new Promise<void>((resolve, reject) => {
+		ipcRenderer.once(`selected-tab-${id}`, (event, key2) => {
+			if (key !== key2) return;
+			resolve();
+		});
+		ipcRenderer.once(`select-tab-error-${id}`, (event, key2, error) => {
+			if (key !== key2) return;
+			reject(error);
+		});
+	});
+}
 
 ipcRenderer.on('update-contents', (event, id, data) => {
 	if (!tabs[id]) {

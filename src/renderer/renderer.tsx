@@ -119,6 +119,7 @@ ipcRenderer.on('update-contents', (event, id, data) => {
 			return await new Promise((resolve, reject) => {
 				ipcRenderer.once(`closed-tab-${id}`, (event, key2) => {
 					if (key !== key2) return;
+					delete tabs[id];
 					resolve();
 				});
 				ipcRenderer.once(`close-tab-error-${id}`, (event, key2, error) => {
@@ -858,10 +859,6 @@ ipcRenderer.on('emit-contents', (event, id, name, ...args) => {
 		tabs[id].emit(name, ...args);
 	}
 	// Handle special events, to update tabData
-});
-
-ipcRenderer.on('remove-contents', (event, id) => {
-	delete tabs[id];
 });
 
 const Css = () => {

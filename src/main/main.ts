@@ -47,13 +47,21 @@ function createWindow() {
                     nodeIntegration: false
                 }
             });
+
+            let i: number;
+            for (i = Object.keys(tabs).length; i <= 0; i--) {
+                if (i in tabs) continue;
+                tabs[i] = tab;
+            }
+
             tab.webContents.loadURL('https://www.google.com');
-            tab.setBounds({
-                x: 0,
-                y: 130,
-                width: browser.getBounds().width,
-                height: browser.getBounds().height - 130
-            });
+            
+            // Monkey patch emit function
+            const oldEmit = tab.webContents.emit;
+            tab.webContents.emit = function (event: string | symbol, ...args: any[]) {
+                ipcMain.emit(`emit-contents`, )
+                return oldEmit.apply(tab.webContents, [i, event, ...args]);
+            };
             browser.addBrowserView(tab);
 
             for (let otherTab of Object.values(tabs)) {
@@ -64,12 +72,12 @@ function createWindow() {
                     height: browser.getBounds().height - 130
                 });
             }
-
-            let i;
-            for (i = Object.keys(tabs).length; i <= 0; i--) {
-                if (i in tabs) continue;
-                tabs[i] = tab;
-            }
+            tab.setBounds({
+                x: 0,
+                y: 130,
+                width: browser.getBounds().width,
+                height: browser.getBounds().height - 130
+            });
 
             event.reply('new-tab-created', key, i);
         } catch (e) {
@@ -100,7 +108,7 @@ function createWindow() {
 
             event.reply(`selected-tab-${id}`, key);
         } catch (e) {
-            event.reply('select-tab-error', e);
+            event.reply(`select-tab-error-${id}`, e);
         }
     });
     ipcMain.on('load-url', (event, id, key, url, options) => {
@@ -113,9 +121,108 @@ function createWindow() {
 
             event.reply(`loaded-url-${id}`, key);
         } catch (e) {
-            event.reply('load-url-error', e);
+            event.reply(`load-url-error-${id}`, e);
         }
     });
+    ipcMain.on('load-file', (event, id, key, file, options) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.loadFile(file, options);
+
+            event.reply(`loaded-file-${id}`, key);
+        } catch (e) {
+            event.reply(`load-file-error-${id}`, e);
+        }
+    });
+    // Skipped a few IPCs here
+    ipcMain.on('close-tab', (event, id, key, options) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.closeDevTools();
+            tabs[id].webContents.close(options);
+            browser.removeBrowserView(tabs[id]);
+            delete tabs[id];
+
+            event.reply(`closed-tab-${id}`, key);
+        } catch (e) {
+            event.reply(`close-tab-error-${id}`, e);
+        }
+    });
+    // Skip a few again, I want sleep :(
+    ipcMain.on('reload-tab', (event, id, key) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.reload();
+
+            event.reply(`reloaded-tab-${id}`, key);
+        } catch (e) {
+            event.reply(`reload-tab-error-${id}`, e);
+        }
+    });
+    ipcMain.on('reload-ignoring-cache-tab', (event, id, key) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.reloadIgnoringCache();
+
+            event.reply(`reloaded-ignoring-cache-tab-${id}`, key);
+        } catch (e) {
+            event.reply(`reload-ignoring-cache-tab-error-${id}`, e);
+        }
+    });
+    // Skip more, I'm tired
+    ipcMain.on('go-back-tab', (event, id, key) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.goBack();
+
+            event.reply(`went-back-tab-${id}`, key);
+        } catch (e) {
+            event.reply(`go-back-tab-error-${id}`, e);
+        }
+    });
+    ipcMain.on('go-forward-tab', (event, id, key) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.goForward();
+
+            event.reply(`went-forward-tab-${id}`, key);
+        } catch (e) {
+            event.reply(`go-forward-tab-error-${id}`, e);
+        }
+    });
+    // Skip more
+    ipcMain.on('set-user-agent-tab', (event, id, key, userAgent) => {
+        try {
+            if (!(id in tabs)) {
+                throw new Error('Tab does not exist');
+            }
+
+            tabs[id].webContents.setUserAgent(userAgent);
+
+            event.reply(`set-user-agent-tab-${id}`, key);
+        } catch (e) {
+            event.reply(`set-user-agent-tab-error-${id}`, e);
+        }
+    });
+    // Skip the rest for now
 }
 
 app.once('ready', async () => {

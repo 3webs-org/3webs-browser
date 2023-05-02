@@ -74,7 +74,8 @@ const sessionRestore = {
       // first run, show the tour
       if (!savedStringData) {
         tasks.setSelected(tasks.add()) // create a new task
-
+        
+        return // TODO - Create a new tour page
         var newTab = tasks.getSelected().tabs.add({
           url: 'https://minbrowser.github.io/min/tour'
         })

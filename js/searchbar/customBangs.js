@@ -99,7 +99,7 @@ function initialize () {
     snippet: l('viewSettings'),
     isAction: true,
     fn: function (text) {
-      webviews.update(tabs.getSelected(), 'min://settings')
+      webviews.update(tabs.getSelected(), 'about:settings')
     }
   })
 

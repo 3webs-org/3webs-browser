@@ -214,7 +214,7 @@ const webviews = {
         ipc.send('loadURLInView', { id: tabData.id, url: urlParser.parse(tabData.url) })
       } else if (tabData.private) {
         // workaround for https://github.com/minbrowser/min/issues/872
-        ipc.send('loadURLInView', { id: tabData.id, url: urlParser.parse('min://newtab') })
+        ipc.send('loadURLInView', { id: tabData.id, url: urlParser.parse('about:newtab') })
       }
     }
 
@@ -326,7 +326,7 @@ const webviews = {
 
     var url = tabs.get(id).url
 
-    if (url.startsWith(urlParser.parse('min://error'))) {
+    if (url.startsWith(urlParser.parse('about:error'))) {
       webviews.callAsync(id, 'canGoToOffset', -2, function (err, result) {
         if (!err && result === true) {
           webviews.callAsync(id, 'goToOffset', -2)

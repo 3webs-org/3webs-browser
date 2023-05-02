@@ -322,7 +322,7 @@ const webviewMenu = {
     translateMenu.submenu.push({
       label: 'Send Feedback',
       click: function () {
-        browserUI.addTab(tabs.add({ url: 'https://github.com/minbrowser/min/issues/new?title=Translation%20feedback%20for%20' + encodeURIComponent(tabs.get(tabs.getSelected()).url) }), { enterEditMode: false, openInBackground: false })
+        browserUI.addTab(tabs.add({ url: 'https://github.com/3webs-org/3webs-browser/issues/new?title=Translation%20feedback%20for%20' + encodeURIComponent(tabs.get(tabs.getSelected()).url) }), { enterEditMode: false, openInBackground: false })
       }
     })
 

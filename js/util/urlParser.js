@@ -62,10 +62,10 @@ var urlParser = {
     }
 
     // if the URL is an internal URL, convert it to the correct file:// url
-    if (url.startsWith('min:')) {
+    if (url.startsWith('about:')) {
       try {
         var urlObj = new URL(url)
-        var pathname = urlObj.pathname.replace('//', '')
+        var pathname = urlObj.pathname
         if (/^[a-zA-Z]+$/.test(pathname)) {
           // only paths with letters are allowed
           return urlParser.getFileURL(
@@ -177,6 +177,8 @@ var urlParser = {
     return publicSuffixes.find(s => cleanDomain.endsWith(s)) !== undefined
   },
   isHTTPSUpgreadable: function (url) {
+    // TODO: Maybe support http?
+    return true
     // TODO: parse and remove all subdomains, only leaving parent domain and tld
     const domain = removeWWW(urlParser.getDomain(url)) // list has no subdomains
 

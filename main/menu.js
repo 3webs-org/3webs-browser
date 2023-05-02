@@ -369,17 +369,17 @@ function buildAppMenu (options = {}) {
     {
       label: l('appMenuHelp'),
       role: 'help',
-      submenu: [
+      submenu: [ // TODO - update these links
         {
           label: l('appMenuKeyboardShortcuts'),
           click: function () {
-            openTabInWindow('https://github.com/minbrowser/min/wiki#keyboard-shortcuts')
+            openTabInWindow('https://github.com/3webs-org/3webs-browser/wiki#keyboard-shortcuts')
           }
         },
         {
           label: l('appMenuReportBug'),
           click: function () {
-            openTabInWindow('https://github.com/minbrowser/min/issues/new')
+            openTabInWindow('https://github.com/3webs-org/3webs-browser/issues/new')
           }
         },
         {
@@ -391,7 +391,7 @@ function buildAppMenu (options = {}) {
         {
           label: l('appMenuViewGithub'),
           click: function () {
-            openTabInWindow('https://github.com/minbrowser/min')
+            openTabInWindow('https://github.com/minbrowser/3webs-org/3webs-browser')
           }
         },
         ...(process.platform !== 'darwin' ? [{ type: 'separator' }] : []),

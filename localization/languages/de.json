@@ -120,7 +120,7 @@
     "phishingErrorVisitAnyway": "Seite trotzdem besuchen",
     "phishingErrorLeave": "Seite verlassen",
     /* multiple instances alert */
-    "multipleInstancesErrorMessage": "Ein Fehler ist aufgetreten. Bitte schließe alle anderen offenen Instanzen und starte Min neu.",
+    "multipleInstancesErrorMessage": "Ein Fehler ist aufgetreten. Bitte schließe alle anderen offenen Instanzen und starte neu.",
     /* pages/sessionRestoreError/index.html */
     "sessionRestoreErrorTitle": "Es trat ein Fehler auf",
     "sessionRestoreErrorExplanation": "Die gespeicherten Tabs konnten nicht wiederhergestellt werden.",
@@ -139,7 +139,7 @@
     "settingsBlockScriptsToggle": "Scripte blockieren",
     "settingsBlockImagesToggle": "Bilder blockieren",
     "settingsBlockedRequestCount": {
-      "unsafeHTML": "Bis jetzt hat Min <strong></strong> Werbeanzeigen und Aktivitätsverfolgungen blockiert."
+      "unsafeHTML": "Bis jetzt hat <strong></strong> Werbeanzeigen und Aktivitätsverfolgungen blockiert."
     },
     "settingsCustomBangs": "Benutzerdefinierte Bangs",
     "settingsCustomBangsAdd": "Bang hinzufügen",
@@ -249,7 +249,7 @@
     "downloadStateCompleted": "Abgeschlossen",
     "downloadStateFailed": "Fehlgeschlagen",
     /* Update Notifications */
-    "updateNotificationTitle": "Eine neue Version von Min ist verfügbar",
+    "updateNotificationTitle": "Eine neue Version von ist verfügbar",
     /* Autofill settings */
     "settingsPasswordAutoFillHeadline": "Passwörter automatisch ausfüllen",
     "settingsSelectPasswordManager": "Wähle einen der unterstützten Passwortmanager:",
@@ -268,7 +268,7 @@
     "passwordManagerSetupDragBox": "Ziehe das Programm hierher",
     "passwordManagerSetupInstalling": "Installiere...",
     "passwordManagerBitwardenSignIn": "Um dein Bitwarden Konto zu verbinden, gehe zu vault.bitwarden.com/#/settings/account, scrolle bis zum Ende und wähle \"View API Key\". Dann kopiere die Werte in die derunterliegenden Felder.",
-    "passwordManagerSetupSignIn": "Melde dich in deinem Passwortmanager an, um die automatische Ausfüllfunktion zu nutzen. Deine Zugangsdaten werden nirgendwo in Min gespeichert.",
+    "passwordManagerSetupSignIn": "Melde dich in deinem Passwortmanager an, um die automatische Ausfüllfunktion zu nutzen. Deine Zugangsdaten werden nirgendwo in gespeichert.",
     "disableAutofill": "Automatische Ausfüllfunktion deaktivieren",
     "passwordManagerSetupUnlockError": "Beim Entsperren des Passwortmanagers ist ein Fehler aufgetreten:",
     "passwordManagerSetupRetry": "Stelle sicher, dass die richtige Datei genutzt und das richtige Passwort eingegeben wurde. Ziehe das Programm wieder hierher, um es nochmal zu versuchen.",

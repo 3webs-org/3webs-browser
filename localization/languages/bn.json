@@ -120,7 +120,7 @@
     "phishingErrorVisitAnyway": "যাইহোক সাইট পরিদর্শন করুন",
     "phishingErrorLeave": "এই সাইটটি ছেড়ে দিন",
     /* multiple instances alert */
-    "multipleInstancesErrorMessage": "একটি ত্রুটি ঘটেছে. অন্য কোনও খোলা দৃষ্টান্ত বন্ধ করুন এবং Min পুনরায় আরম্ভ করুন।",
+    "multipleInstancesErrorMessage": "একটি ত্রুটি ঘটেছে. অন্য কোনও খোলা দৃষ্টান্ত বন্ধ করুন এবং পুনরায় আরম্ভ করুন।",
     /* pages/sessionRestoreError/index.html */
     "sessionRestoreErrorTitle": "একটি ত্রুটি ঘটেছে",
     "sessionRestoreErrorExplanation": "আপনার সংরক্ষিত ট্যাবগুলি সঠিকভাবে পুনরুদ্ধার করা যাবে না।",
@@ -139,7 +139,7 @@
     "settingsBlockScriptsToggle": "স্ক্রিপ্ট ব্লক করুন",
     "settingsBlockImagesToggle": "ইমেজ ব্লক করুন",
     "settingsBlockedRequestCount": {
-      "unsafeHTML": "এখনও অবধি, Min <strong></strong> বিজ্ঞাপন এবং ট্র্যাকারদের অবরুদ্ধ করেছে"
+      "unsafeHTML": "এখনও অবধি, <strong></strong> বিজ্ঞাপন এবং ট্র্যাকারদের অবরুদ্ধ করেছে"
     },
     "settingsCustomBangs": null, // missing translation
     "settingsCustomBangsAdd": null, // missing translation

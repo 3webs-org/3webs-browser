@@ -15,11 +15,11 @@ async function afterPackageBuilt (packagePath) {
   }
 
   /* create zip files */
-  var output = fs.createWriteStream('dist/app/' + 'Min-v' + version + '-windows' + (packagePath.includes('ia32') ? '-ia32' : '') + '.zip')
+  var output = fs.createWriteStream('dist/app/' + '3WebsBrowser-v' + version + '-windows' + (packagePath.includes('ia32') ? '-ia32' : '') + '.zip')
   var archive = archiver('zip', {
     zlib: { level: 9 }
   })
-  archive.directory(packagePath, 'Min-v' + version)
+  archive.directory(packagePath, '3WebsBrowser-v' + version)
   archive.pipe(output)
   await archive.finalize()
 
@@ -29,7 +29,7 @@ async function afterPackageBuilt (packagePath) {
 
     const options = {
       src: packagePath,
-      dest: 'dist/app/min-installer-x64',
+      dest: 'dist/app/3websbrowser-installer-x64',
       icon: 'icons/icon256.ico',
       animation: 'icons/windows-installer.gif',
       licenseUrl: 'https://github.com/minbrowser/min/blob/master/LICENSE.txt',
@@ -42,7 +42,7 @@ async function afterPackageBuilt (packagePath) {
 
     await installer(options)
       .then(function () {
-        fs.renameSync('./dist/app/min-installer-x64/min-' + version + '-setup.exe', './dist/app/min-' + version + '-setup.exe')
+        fs.renameSync('./dist/app/3websbrowser-installer-x64/3websbrowser-' + version + '-setup.exe', './dist/app/3websbrowser-' + version + '-setup.exe')
       })
       .catch(err => {
         console.error(err, err.stack)

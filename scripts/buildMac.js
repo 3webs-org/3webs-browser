@@ -20,7 +20,7 @@ function toArch (platform) {
 
 require('./createPackage.js')('mac', { arch: toArch(platform) }).then(function (packagePath) {
   if (platform === 'arm64') {
-    execSync('codesign -s - -a arm64 -f --deep ' + packagePath + '/Min.app')
+    execSync('codesign -s - -a arm64 -f --deep ' + packagePath + '/3WebsBrowser.app')
   }
 
   /* create output directory if it doesn't exist */
@@ -36,7 +36,7 @@ require('./createPackage.js')('mac', { arch: toArch(platform) }).then(function (
     zlib: { level: 9 }
   })
 
-  archive.directory(path.resolve(packagePath, 'Min.app'), 'Min.app')
+  archive.directory(path.resolve(packagePath, '3WebsBrowser.app'), '3WebsBrowser.app')
 
   archive.pipe(output)
   archive.finalize()

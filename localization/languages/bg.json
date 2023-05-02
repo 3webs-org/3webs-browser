@@ -120,7 +120,7 @@
     "phishingErrorVisitAnyway": "Продължаване въпреки риска",
     "phishingErrorLeave": "Напускане на сайта",
     /* multiple instances alert */
-    "multipleInstancesErrorMessage": "Възникна грешка. Моля затворете всякакви други инстанции и рестартирайте Min.",
+    "multipleInstancesErrorMessage": "Възникна грешка. Моля затворете всякакви други инстанции и рестартирайте.",
     /* pages/sessionRestoreError/index.html */
     "sessionRestoreErrorTitle": "Възникна грешка",
     "sessionRestoreErrorExplanation": "Вашите запазени раздели не можаха да бъдат възстановени правилно.",
@@ -139,7 +139,7 @@
     "settingsBlockScriptsToggle": "Блокиране на скриптове",
     "settingsBlockImagesToggle": "Блокиране на изображения",
     "settingsBlockedRequestCount": {
-      "unsafeHTML": "Досега Min е блокирал <strong></strong> реклами и тракери."
+      "unsafeHTML": "Досега е блокирал <strong></strong> реклами и тракери."
     },
     "settingsCustomBangs": null, // missing translation
     "settingsCustomBangsAdd": null, // missing translation
@@ -246,7 +246,7 @@
     "downloadStateCompleted": "Завършено",
     "downloadStateFailed": "Провалено",
     /* Update Notifications */
-    "updateNotificationTitle": "Налична е нова версия на Min",
+    "updateNotificationTitle": "Налична е нова версия на",
     /* Autofill settings */
     "settingsPasswordAutoFillHeadline": "Автоматично попълване на пароли",
     "settingsSelectPasswordManager": "Изберете един от поддържаните мениджъри на пароли:",
@@ -265,7 +265,7 @@
     "passwordManagerSetupDragBox": "Плъзнете уреда тук",
     "passwordManagerSetupInstalling": "Инсталиране...",
     "passwordManagerBitwardenSignIn": null, //missing translation
-    "passwordManagerSetupSignIn": "Впишете се във Вашия мениджър на пароли, за да започнете употребата на автоматично попълване. Вашите пълномощия няма да се съхраняват никъде в Min.",
+    "passwordManagerSetupSignIn": "Впишете се във Вашия мениджър на пароли, за да започнете употребата на автоматично попълване. Вашите пълномощия няма да се съхраняват никъде в.",
     "disableAutofill": "Деактивиране на автоматично попълване на пароли",
     "passwordManagerSetupUnlockError": "Неуспешно отключване на хранилището за пароли: ",
     "passwordManagerSetupRetry": "Уверете се, че използвате правилния файл и въвеждате правилна парола. Може да пробвате отново, като пак плъзнете уреда тук.",

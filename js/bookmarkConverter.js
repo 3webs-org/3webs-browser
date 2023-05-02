@@ -56,7 +56,7 @@ const bookmarkConverter = {
       var folderRoot = document.createElement('dt')
       innerRoot.appendChild(folderRoot)
       // var folderHeading = document.createElement('h3')
-      // folderHeading.textContent = 'Min Bookmarks'
+      // folderHeading.textContent = 'Bookmarks'
       // folderRoot.appendChild(folderHeading)
       var folderBookmarksList = document.createElement('dl')
       folderRoot.appendChild(folderBookmarksList)

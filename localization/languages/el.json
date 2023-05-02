@@ -102,16 +102,16 @@
       "crashErrorSubtitle": "Παρουσιάστηκε πρόβλημα κατά την εμφάνιση αυτής της σελίδας.",
       "errorPagePrimaryAction": "Προσπαθήστε ξανά",
       "serverNotFoundTitle": "Δεν βρέθηκε διακομιστής",
-      "serverNotFoundSubtitle": "Το Min δεν μπόρεσε να βρεί αυτήν την ιστοσελίδα.",
+      "serverNotFoundSubtitle": "Το δεν μπόρεσε να βρεί αυτήν την ιστοσελίδα.",
       "archiveSearchAction": "Αναζήτηση στο archive.org",
       "sslErrorTitle": "Αυτή η ιστοσελίδα δεν είναι διαθέσιμη",
-      "sslErrorMessage": "Το Min δεν μπόρεσε να συνδεθεί με ασφάλεια σε αυτήν την ιστοσελίδα.",
+      "sslErrorMessage": "Το δεν μπόρεσε να συνδεθεί με ασφάλεια σε αυτήν την ιστοσελίδα.",
       "dnsErrorTitle": "Η ιστοσελίδα δεν βρέθηκε",
       "dnsErrorMessage": "Προέκυψε ένα σφάλμα DNS.",
       "offlineErrorTitle": "Δεν υπάρχει σύνδεση στο διαδίκτυο",
       "offlineErrorMessage": "Επανασυνδεθείτε στο διαδίκτυο και δοκιμάστε ξανά.",
-      "genericConnectionFail": "Το Min δεν μπόρεσε να συνδεθεί στην ιστοσελίδα.",
-      "sslTimeErrorMessage": "Το Min δεν μπόρεσε να συνδεθεί με ασφάλεια σε αυτήν την ιστοσελίδα. Σιγουρευτείτε ότι το ρολόι του συστήματος είναι ρυθμισμένο σωστά.",
+      "genericConnectionFail": "Το δεν μπόρεσε να συνδεθεί στην ιστοσελίδα.",
+      "sslTimeErrorMessage": "Το δεν μπόρεσε να συνδεθεί με ασφάλεια σε αυτήν την ιστοσελίδα. Σιγουρευτείτε ότι το ρολόι του συστήματος είναι ρυθμισμένο σωστά.",
       "addressInvalidTitle": "Αυτή η διεύθυνση είναι μη έγκυρη.",
       "genericError": "Παρουσιάστηκε σφάλμα",
       /* pages/phishing/index.html */
@@ -120,7 +120,7 @@
       "phishingErrorVisitAnyway": "Επίσκεψη ιστοσελίδας παρ' όλα αυτά",
       "phishingErrorLeave": "Αποχώριση απο την ιστοσελίδα",
       /* multiple instances alert */
-      "multipleInstancesErrorMessage": "Παρουσιάστηκε σφάλμα. Κλείστε τυχόν άλλα ανοιχτά παράθυρα και επανεκκινήστε το Min.",
+      "multipleInstancesErrorMessage": "Παρουσιάστηκε σφάλμα. Κλείστε τυχόν άλλα ανοιχτά παράθυρα και επανεκκινήστε το.",
       /* pages/sessionRestoreError/index.html */
       "sessionRestoreErrorTitle": "Παρουσιάστηκε σφάλμα",
       "sessionRestoreErrorExplanation": "Δεν ήταν δυνατή η σωστή επαναφορά των αποθηκευμένων καρτελών.",
@@ -139,7 +139,7 @@
       "settingsBlockScriptsToggle": "Αποκλεισμός των scripts",
       "settingsBlockImagesToggle": "Αποκλεισμός εικόνων",
       "settingsBlockedRequestCount": {
-        "unsafeHTML": "Μέχρι στιγμής, το Min έχει αποκλέισει <strong></strong> διαφημίσει και trackers."
+        "unsafeHTML": "Μέχρι στιγμής, το έχει αποκλέισει <strong></strong> διαφημίσει και trackers."
       },
       "settingsCustomBangs": "Προσαρμοσμένα bangs",
       "settingsCustomBangsAdd": "Προσθήκη προσαρμοσμένου bang",
@@ -249,7 +249,7 @@
       "downloadStateCompleted": "Ολοκληρώθηκε",
       "downloadStateFailed": "Απέτυχε",
       /* Update Notifications */
-      "updateNotificationTitle": "Μια καινούργια έκδοση του Min είναι διαθέσιμη",
+      "updateNotificationTitle": "Μια καινούργια έκδοση του είναι διαθέσιμη",
       /* Autofill settings */
       "settingsPasswordAutoFillHeadline": "Αυτόματη συμπλήρωση κωδικού πρόσβασης",
       "settingsSelectPasswordManager": "Επίλέξτε έναν απο τους υποστηριζόμενους διαχειριστές κωδικών πρόσβασης:",
@@ -268,7 +268,7 @@
       "passwordManagerSetupDragBox": "Σείρετε το εργαλείο εδώ",
       "passwordManagerSetupInstalling": "Εγκατάσταση...",
       "passwordManagerBitwardenSignIn": "Για να συνδεθείτε στο λογαριασμο Bitwarden, επισκεφτείτε το vault.bitwarden.com/#/settings/account, πηγένετε στο τέλος της σελίδας, και επιλέξτε \"View API Key\". Στην συνέχεια επικολλήστε τις τιμές στα παρακάτω πεδία.",
-      "passwordManagerSetupSignIn": "Συνδεθείτε στον διαχειριστή κωδικών πρόσβασης για να ξεκινήσετε να χρησιμοποιείτε την αυτόματη συμπλήρωση. Τα διαπιστευτήριά σας δεν θα αποθηκευτούν πουθενά μέσα στο Min.",
+      "passwordManagerSetupSignIn": "Συνδεθείτε στον διαχειριστή κωδικών πρόσβασης για να ξεκινήσετε να χρησιμοποιείτε την αυτόματη συμπλήρωση. Τα διαπιστευτήριά σας δεν θα αποθηκευτούν πουθενά μέσα στο.",
       "disableAutofill": "Απενεργοποίηση αυτόματης συμπλήρωσης",
       "passwordManagerSetupUnlockError": "Αποτυχία ξεκλειδώματος του χώρου αποθήκευσης κωδικών πρόσβασης:",
       "passwordManagerSetupRetry": "Επιβεβαιώστε ότι χρησιμοποιείτε το σωστό αρχείο και ότι εισάγετε το σωστό κωδικό πρόσβασης. Μπορείτε να ξαναδοκιμάσετε σέρνοντας το εργαλείο ξανά εδώ.",

@@ -3,108 +3,108 @@ var regedit = require('regedit')
 var installPath = process.execPath
 
 var keysToCreate = [
-  'HKCU\\Software\\Classes\\Min',
-  'HKCU\\Software\\Classes\\Min\\Application',
-  'HKCU\\Software\\Classes\\Min\\DefaulIcon',
-  'HKCU\\Software\\Classes\\Min\\shell\\open\\command',
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\Capabilities\\FileAssociations',
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\Capabilities\\StartMenu',
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\Capabilities\\URLAssociations',
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\DefaultIcon',
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\InstallInfo',
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\shell\\open\\command'
+  'HKCU\\Software\\Classes\\3WebsBrowser',
+  'HKCU\\Software\\Classes\\3WebsBrowser\\Application',
+  'HKCU\\Software\\Classes\\3WebsBrowser\\DefaulIcon',
+  'HKCU\\Software\\Classes\\3WebsBrowser\\shell\\open\\command',
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities\\FileAssociations',
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities\\StartMenu',
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities\\URLAssociations',
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\DefaultIcon',
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\InstallInfo',
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\shell\\open\\command'
 ]
 
 var registryConfig = {
   'HKCU\\Software\\RegisteredApplications': {
-    Min: {
-      value: 'Software\\Clients\\StartMenuInternet\\Min\\Capabilities',
+    '3WebsBrowser': {
+      value: 'Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Classes\\Min': {
+  'HKCU\\Software\\Classes\\3WebsBrowser': {
     default: {
-      value: 'Min Browser Document',
+      value: '3Webs Browser Document',
       type: 'REG_DEFAULT'
     }
   },
-  'HKCU\\Software\\Classes\\Min\\Application': {
+  'HKCU\\Software\\Classes\\3WebsBrowser\\Application': {
     ApplicationIcon: {
       value: installPath + ',0',
       type: 'REG_SZ'
     },
     ApplicationName: {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     },
     AppUserModelId: {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Classes\\Min\\DefaulIcon': {
+  'HKCU\\Software\\Classes\\3WebsBrowser\\DefaulIcon': {
     ApplicationIcon: {
       value: installPath + ',0',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Classes\\Min\\shell\\open\\command': {
+  'HKCU\\Software\\Classes\\3WebsBrowser\\shell\\open\\command': {
     default: {
       value: '"' + installPath + '" "%1"',
       type: 'REG_DEFAULT'
     }
   },
   'HKCU\\Software\\Classes\\.htm\\OpenWithProgIds': {
-    Min: {
+    '3WebsBrowser': {
       value: 'Empty',
       type: 'REG_SZ'
     }
   },
   'HKCU\\Software\\Classes\\.html\\OpenWithProgIds': {
-    Min: {
+    '3WebsBrowser': {
       value: 'Empty',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\Capabilities\\FileAssociations': {
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities\\FileAssociations': {
     '.htm': {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     },
     '.html': {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\Capabilities\\StartMenu': {
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities\\StartMenu': {
     StartMenuInternet: {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\Capabilities\\URLAssociations': {
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\Capabilities\\URLAssociations': {
     http: {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     },
     https: {
-      value: 'Min',
+      value: '3WebsBrowser',
       type: 'REG_SZ'
     }
   },
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\DefaultIcon': {
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\DefaultIcon': {
     default: {
       value: installPath + ',0',
       type: 'REG_DEFAULT'
     }
   },
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\InstallInfo': {
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\InstallInfo': {
     IconsVisible: {
       value: 1,
       type: 'REG_DWORD'
     }
   },
-  'HKCU\\Software\\Clients\\StartMenuInternet\\Min\\shell\\open\\command': {
+  'HKCU\\Software\\Clients\\StartMenuInternet\\3WebsBrowser\\shell\\open\\command': {
     default: {
       value: installPath,
       type: 'REG_DEFAULT'

@@ -102,16 +102,16 @@
     "crashErrorSubtitle": "Během zobrazování této stránky došlo k potížím.",
     "errorPagePrimaryAction": "Zkusit znovu",
     "serverNotFoundTitle": "Server nenalezen",
-    "serverNotFoundSubtitle": "Prohlížeč Min nemůže najít tuto webovou stránku.",
+    "serverNotFoundSubtitle": "Prohlížeč nemůže najít tuto webovou stránku.",
     "archiveSearchAction": "Vyhledávat na archive.org",
     "sslErrorTitle": "Tato webová stránka není dostupná",
-    "sslErrorMessage": "Prohlížeč Min nemůže s touto stránkou navázat zabezpečené spojení.",
+    "sslErrorMessage": "Prohlížeč nemůže s touto stránkou navázat zabezpečené spojení.",
     "dnsErrorTitle": "Webová stránka nenalezena",
     "dnsErrorMessage": "Došlo k chybě DNS.",
     "offlineErrorTitle": "Jste offline",
     "offlineErrorMessage": "Připojte se k internetu a zkuste to znovu.",
-    "genericConnectionFail": "Prohlížeč Min se nemůže připojit k této webové adrese.",
-    "sslTimeErrorMessage": "Prohlížeč Min nemůže s touto stránkou navázat zabezpečené spojení. Prosím zkontrolujte, zda máte v počítači správně nastavený čas.",
+    "genericConnectionFail": "Prohlížeč se nemůže připojit k této webové adrese.",
+    "sslTimeErrorMessage": "Prohlížeč nemůže s touto stránkou navázat zabezpečené spojení. Prosím zkontrolujte, zda máte v počítači správně nastavený čas.",
     "addressInvalidTitle": "Tato adresa je neplatná.",
     "genericError": "Vyskytla se chyba",
     /* pages/phishing/index.html */
@@ -120,7 +120,7 @@
     "phishingErrorVisitAnyway": "Přesto stránky navštívit",
     "phishingErrorLeave": "Opustit tyto stránky",
     /* multiple instances alert */
-    "multipleInstancesErrorMessage": "Vyskytla se chyba. Prosím zavřete všechny ostatní spuštěné instance a restartujte prohlížeč Min.",
+    "multipleInstancesErrorMessage": "Vyskytla se chyba. Prosím zavřete všechny ostatní spuštěné instance a restartujte prohlížeč.",
     /* pages/sessionRestoreError/index.html */
     "sessionRestoreErrorTitle": "Vyskytla se chyba",
     "sessionRestoreErrorExplanation": "Vaše uložené karty nelze správně obnovit.",
@@ -139,7 +139,7 @@
     "settingsBlockScriptsToggle": "Blokovat skripty",
     "settingsBlockImagesToggle": "Blokovat obrázky",
     "settingsBlockedRequestCount": {
-      "unsafeHTML": "Prohlížeč Min dosud zablokoval <strong></strong> reklam a trackerů."
+      "unsafeHTML": "Prohlížeč dosud zablokoval <strong></strong> reklam a trackerů."
     },
     "settingsCustomBangs": "Vlastní !zkratky",
     "settingsCustomBangsAdd": "Vytvořit novou zkratku",
@@ -249,7 +249,7 @@
     "downloadStateCompleted": "Dokončeno",
     "downloadStateFailed": "Selhalo",
     /* Update Notifications */
-    "updateNotificationTitle": "Je dostupná nová verze prohlížeče Min",
+    "updateNotificationTitle": "Je dostupná nová verze prohlížeče",
     /* Autofill settings */
     "settingsPasswordAutoFillHeadline": "Automatické vkládání hesla",
     "settingsSelectPasswordManager": "Vyberte jeden z podporovaných správců hesel:",
@@ -268,7 +268,7 @@
     "passwordManagerSetupDragBox": "Přetáhněte nástroj sem",
     "passwordManagerSetupInstalling": "Probíhá instalace...",
     "passwordManagerBitwardenSignIn": "Pro připojení vašeho Bitwarden účtu navštivte vault.bitwarden.com/#/settings/account, srolujte dolů a zvolte \"Zobrazit API klíč\". Tyto hodnoty poté vložte do textových polí níže.",
-    "passwordManagerSetupSignIn": "Přihlaste se do vašeho správce hesel, abyste mohli začít používat automatické vkládání. Vaše přihlašovací údaje nebudou v prohlížeči Min nikde uchovány.",
+    "passwordManagerSetupSignIn": "Přihlaste se do vašeho správce hesel, abyste mohli začít používat automatické vkládání. Vaše přihlašovací údaje nebudou v prohlížeči nikde uchovány.",
     "disableAutofill": "Vypnout automatické vkládání",
     "passwordManagerSetupUnlockError": "Selhalo odemčení úložiště hesel: ",
     "passwordManagerSetupRetry": "Ujistěte se, že používáte správný soubor a zadáváte heslo správně. Můžete postup opakovat přetažením nástroje sem.",

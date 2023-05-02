@@ -120,7 +120,7 @@
     "phishingErrorVisitAnyway": "Visitar este sitio de todos modos",
     "phishingErrorLeave": "Salir de este sitio",
     /* multiple instances alert */
-    "multipleInstancesErrorMessage": "Ha ocurrido un error. Por favor, cierre cualquier otra instancia y reinicie Min.",
+    "multipleInstancesErrorMessage": "Ha ocurrido un error. Por favor, cierre cualquier otra instancia y reinicie.",
     /* pages/sessionRestoreError/index.html */
     "sessionRestoreErrorTitle": "Ha ocurrido un error",
     "sessionRestoreErrorExplanation": "Tus pestañas guardadas no se pudieron restaurar correctamente.",
@@ -139,7 +139,7 @@
     "settingsBlockScriptsToggle": "Bloquear scripts",
     "settingsBlockImagesToggle": "Bloquear imágenes",
     "settingsBlockedRequestCount": {
-      "unsafeHTML": "Hasta ahora, Min ha bloqueado <strong></strong> anuncios y rastreadores."
+      "unsafeHTML": "Hasta ahora, ha bloqueado <strong></strong> anuncios y rastreadores."
     },
     "settingsCustomBangs": "Bangs personalizados",
     "settingsCustomBangsAdd": "Agregar bang personalizado",
@@ -248,7 +248,7 @@
     "downloadStateCompleted": "Completado",
     "downloadStateFailed": "Fallido",
     /* Update Notifications */
-    "updateNotificationTitle": "Una nueva versión de Min se encuentra disponible.",
+    "updateNotificationTitle": "Una nueva versión se encuentra disponible.",
     /* Autofill settings */
     "settingsPasswordAutoFillHeadline": "Auto-llenado de contraseña", //Autofill is not the same as autocomplete (autocompletar)
     "settingsSelectPasswordManager": "Elije uno de los gestores de contraseñas soportados:",
@@ -267,7 +267,7 @@
     "passwordManagerSetupDragBox": "Arrastra la herramienta hasta aquí",
     "passwordManagerSetupInstalling": "Instalando...",
     "passwordManagerBitwardenSignIn": null, //missing translation
-    "passwordManagerSetupSignIn": "Inicia sesión en tu gestor de contraseñas para empezar a usar el Auto-llenado. Tus credenciales no serán almacenadas en ningún lugar dentro de Min.",
+    "passwordManagerSetupSignIn": "Inicia sesión en tu gestor de contraseñas para empezar a usar el Auto-llenado. Tus credenciales no serán almacenadas en ningún lugar dentro .",
     "disableAutofill": "Desactivar Auto-llenado",
     "passwordManagerSetupUnlockError": "No se pudo desbloquear el almacén de contraseñas:",
     "passwordManagerSetupRetry": "Asegúrate de estar usando el archivo correcto e ingresando una contraseña correcta. Puedes reintentar arrastrando nuevamente la herramienta hasta aquí.",

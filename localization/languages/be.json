@@ -120,7 +120,7 @@
       "phishingErrorVisitAnyway": "Усё роўна наведаць сайт",
       "phishingErrorLeave": "Сысці з сайта",
       /* multiple instances alert */
-      "multipleInstancesErrorMessage": "Адбылася памылка. Калі ласка, зачыніце ўсе іншыя адкрытыя асобнікі і перазапусціце Min.",
+      "multipleInstancesErrorMessage": "Адбылася памылка. Калі ласка, зачыніце ўсе іншыя адкрытыя асобнікі і перазапусціце.",
       /* pages/sessionRestoreError/index.html */
       "sessionRestoreErrorTitle": "Адбылася памылка",
       "sessionRestoreErrorExplanation": "Вашы захаваныя ўкладкі не могуць быць карэктна адноўлены.",
@@ -139,7 +139,7 @@
       "settingsBlockScriptsToggle": "Блакаваць скрыпты",
       "settingsBlockImagesToggle": "Блакаваць малюнкі",
       "settingsBlockedRequestCount": {
-        "unsafeHTML": "На дадзены момант Min заблакаваў <strong></strong> аб'яў і трэкераў."
+        "unsafeHTML": "На дадзены момант заблакаваў <strong></strong> аб'яў і трэкераў."
       },
       "settingsCustomBangs": "Карыстацкія bangs",
       "settingsCustomBangsAdd": "Дадаць уласны bang",
@@ -220,7 +220,7 @@
       "appMenuHelp": "Дапамога",
       "appMenuKeyboardShortcuts": "Спалучэння клавіш",
       "appMenuReportBug": "Паведаміць пра памылку",
-      "appMenuTakeTour": "Знаёмства з Min",
+      "appMenuTakeTour": "Знаёмства з",
       "appMenuViewGithub": "Мы на GitHub",
       "appMenuAbout": "Аб %n", //%n is replaced with app name
       "appMenuPreferences": "Налады",
@@ -249,7 +249,7 @@
       "downloadStateCompleted": "Завершана",
       "downloadStateFailed": "Не атрымалася",
       /* Update Notifications */
-      "updateNotificationTitle": "Даступная новая версія Min",
+      "updateNotificationTitle": "Даступная новая версія",
       /* Autofill settings */
       "settingsPasswordAutoFillHeadline": "Аўтазапаўненне пароля",
       "settingsSelectPasswordManager": "Выбераце адзін з падтрымоўваных мэнэджараў пароляў:",
@@ -268,7 +268,7 @@
       "passwordManagerSetupDragBox": "Перацягніце інструмент сюды",
       "passwordManagerSetupInstalling": "Устаноўка...",
       "passwordManagerBitwardenSignIn": "Каб падключыць свой уліковы запіс Bitwarden, перайдзіце на старонку vault.bitwarden.com/#/settings/account, пракруціць ўніз і выберыце \"View API Key\". Затым устаўце значэння ў палі ніжэй.",
-      "passwordManagerSetupSignIn": "Ўвайдзіце ў свой мэнэджэр пароляў, каб пачаць выкарыстоўваць аўтазапаўненне. Вашы ўліковыя дадзеныя не будуць захоўвацца дзе-небудзь ўнутры Min.",
+      "passwordManagerSetupSignIn": "Ўвайдзіце ў свой мэнэджэр пароляў, каб пачаць выкарыстоўваць аўтазапаўненне. Вашы ўліковыя дадзеныя не будуць захоўвацца дзе-небудзь ўнутры.",
       "disableAutofill": "Адключыць аўтазапаўненне",
       "passwordManagerSetupUnlockError": "Немагчыма разблакаваць сховішча пароляў: ",
       "passwordManagerSetupRetry": "Пераканайцеся, што вы выкарыстоўваеце правільны файл і ўводзіце правільны пароль. Вы можаце паўтарыць спробу, перацягнуўшы інструмент сюды яшчэ раз.",

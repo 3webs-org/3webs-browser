@@ -4,7 +4,7 @@ const settings = require('util/settings/settings.js')
 
 const pageTranslations = {
   apiURL: 'https://translate-api.minbrowser.org/translate',
-  translatePrivacyInfo: 'When you translate a page, the page contents are sent to Min\'s servers. We don\'t save your translations or use them to identify you.',
+  translatePrivacyInfo: 'When you translate a page, the page contents are sent to a third party\'s servers. We don\'t save your translations or use them to identify you.',
   languages: [
     {
       name: 'English',

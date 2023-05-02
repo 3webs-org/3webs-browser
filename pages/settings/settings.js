@@ -1,4 +1,4 @@
-document.title = l('settingsPreferencesHeading') + ' | Min'
+document.title = l('settingsPreferencesHeading') + ' | 3Webs Browser'
 
 var contentTypeBlockingContainer = document.getElementById('content-type-blocking')
 var banner = document.getElementById('restart-required-banner')

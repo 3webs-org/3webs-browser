@@ -38,7 +38,7 @@ async function afterPackageBuilt (packagePath) {
 
     console.log('Creating package (this may take a while)')
 
-    fs.copyFileSync('LICENSE.txt', packagePath + '/LICENSE')
+    fs.copyFileSync('LICENSE.md', packagePath + '/LICENSE')
 
     await installer(options)
       .then(function () {

@@ -1,9 +1,10 @@
 {
-  "name": "min",
-  "productName": "Min",
-  "author": "PalmerAL",
+  "name": "3webs-browser",
+  "productName": "3webs Browser",
+  "author": "3webs",
   "version": "1.27.0",
-  "description": "A fast, minimal browser that protects your privacy",
+  "shortDescription": "The Ethereum-native browser",
+  "description": "The 3Webs is the state-of-the-art Ethereum-native browser with built-in Web3 and decentralized app support.",
   "electronVersion": "22.0.0",
   "main": "main.build.js",
   "standard": {
@@ -61,7 +62,7 @@
   "scripts": {
     "test": "standard --verbose js/**/*.js main/*.js",
     "watch": "node ./scripts/watch.js",
-    "startElectron": "electron . --development-mode",
+    "startElectron": "electron . --trace-warnings --development-mode",
     "start": "npm run build && concurrently \"npm run watch\" \"npm run startElectron\"",
     "buildMain": "node ./scripts/buildMain.js",
     "buildBrowser": "node ./scripts/buildBrowser.js",

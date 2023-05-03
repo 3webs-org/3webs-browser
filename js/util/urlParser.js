@@ -23,7 +23,6 @@ var urlParser = {
     try {
       let supportedUrls = ['http', 'https', 'file', 'web3', 'about', 'chrome', 'data', 'browser']
       let urlObj = new URL(url)
-      console.log('protocol: ' + urlObj.protocol.replace(':', ''))
       return supportedUrls.includes(urlObj.protocol.replace(':', '')) || urlParser.protocolRegex.test(url)
     } catch (e) { // Invalid URL
       return false

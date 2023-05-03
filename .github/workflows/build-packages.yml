@@ -23,13 +23,15 @@ jobs:
     env:
       SDKROOT: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Install Node.js 16
+      uses: actions/setup-node@v3
       with:
         node-version: 16
     - run: npm install
     - name: build package
-      run: pnpm run ${{ matrix.osBuild[1] }}
+      run: npm run ${{ matrix.osBuild[1] }}
     - name: upload package
       uses: actions/upload-artifact@v3
       with:

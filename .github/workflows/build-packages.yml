@@ -1,35 +1,42 @@
-name: Build Package
-on: [workflow_dispatch]
+name: Build Packages
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
 jobs:
   buildMac:
     runs-on: macos-11
     env:
       SDKROOT: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: '14.11.0'
+        node-version: 16
     - run: npm install
     - name: build package
       run: npm run buildMacIntel && npm run buildMacArm
     - name: upload package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: mac-package
         path: dist/app/*.zip
   buildWindows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: '14.x'
+        node-version: 16
     - run: npm install
     - name: build package
       run: npm run buildWindows
     - name: upload package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: windows-package
         path: |
@@ -38,17 +45,18 @@ jobs:
   buildLinux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: '14.x'
+        node-version: 16
     - run: npm install
     - name: build package
       run: npm run buildDebian && npm run buildRedhat && npm run buildLinuxArm64 && npm run buildRaspi
     - name: upload package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: linux-package
         path: |
           dist/app/*.deb
           dist/app/*.rpm
+      

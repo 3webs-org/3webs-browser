@@ -2,6 +2,7 @@ const ProcessSpawner = require('util/process.js')
 const path = require('path')
 const fs = require('fs')
 var { ipcRenderer } = require('electron')
+const { l } = require('../localization/localizationHelpers.js')
 
 // Bitwarden password manager. Requires session key to unlock the vault.
 class Bitwarden {

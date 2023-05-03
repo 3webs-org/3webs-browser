@@ -5,6 +5,7 @@ var urlParser = require('util/urlParser.js')
 var settings = require('util/settings/settings.js')
 var path = require('path')
 var fs = require('fs')
+const { l } = require('../localization/localizationHelpers.js')
 
 const bookmarkConverter = {
   import: function (data) {

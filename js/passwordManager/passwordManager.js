@@ -8,6 +8,7 @@ const statistics = require('js/statistics.js')
 const Bitwarden = require('js/passwordManager/bitwarden.js')
 const OnePassword = require('js/passwordManager/onePassword.js')
 const Keychain = require('js/passwordManager/keychain.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 const PasswordManagers = {
   // List of supported password managers. Each password manager is expected to

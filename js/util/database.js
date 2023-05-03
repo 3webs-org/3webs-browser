@@ -1,6 +1,8 @@
 // defines schema for the browsingData database
 // requires Dexie.min.js
 
+const { l } = require('../localization/localizationHelpers.js')
+
 if (typeof Dexie === 'undefined' && typeof require !== 'undefined') {
   var Dexie = require('dexie')
 }

@@ -1,3 +1,5 @@
+const { l } = require('../localization/localizationHelpers.js')
+
 var searchbar = require('searchbar/searchbar.js')
 var webviews = require('webviews.js')
 var modalMode = require('modalMode.js')

@@ -1,5 +1,7 @@
 var webviews = require('webviews.js')
 const remoteMenu = require('remoteMenuRenderer.js')
+const { l } = require('../localization/localizationHelpers.js')
+
 
 function getFileSizeString (bytes) {
   const prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']

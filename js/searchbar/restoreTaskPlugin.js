@@ -2,6 +2,7 @@ var searchbarPlugins = require('searchbar/searchbarPlugins.js')
 var searchbarUtils = require('searchbar/searchbarUtils.js')
 
 var browserUI = require('browserUI.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 function getFormattedTitle (tab) {
   if (tab.title) {

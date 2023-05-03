@@ -1,5 +1,7 @@
 const EventEmitter = require('events')
 
+const { l } = require('../localization/localizationHelpers.js')
+
 const webviews = require('webviews.js')
 const focusMode = require('focusMode.js')
 const readerView = require('readerView.js')

@@ -9,6 +9,7 @@ const Parser = require('expr-eval').Parser
 const math = new Parser()
 math.consts.pi = Math.PI
 math.consts.e = Math.E
+const { l } = require('../localization/localizationHelpers.js')
 
 // get all expr-eval tokens (operators, constants, etc.)
 const mathOps = {

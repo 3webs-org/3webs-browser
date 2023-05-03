@@ -2,6 +2,7 @@ var places = require('places/places.js')
 var autocomplete = require('util/autocomplete.js')
 const remoteMenu = require('remoteMenuRenderer.js')
 var { ipcRenderer } = require('electron')
+const { l } = require('../localization/localizationHelpers.js')
 
 const bookmarkEditor = {
   currentInstance: null,

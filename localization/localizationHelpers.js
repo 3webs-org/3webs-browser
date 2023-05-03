@@ -1,13 +1,5 @@
 /* provides helper functions for using localized strings */
-
-/*
-translations are compiled into here by running "npm run build" in this format
-
-var languages = {
-    en-US: {name: "English (United States), identifier: "en-US", translations: {...}}
-}
-
-*/
+let languages = require('./languages/all')
 
 function getCurrentLanguage () {
   // TODO add a setting to change the language to something other than the default
@@ -32,20 +24,26 @@ function l (stringId) {
     userLanguage = getCurrentLanguage()
   }
 
-  var userBaseLanguage = userLanguage.split('-')[0] // examples: es-419 -> es, nl-BE -> nl
-
-  // get the translated string for the given ID
-
-  // try an exact match for the user language
-  if (languages[userLanguage] && languages[userLanguage].translations[stringId] && languages[userLanguage].translations[stringId].unsafeHTML !== null) {
-    return languages[userLanguage].translations[stringId]
-    // try a match for the base language, if the language code is for a particular region
-  } else if (languages[userBaseLanguage] && languages[userBaseLanguage].translations[stringId] && languages[userBaseLanguage].translations[stringId].unsafeHTML !== null) {
-    return languages[userBaseLanguage].translations[stringId]
-  } else {
-    // fallback to en-US
-    return languages['en-US'].translations[stringId]
+  // If the string is available in the user's language, use it
+  if (languages[userLanguage] && languages[userLanguage][stringId]) {
+    return languages[userLanguage][stringId]
   }
+  // If general language unavailable but specific dialect is, use it
+  for (let lang in languages) {
+    if (lang.startsWith(userLanguage.split('-')[0]) && languages[lang][stringId]) {
+      return languages[lang][stringId]
+    }
+  }
+  // If the specific dialect is unavailable, use the general language
+  if (languages[userLanguage.split('-')[0]] && languages[userLanguage.split('-')[0]][stringId]) {
+    return languages[userLanguage.split('-')[0]][stringId]
+  }
+  // If the string is unavailable in the user's language, use the default
+  if (languages['en-US'][stringId]) {
+    return languages['en-US'][stringId]
+  }
+  // If the string is unavailable in the default language, use the stringId
+  return stringId
 }
 
 /* for static HTML pages
@@ -90,3 +88,4 @@ if (typeof window !== 'undefined') {
   window.userLanguage = userLanguage
   window.getCurrentLanguage = getCurrentLanguage
 }
+exports.l = l

@@ -1,6 +1,7 @@
 const webviews = require('webviews.js')
 const settings = require('util/settings/settings.js')
 const PasswordManagers = require('passwordManager/passwordManager.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 const passwordCapture = {
   bar: document.getElementById('password-capture-bar'),

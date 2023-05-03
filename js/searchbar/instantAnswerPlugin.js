@@ -4,6 +4,7 @@ var searchbarAutocomplete = require('util/autocomplete.js')
 
 var urlParser = require('util/urlParser.js')
 var searchEngine = require('util/searchEngine.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 var ddgAttribution = l('resultsFromDDG')
 

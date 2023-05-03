@@ -2,6 +2,7 @@ var browserUI = require('browserUI.js')
 var searchbarUtils = require('searchbar/searchbarUtils.js')
 var urlParser = require('util/urlParser.js')
 var searchEngine = require('util/searchEngine.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 const faviconMinimumLuminance = 70 // minimum brightness for a "light" favicon
 

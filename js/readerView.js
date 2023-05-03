@@ -1,6 +1,7 @@
 var webviews = require('webviews.js')
 var keybindings = require('keybindings.js')
 var urlParser = require('util/urlParser.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 var readerDecision = require('readerDecision.js')
 

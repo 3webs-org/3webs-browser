@@ -6,6 +6,7 @@ const searchEngine = require('util/searchEngine.js')
 const userscripts = require('userscripts.js')
 const settings = require('util/settings/settings.js')
 const pageTranslations = require('pageTranslations.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 const remoteMenu = require('remoteMenuRenderer.js')
 

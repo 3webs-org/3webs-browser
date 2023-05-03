@@ -1,6 +1,7 @@
 var { ipcRenderer } = require('electron')
 var fs = require('fs')
 var path = require('path')
+const { l } = require('../localization/localizationHelpers.js')
 
 var webviews = require('webviews.js')
 var settings = require('util/settings/settings.js')

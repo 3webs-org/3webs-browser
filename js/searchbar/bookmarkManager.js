@@ -8,6 +8,7 @@ var formatRelativeDate = require('util/relativeDate.js')
 
 var tabEditor = require('navbar/tabEditor.js')
 var bookmarkEditor = require('searchbar/bookmarkEditor.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 const maxTagSuggestions = 12
 

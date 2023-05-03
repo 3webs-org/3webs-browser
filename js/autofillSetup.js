@@ -1,6 +1,7 @@
 const setupDialog = require('passwordManager/managerSetup.js')
 const settings = require('util/settings/settings.js')
 const PasswordManagers = require('passwordManager/passwordManager.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 const AutofillSetup = {
   checkSettings: function () {

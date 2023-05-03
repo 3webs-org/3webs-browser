@@ -6,6 +6,7 @@ var bangsPlugin = require('searchbar/bangsPlugin.js')
 var tabEditor = require('navbar/tabEditor.js')
 var searchbarPlugins = require('searchbar/searchbarPlugins.js')
 var urlParser = require('util/urlParser.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 var statistics = require('js/statistics.js')
 

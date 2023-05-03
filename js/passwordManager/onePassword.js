@@ -4,6 +4,7 @@ const fs = require('fs')
 var { ipcRenderer } = require('electron')
 const compareVersions = require('util/compareVersions.js')
 const settings = require('util/settings/settings.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 // 1Password password manager. Requires session key to unlock the vault.
 class OnePassword {

@@ -1,5 +1,6 @@
 const UPDATE_URL = 'https://minbrowser.github.io/min/updates/latestVersion.json' // TODO - change this to the new URL
 
+const { l } = require('../localization/localizationHelpers.js')
 var settings = require('util/settings/settings.js')
 
 var searchbarPlugins = require('searchbar/searchbarPlugins.js')

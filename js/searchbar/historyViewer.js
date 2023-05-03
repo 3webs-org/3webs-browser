@@ -5,6 +5,7 @@ var bangsPlugin = require('searchbar/bangsPlugin.js')
 var places = require('places/places.js')
 var urlParser = require('util/urlParser.js')
 var formatRelativeDate = require('util/relativeDate.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 module.exports = {
   initialize: function () {

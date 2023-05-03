@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron')
+const { l } = require('../localization/localizationHelpers.js')
 
 var webviews = require('webviews.js')
 var keybindings = require('keybindings.js')

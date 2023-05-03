@@ -1,3 +1,6 @@
+
+const { l } = require('../localization/localizationHelpers.js')
+
 // creating formatters is slow, so we we reuse the same one for every call
 const formatterInstance = new Intl.DateTimeFormat(navigator.language, { year: 'numeric', month: 'long' })
 

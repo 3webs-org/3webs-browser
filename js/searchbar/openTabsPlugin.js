@@ -1,6 +1,7 @@
 var browserUI = require('browserUI.js')
 var searchbarPlugins = require('searchbar/searchbarPlugins.js')
 var urlParser = require('util/urlParser.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 var stringScore = require('string_score') // eslint-disable-line no-unused-vars
 

@@ -42,16 +42,14 @@
     "string_score": "^0.1.22"
   },
   "devDependencies": {
+    "electron-builder": "^24.3.0",
     "archiver": "^4.0.1",
     "browserify": "^16.5.1",
     "chokidar": "^3.4.0",
     "concurrently": "^5.2.0",
     "decomment": "^0.9.0",
     "electron": "^25.0.0-beta.1",
-    "electron-builder": "^22.14.13",
     "electron-installer-windows": "^3.0.0",
-    "electron-packager": "^15.1.0",
-    "electron-rebuild": "^3.2.7",
     "electron-renderify": "0.0.2",
     "prebuild-install": "^7.0.1",
     "prettier": "^2.2.1",
@@ -63,28 +61,82 @@
     "test": "standard --verbose js/**/*.js main/*.js",
     "watch": "node ./scripts/watch.js",
     "startElectron": "electron . --trace-warnings --development-mode",
-    "start": "npm run build && concurrently \"npm run watch\" \"npm run startElectron\"",
-    "buildMain": "node ./scripts/buildMain.js",
-    "buildBrowser": "node ./scripts/buildBrowser.js",
-    "buildBrowserStyles": "node ./scripts/buildBrowserStyles.js",
-    "buildPreload": "node ./scripts/buildPreload.js",
-    "build": "npm run buildMain && npm run buildBrowser && npm run buildBrowserStyles && npm run buildPreload",
-    "buildWindows": "npm run build && node ./scripts/buildWindows.js",
-    "buildMacIntel": "npm run build && node ./scripts/buildMac.js --platform=x86",
-    "buildMacArm": "npm run build && node ./scripts/buildMac.js --platform=arm64",
-    "buildDebian": "npm run build && node ./scripts/buildDebian.js --platform=amd64",
-    "buildRaspi": "npm run build && node ./scripts/buildDebian.js --platform=armhf",
-    "buildLinuxArm64": "npm run build && node ./scripts/buildDebian.js --platform=arm64",
-    "buildRedhat": "npm run build && node ./scripts/buildRedhat.js",
-    "buildAll": "npm run buildWindows && npm run buildMacIntel && npm run buildMacArm && npm run buildDebian && npm run buildRedhat && npm run buildRaspi && npm run buildLinuxArm64 && npm run buildAppImage",
-    "buildAppImage": "npm run build && node ./scripts/buildAppImage.js",
-    "updateFilters": "node ./ext/filterLists/updateEasylist.js",
-    "updateHttpsList": "node ./ext/httpsUpgrade/updateHttpsList.js",
-    "updateSuffixes": "node ./ext/publicSuffixes/updateSuffixes.js",
+    "start": "npm run build && npm run startElectron",
+    "build": "electron-builder build",
     "lint": "prettier --write **/**/*.css **/**/*.md **/**/*.html **/**/*.json && standard --fix js/**/*.js main/*.js | snazzy"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/minbrowser/min.git"
+  },
+  "build": {
+    "appId": "org.3webs.browser",
+    "productName": "3webs Browser",
+    "copyright": "Copyright Waived by Creative Commons Zero (CC0)",
+    "directories": {
+      "output": "dist"
+    },
+    "protocols": [
+      {
+        "name": "Hypertext Transfer Protocol",
+        "schemes": [
+          "http"
+        ]
+      },
+      {
+        "name": "Hypertext Transfer Protocol (Secure)",
+        "schemes": [
+          "https"
+        ]
+      },
+      {
+        "name": "ERC-4804 Contract URI",
+        "schemes": [
+          "web3"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.networking",
+      "icon": "icons/icon.icns",
+      "target": [
+        "dmg",
+        "pkg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable",
+        "msi"
+      ],
+      "icon": "icons/icon.ico",
+      "legalTrademarks": "Copyright Waived by Creative Commons Zero (CC0)",
+      "publisherName": "3webs"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "flatpak",
+        "snap",
+        "deb",
+        "rpm",
+        "freebsd",
+        "pacman",
+        "p5p",
+        "apk",
+        "zip"
+      ],
+      "icon": "icons/icon.png",
+      "maintainer": "3webs",
+      "vendor": "3webs",
+      "synopsis": "The Ethereum-native browser",
+      "description": "The 3Webs is the state-of-the-art Ethereum-native browser with built-in Web3 and decentralized app support.",
+      "category": "Network",
+      "mimeTypes": [
+        "text/html"
+      ]
+    }
   }
 }

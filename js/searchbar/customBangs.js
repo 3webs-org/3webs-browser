@@ -16,6 +16,8 @@ const searchbarPlugins = require('searchbar/searchbarPlugins.js')
 const tabEditor = require('navbar/tabEditor.js')
 const formatRelativeDate = require('util/relativeDate.js')
 
+const { l } = require('../localization/localizationHelpers.js')
+
 function moveToTaskCommand (taskId) {
   // remove the tab from the current task
 

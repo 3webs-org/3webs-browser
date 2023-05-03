@@ -6,6 +6,7 @@ var searchbarPlugins = require('searchbar/searchbarPlugins.js')
 var searchbarAutocomplete = require('util/autocomplete.js')
 
 var searchEngine = require('util/searchEngine.js')
+const { l } = require('../localization/localizationHelpers.js')
 
 // format is {phrase, snippet, score, icon, fn, isCustom, isAction} to match https://ac.duckduckgo.com/ac?q=!
 

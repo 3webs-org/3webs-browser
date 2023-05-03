@@ -8,8 +8,18 @@ on:
     branches:
     - main
 jobs:
-  buildMac:
-    runs-on: macos-11
+  build:
+    strategy:
+      matrix:
+        osBuild:
+        - [macos-11, buildMacIntel]
+        - [macos-11, buildMacArm]
+        - [windows-2022, buildWindows]
+        - [ubuntu-22.04, buildDebian]
+        - [ubuntu-22.04, buildRedhat]
+        - [ubuntu-22.04, buildLinuxArm64]
+        - [ubuntu-22.04, buildRaspi]
+    runs-on: ${{ matrix.osBuild[0] }}
     env:
       SDKROOT: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
     steps:
@@ -17,58 +27,20 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-        cache: 'npm-macos-11'
+        cache: 'npm-${{ matrix.osBuild[0] }}'
         cache-dependency-path: |
           node_modules
           package-lock.json
     - run: npm install
     - name: build package
-      run: pnpm run buildMacIntel && pnpm run buildMacArm
+      run: pnpm run ${{ matrix.osBuild[1] }}
     - name: upload package
       uses: actions/upload-artifact@v3
       with:
-        name: mac-package
-        path: dist/app/*.zip
-  buildWindows:
-    runs-on: windows-2022
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm-windows-2022'
-        cache-dependency-path: |
-          node_modules
-          package-lock.json
-    - run: npm install
-    - name: build package
-      run: pnpm run buildWindows
-    - name: upload package
-      uses: actions/upload-artifact@v3
-      with:
-        name: windows-package
+        name: ${{ matrix.osBuild[1] }}
         path: |
           dist/app/*.zip
           dist/app/*.exe
-  buildLinux:
-    runs-on: ubuntu-22.04
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm-ubuntu-22-04'
-        cache-dependency-path: |
-          node_modules
-          package-lock.json
-    - run: npm install
-    - name: build package
-      run: pnpm run buildDebian && pnpm run buildRedhat && pnpm run buildLinuxArm64 && pnpm run buildRaspi
-    - name: upload package
-      uses: actions/upload-artifact@v3
-      with:
-        name: linux-package
-        path: |
           dist/app/*.deb
           dist/app/*.rpm
       

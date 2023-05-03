@@ -17,10 +17,10 @@ var urlParser = {
   validIP4Regex: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/i,
   validDomainRegex: /^(?!-)(?:.*@)*?([a-z0-9-._]+[a-z0-9]|\[[:a-f0-9]+\])/i,
   unicodeRegex: /[^\u0000-\u00ff]/,
-  removeProtocolRegex: /^(https?|file):\/\//i,
+  removeProtocolRegex: /^(https?|file|web3):\/\//i,
   protocolRegex: /^[a-z0-9]+:\/\//, // URI schemes can be alphanum
   isURL: function (url) {
-    return urlParser.protocolRegex.test(url) || url.indexOf('about:') === 0 || url.indexOf('chrome:') === 0 || url.indexOf('data:') === 0
+    return urlParser.protocolRegex.test(url) || url.indexOf('about:') === 0 || url.indexOf('chrome:') === 0 || url.indexOf('data:') === 0 || url.indexOf('web3:') === 0
   },
   isPossibleURL: function (url) {
     if (urlParser.isURL(url)) {
@@ -127,7 +127,7 @@ var urlParser = {
           var pageName = url.match(/\/pages\/([a-zA-Z]+)\//)
           var urlObj = new URL(url)
           if (pageName) {
-            return 'min://' + pageName[1] + urlObj.search
+            return 'browser://' + pageName[1] + urlObj.search
           }
         } catch (e) {}
       }

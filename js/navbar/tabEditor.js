@@ -26,7 +26,7 @@ const tabEditor = {
     document.body.classList.add('is-edit-mode')
 
     var currentURL = urlParser.getSourceURL(tabs.get(tabId).url)
-    if (currentURL === 'about:newtab') {
+    if (currentURL === 'browser:newtab') {
       currentURL = ''
     }
 

@@ -29,18 +29,11 @@ function captureCurrentTab (options) {
 
 // called whenever a new page starts loading, or an in-page navigation occurs
 function onPageURLChange (tab, url) {
-  if (url.indexOf('https://') === 0 || url.indexOf('about:') === 0 || url.indexOf('chrome:') === 0 || url.indexOf('file://') === 0) {
-    tabs.update(tab, {
-      secure: true,
-      url: url
-    })
-  } else {
-    tabs.update(tab, {
-      secure: false,
-      url: url
-    })
-  }
-
+  let secureSchemes = ['https', 'about', 'chrome', 'file', 'browser', 'web3'];
+  tabs.update(tab, {
+    secure: url.includes(':') && secureSchemes.includes(url.splice(':')[0]),
+    url: url
+  })
   webviews.callAsync(tab, 'setVisualZoomLevelLimits', [1, 3])
 }
 
@@ -214,7 +207,7 @@ const webviews = {
         ipc.send('loadURLInView', { id: tabData.id, url: urlParser.parse(tabData.url) })
       } else if (tabData.private) {
         // workaround for https://github.com/minbrowser/min/issues/872
-        ipc.send('loadURLInView', { id: tabData.id, url: urlParser.parse('about:newtab') })
+        ipc.send('loadURLInView', { id: tabData.id, url: urlParser.parse('browser:newtab') })
       }
     }
 
@@ -326,7 +319,7 @@ const webviews = {
 
     var url = tabs.get(id).url
 
-    if (url.startsWith(urlParser.parse('about:error'))) {
+    if (url.startsWith(urlParser.parse('browser:error'))) {
       webviews.callAsync(id, 'canGoToOffset', -2, function (err, result) {
         if (!err && result === true) {
           webviews.callAsync(id, 'goToOffset', -2)

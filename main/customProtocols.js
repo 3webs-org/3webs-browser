@@ -1,3 +1,5 @@
+const { app, protocol } = require('electron')
+
 protocol.registerSchemesAsPrivileged([
   {
     scheme: 'web3',

@@ -1,3 +1,5 @@
+const { app, webContents } = require('electron')
+
 var defaultFilteringSettings = {
   blockingLevel: 1,
   contentTypes: [],

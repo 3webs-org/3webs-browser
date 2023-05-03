@@ -1,3 +1,4 @@
+const { app } = require('electron')
 var regedit = require('regedit')
 
 var installPath = process.execPath

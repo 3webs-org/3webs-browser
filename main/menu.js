@@ -1,3 +1,5 @@
+const { app, Menu } = require('electron')
+
 function buildAppMenu (options = {}) {
   function getFormattedKeyMapEntry (keybinding) {
     const value = settings.get('keyMap')?.[keybinding]

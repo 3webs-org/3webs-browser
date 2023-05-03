@@ -1,3 +1,5 @@
+const { app, session, ipcMain: ipc } = require('electron')
+
 const currrentDownloadItems = {}
 
 ipc.on('cancelDownload', function (e, path) {

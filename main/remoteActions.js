@@ -1,3 +1,4 @@
+const { app, dialog, ipcMain: ipc, session } = require('electron')
 /*
 Wraps APIs that are only available in the main process in IPC messages, so that the BrowserWindow can use them
 */

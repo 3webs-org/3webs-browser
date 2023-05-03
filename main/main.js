@@ -1,19 +1,8 @@
-const electron = require('electron')
+const { app, BrowserWindow, ipcMain: ipc, Menu, crashReporter } = require('electron')
 const fs = require('fs')
 const path = require('path')
-
-const {
-  app, // Module to control application life.
-  protocol, // Module to control protocol handling
-  BrowserWindow, // Module to create native browser window.
-  webContents,
-  session,
-  ipcMain: ipc,
-  Menu, MenuItem,
-  crashReporter,
-  dialog,
-  nativeTheme
-} = electron
+const settings = require('../js/util/settings/settingsMain')
+require('../js/util/proxy')
 
 crashReporter.start({
   submitURL: 'https://minbrowser.org/',
@@ -416,3 +405,17 @@ ipc.on('handoffUpdate', function(e, data) {
 ipc.on('quit', function () {
   app.quit()
 })
+
+require('./customProtocols')
+require('./download')
+require('./filtering')
+require('./keychainService')
+require('./menu')
+require('./permissionManager')
+require('./prompt')
+require('./registryConfig')
+require('./remoteMenu')
+require('./themeMain')
+require('./touchbar')
+require('./UAswitcher')
+require('./viewManager')

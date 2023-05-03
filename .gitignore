@@ -3,6 +3,4 @@
 /.idea
 .npm
 dist
-main.build.js
 .DS_Store
-yarn.lock

@@ -1,3 +1,4 @@
+import { BrowserWindow, ipcMain as ipc } from 'electron'
 /* Simple input prompt. */
 
 var promptAnswer

@@ -1,3 +1,4 @@
+const { app, BrowserView } = require('electron')
 const BrowserView = electron.BrowserView
 
 var viewMap = {} // id: view

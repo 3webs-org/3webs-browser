@@ -1,3 +1,5 @@
+const { sendIPCToWindow } = require('./utils')
+
 const TouchBar = require('electron').TouchBar
 const nativeImage = require('electron').nativeImage
 const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar

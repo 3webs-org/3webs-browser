@@ -6,7 +6,7 @@
   "shortDescription": "The Ethereum-native browser",
   "description": "The 3Webs is the state-of-the-art Ethereum-native browser with built-in Web3 and decentralized app support.",
   "electronVersion": "25.0.0",
-  "main": "main.build.js",
+  "main": "main/main.js",
   "standard": {
     "globals": [
       "l",

@@ -1,3 +1,6 @@
+const settings = require('./settings/settingsMain')
+const { app, webContents } = require('electron')
+
 let proxyConfig = {}
 
 settings.listen('proxy', (proxy = {}) => {

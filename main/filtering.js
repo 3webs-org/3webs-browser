@@ -77,7 +77,7 @@ var electronABPElementTypeMap = {
   other: 'other' // ?
 }
 
-var parser = require('./ext/abp-filter-parser-modified/abp-filter-parser.js')
+var parser = require('../ext/abp-filter-parser-modified/abp-filter-parser.js')
 var parsedFilterData = {}
 
 function initFilterList () {

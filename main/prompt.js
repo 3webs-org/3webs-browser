@@ -1,4 +1,5 @@
-import { BrowserWindow, ipcMain as ipc } from 'electron'
+const { BrowserWindow, ipcMain: ipc } = require('electron')
+const getMainWindow = require('./getMainWindow')
 /* Simple input prompt. */
 
 var promptAnswer
@@ -11,7 +12,7 @@ function createPrompt (options, callback) {
   var promptWindow = new BrowserWindow({
     width: width,
     height: height,
-    parent: parent != null ? parent : mainWindow,
+    parent: parent != null ? parent : getMainWindow.get(),
     show: false,
     modal: true,
     alwaysOnTop: true,

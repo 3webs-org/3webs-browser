@@ -1,4 +1,5 @@
 const { app, dialog, ipcMain: ipc, session } = require('electron')
+const getMainWindow = require('./getMainWindow')
 /*
 Wraps APIs that are only available in the main process in IPC messages, so that the BrowserWindow can use them
 */
@@ -8,12 +9,12 @@ ipc.handle('test-invoke', function () {
 })
 
 ipc.handle('reloadWindow', function () {
-  mainWindow.webContents.reload()
+  getMainWindow.get().webContents.reload()
 })
 
 ipc.handle('startFileDrag', function (e, path) {
   app.getFileIcon(path, {}).then(function (icon) {
-    mainWindow.webContents.startDrag({
+    getMainWindow.get().webContents.startDrag({
       file: path,
       icon: icon
     })
@@ -39,12 +40,12 @@ ipc.handle('showFocusModeDialog2', function () {
 })
 
 ipc.handle('showOpenDialog', async function (e, options) {
-  const result = await dialog.showOpenDialog(mainWindow, options)
+  const result = await dialog.showOpenDialog(getMainWindow.get(), options)
   return result.filePaths
 })
 
 ipc.handle('showSaveDialog', async function (e, options) {
-  const result = await dialog.showSaveDialog(mainWindow, options)
+  const result = await dialog.showSaveDialog(getMainWindow.get(), options)
   return result.filePath
 })
 
@@ -53,7 +54,7 @@ ipc.handle('addWordToSpellCheckerDictionary', function (e, word) {
 })
 
 ipc.handle('downloadURL', function (e, url) {
-  mainWindow.webContents.downloadURL(url)
+  getMainWindow.get().webContents.downloadURL(url)
 })
 
 ipc.handle('clearStorageData', function () {
@@ -88,27 +89,27 @@ ipc.handle('clearStorageData', function () {
 /* window actions */
 
 ipc.handle('minimize', function (e) {
-  mainWindow.minimize()
+  getMainWindow.get().minimize()
   // workaround for https://github.com/minbrowser/min/issues/1662
-  mainWindow.webContents.send('minimize')
+  getMainWindow.get().webContents.send('minimize')
 })
 
 ipc.handle('maximize', function (e) {
-  mainWindow.maximize()
+  getMainWindow.get().maximize()
   // workaround for https://github.com/minbrowser/min/issues/1662
-  mainWindow.webContents.send('maximize')
+  getMainWindow.get().webContents.send('maximize')
 })
 
 ipc.handle('unmaximize', function (e) {
-  mainWindow.unmaximize()
+  getMainWindow.get().unmaximize()
   // workaround for https://github.com/minbrowser/min/issues/1662
-  mainWindow.webContents.send('unmaximize')
+  getMainWindow.get().webContents.send('unmaximize')
 })
 
 ipc.handle('close', function (e) {
-  mainWindow.close()
+  getMainWindow.get().close()
 })
 
 ipc.handle('setFullScreen', function (e, fullScreen) {
-  mainWindow.setFullScreen(e, fullScreen)
+  getMainWindow.get().setFullScreen(e, fullScreen)
 })

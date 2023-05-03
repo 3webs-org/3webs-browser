@@ -1,3 +1,8 @@
+const { app, ipcMain: ipc } = require('electron')
+const fs = require('fs')
+var userDataPath = app.getPath('userData')
+const getMainWindow = require('../../../main/getMainWindow')
+
 var settings = {
   filePath: userDataPath + (process.platform === 'win32' ? '\\' : '/') + 'settings.json',
   fileWritePromise: null,
@@ -52,8 +57,8 @@ var settings = {
     settings.writeFile()
     settings.runChangeCallbacks(key)
 
-    if (mainWindow) {
-      mainWindow.webContents.send('settingChanged', key, value)
+    if (getMainWindow.get()) {
+      getMainWindow.get().webContents.send('settingChanged', key, value)
     }
   },
   initialize: function () {

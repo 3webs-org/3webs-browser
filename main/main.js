@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain: ipc, Menu, crashReporter } = require('elect
 const fs = require('fs')
 const path = require('path')
 const settings = require('../js/util/settings/settingsMain')
+const getMainWindow = require('./getMainWindow')
 require('../js/util/proxy')
 
 crashReporter.start({
@@ -191,6 +192,7 @@ function createWindowWithBounds (bounds) {
       ]
     }
   })
+  getMainWindow.set(mainWindow)
 
   // windows and linux always use a menu button in the upper-left corner instead
   // if frame: false is set, this won't have any effect, but it does apply on Linux if "use separate titlebar" is enabled

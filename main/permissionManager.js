@@ -1,3 +1,4 @@
+const getMainWindow = require('./getMainWindow')
 var pendingPermissions = []
 var grantedPermissions = []
 var nextPermissionId = 1
@@ -8,7 +9,7 @@ it will figure out what updates to make
 */
 function sendPermissionsToRenderer () {
   // remove properties that can't be serialized over IPC
-  sendIPCToWindow(mainWindow, 'updatePermissions', pendingPermissions.concat(grantedPermissions).map(p => {
+  sendIPCToWindow(getMainWindow.get(), 'updatePermissions', pendingPermissions.concat(grantedPermissions).map(p => {
     return {
       permissionId: p.permissionId,
       tabId: p.tabId,
@@ -160,7 +161,7 @@ function pagePermissionRequestHandler (webContents, permission, callback, detail
     })
     webContents.once('destroyed', function () {
       // check whether the app is shutting down to avoid an electron crash (TODO remove this)
-      if (mainWindow) {
+      if (getMainWindow.get()) {
         removePermissionsForContents(webContents)
       }
     })

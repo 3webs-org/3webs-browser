@@ -20,7 +20,14 @@ var urlParser = {
   removeProtocolRegex: /^(https?|file|web3):\/\//i,
   protocolRegex: /^[a-z0-9]+:\/\//, // URI schemes can be alphanum
   isURL: function (url) {
-    return urlParser.protocolRegex.test(url) || url.indexOf('about:') === 0 || url.indexOf('chrome:') === 0 || url.indexOf('data:') === 0 || url.indexOf('web3:') === 0
+    try {
+      let supportedUrls = ['http', 'https', 'file', 'web3', 'about', 'chrome', 'data', 'browser']
+      let urlObj = new URL(url)
+      console.log('protocol: ' + urlObj.protocol.replace(':', ''))
+      return supportedUrls.includes(urlObj.protocol.replace(':', '')) || urlParser.protocolRegex.test(url)
+    } catch (e) { // Invalid URL
+      return false
+    }
   },
   isPossibleURL: function (url) {
     if (urlParser.isURL(url)) {
@@ -59,20 +66,6 @@ var urlParser = {
       var realURL = url.replace('view-source:', '')
 
       return 'view-source:' + urlParser.parse(realURL)
-    }
-
-    // if the URL is an internal URL, convert it to the correct file:// url
-    if (url.startsWith('about:')) {
-      try {
-        var urlObj = new URL(url)
-        var pathname = urlObj.pathname
-        if (/^[a-zA-Z]+$/.test(pathname)) {
-          // only paths with letters are allowed
-          return urlParser.getFileURL(
-            path.join(__dirname, 'pages', pathname, 'index.html') + urlObj.search
-          )
-        }
-      } catch (e) {}
     }
 
     // if the url starts with a (supported) protocol

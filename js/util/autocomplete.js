@@ -32,31 +32,35 @@ function autocomplete (input, strings) {
 // autocompletes based on a result item
 // returns: 1 - the exact URL was autocompleted, 0 - the domain was autocompleted, -1: nothing was autocompleted
 function autocompleteURL (input, url) {
-  var urlObj = new URL(url)
-  var hostname = urlObj.hostname
+  try {
+    var urlObj = new URL(url)
+    var hostname = urlObj.hostname
 
-  // the different variations of the URL we can autocomplete
-  var possibleAutocompletions = [
-    // we start with the domain, including any non-standard ports (such as localhost:8080)
-    hostname + (urlObj.port ? ':' + urlObj.port : ''),
-    // if that doesn't match, try the hostname without the www instead. The regex requires a slash at the end, so we add one, run the regex, and then remove it
-    (hostname + '/').replace(urlParser.startingWWWRegex, '$1').replace('/', ''),
-    // then try the whole URL
-    urlParser.prettyURL(url),
-    // then try the URL with querystring
-    urlParser.basicURL(url),
-    // then just try the URL with protocol
-    url
-  ]
+    // the different variations of the URL we can autocomplete
+    var possibleAutocompletions = [
+      // we start with the domain, including any non-standard ports (such as localhost:8080)
+      hostname + (urlObj.port ? ':' + urlObj.port : ''),
+      // if that doesn't match, try the hostname without the www instead. The regex requires a slash at the end, so we add one, run the regex, and then remove it
+      (hostname + '/').replace(urlParser.startingWWWRegex, '$1').replace('/', ''),
+      // then try the whole URL
+      urlParser.prettyURL(url),
+      // then try the URL with querystring
+      urlParser.basicURL(url),
+      // then just try the URL with protocol
+      url
+    ]
 
-  var autocompleteResult = autocomplete(input, possibleAutocompletions)
+    var autocompleteResult = autocomplete(input, possibleAutocompletions)
 
-  if (!autocompleteResult.valid) {
+    if (!autocompleteResult.valid) {
+      return -1
+    } else if (autocompleteResult.matchIndex < 2 && urlObj.pathname !== '/') {
+      return 0
+    } else {
+      return 1
+    }
+  } catch (e) {
     return -1
-  } else if (autocompleteResult.matchIndex < 2 && urlObj.pathname !== '/') {
-    return 0
-  } else {
-    return 1
   }
 }
 

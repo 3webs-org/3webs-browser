@@ -7,9 +7,13 @@ if (typeof require !== 'undefined') {
 
 const readerDecision = {
   trimURL: function (url) {
-    var loc = new URL(url)
-    loc.hash = ''
-    return loc.toString()
+    try {
+      var loc = new URL(url)
+      loc.hash = ''
+      return loc.toString()
+    } catch (e) {
+      return url
+    }
   },
   shouldRedirect: function (url) {
     /*

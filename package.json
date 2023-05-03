@@ -2,10 +2,10 @@
   "name": "3webs-browser",
   "productName": "3webs Browser",
   "author": "3webs",
-  "version": "1.27.0",
+  "version": "1.0.0",
   "shortDescription": "The Ethereum-native browser",
   "description": "The 3Webs is the state-of-the-art Ethereum-native browser with built-in Web3 and decentralized app support.",
-  "electronVersion": "22.0.0",
+  "electronVersion": "25.0.0",
   "main": "main.build.js",
   "standard": {
     "globals": [
@@ -47,7 +47,7 @@
     "chokidar": "^3.4.0",
     "concurrently": "^5.2.0",
     "decomment": "^0.9.0",
-    "electron": "22.0.0",
+    "electron": "^25.0.0-beta.1",
     "electron-builder": "^22.14.13",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^15.1.0",
@@ -58,7 +58,7 @@
     "snazzy": "^9.0.0",
     "standard": "^14.3.4"
   },
-  "license": "Apache-2.0",
+  "license": "CC0-1.0",
   "scripts": {
     "test": "standard --verbose js/**/*.js main/*.js",
     "watch": "node ./scripts/watch.js",

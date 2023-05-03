@@ -31,7 +31,7 @@ function captureCurrentTab (options) {
 function onPageURLChange (tab, url) {
   let secureSchemes = ['https', 'about', 'chrome', 'file', 'browser', 'web3'];
   tabs.update(tab, {
-    secure: url.includes(':') && secureSchemes.includes(url.splice(':')[0]),
+    secure: url.includes(':') && secureSchemes.includes(url.split(':')[0]),
     url: url
   })
   webviews.callAsync(tab, 'setVisualZoomLevelLimits', [1, 3])

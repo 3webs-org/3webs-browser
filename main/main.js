@@ -76,18 +76,6 @@ if (!isFirstInstance) {
   return
 }
 
-// Register as handler for supported urls
-let supportedUrls = ['http', 'https', 'web3'];
-for (let uriScheme in supportedUrls) {
-  if (process.defaultApp) {
-    if (process.argv.length >= 2) {
-      app.setAsDefaultProtocolClient(uriScheme, process.execPath, [path.resolve(process.argv[1])])
-    }
-  } else {
-    app.setAsDefaultProtocolClient(uriScheme);
-  }
-}
-
 var saveWindowBounds = function () {
   if (mainWindow) {
     var bounds = Object.assign(mainWindow.getBounds(), {
@@ -95,17 +83,6 @@ var saveWindowBounds = function () {
     })
     fs.writeFileSync(path.join(userDataPath, 'windowBounds.json'), JSON.stringify(bounds))
   }
-}
-
-function processCustomSchemes() {
-  protocol.registerStringProtocol('web3', (request, callback) => {
-    let urlObj = new URL(request.url)
-
-  })
-  protocol.registerFileProtocol('browser:', (request, callback) => {
-    let urlObj = new URL(request.url)
-    callback(path.join(__dirname, 'pages', urlObj.pathname, 'index.html') + urlObj.search)
-  })
 }
 
 function sendIPCToWindow (window, action, data) {
@@ -216,6 +193,7 @@ function createWindowWithBounds (bounds) {
       nodeIntegration: true,
       contextIsolation: false,
       nodeIntegrationInWorker: true, // used by ProcessSpawner
+      devTools: isDevelopmentMode,
       additionalArguments: [
         '--user-data-path=' + userDataPath,
         '--app-version=' + app.getVersion(),
@@ -350,8 +328,6 @@ app.on('ready', function () {
   }
 
   createWindow()
-
-  processCustomSchemes()
 
   mainWindow.webContents.on('did-finish-load', function () {
     // if a URL was passed as a command line argument (probably because Min is set as the default browser on Linux), open it.

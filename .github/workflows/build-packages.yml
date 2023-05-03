@@ -27,10 +27,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-        cache: 'npm-${{ matrix.osBuild[0] }}'
-        cache-dependency-path: |
-          node_modules
-          package-lock.json
     - run: npm install
     - name: build package
       run: pnpm run ${{ matrix.osBuild[1] }}

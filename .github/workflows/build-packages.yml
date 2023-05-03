@@ -17,24 +17,32 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
+        cache: 'npm-macos-11'
+        cache-dependency-path: |
+          node_modules
+          package-lock.json
     - run: npm install
     - name: build package
-      run: npm run buildMacIntel && npm run buildMacArm
+      run: pnpm run buildMacIntel && pnpm run buildMacArm
     - name: upload package
       uses: actions/upload-artifact@v3
       with:
         name: mac-package
         path: dist/app/*.zip
   buildWindows:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: 16
+        cache: 'npm-windows-2022'
+        cache-dependency-path: |
+          node_modules
+          package-lock.json
     - run: npm install
     - name: build package
-      run: npm run buildWindows
+      run: pnpm run buildWindows
     - name: upload package
       uses: actions/upload-artifact@v3
       with:
@@ -43,15 +51,19 @@ jobs:
           dist/app/*.zip
           dist/app/*.exe
   buildLinux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: 16
+        cache: 'npm-ubuntu-22-04'
+        cache-dependency-path: |
+          node_modules
+          package-lock.json
     - run: npm install
     - name: build package
-      run: npm run buildDebian && npm run buildRedhat && npm run buildLinuxArm64 && npm run buildRaspi
+      run: pnpm run buildDebian && pnpm run buildRedhat && pnpm run buildLinuxArm64 && pnpm run buildRaspi
     - name: upload package
       uses: actions/upload-artifact@v3
       with:

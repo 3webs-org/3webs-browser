@@ -132,12 +132,12 @@ async function initialize(moduleNames) {
     try {
       const theModule = await import(moduleName)
       const initialize = theModule.initialize || theModule.default.initialize
-      console.log('Loaded module', moduleName, theModule, initialize)
+      console.log('Loaded module', moduleName)
       let ret = initialize()
       if (ret instanceof Promise) {
         ret = await ret
       }
-      console.log('Initialized module', moduleName, ret)
+      console.log('Initialized module', moduleName)
       return ret
     } catch (e) {
       console.error('Failed to initialize module', moduleName, e)

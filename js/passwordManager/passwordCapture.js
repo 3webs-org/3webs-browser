@@ -1,7 +1,8 @@
-const webviews = require('webviews.js')
-const settings = require('util/settings/settings.js')
-const PasswordManagers = require('passwordManager/passwordManager.js')
-const { l } = require('../localization/localizationHelpers.js')
+import webviews from '../webviews.js'
+import settings from '../util/settings/settings.js'
+import PasswordManagers from './passwordManager.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 const passwordCapture = {
   bar: document.getElementById('password-capture-bar'),
@@ -115,4 +116,4 @@ const passwordCapture = {
   }
 }
 
-module.exports = passwordCapture
+export default passwordCapture

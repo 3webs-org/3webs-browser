@@ -1,7 +1,9 @@
-var browserUI = require('browserUI.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var urlParser = require('util/urlParser.js')
-const { l } = require('../localization/localizationHelpers.js')
+import browserUI from '../browserUI.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import urlParser from '../util/urlParser.js'
+import { getTasks } from '../tabState.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 var stringScore = require('string_score') // eslint-disable-line no-unused-vars
 
@@ -10,10 +12,10 @@ var searchOpenTabs = function (text, input, event) {
 
   var matches = []
   var searchText = text.toLowerCase()
-  var currentTask = tasks.getSelected()
+  var currentTask = getTasks().getSelected()
   var currentTab = currentTask.tabs.getSelected()
 
-  tasks.forEach(function (task) {
+  getTasks().forEach(function (task) {
     task.tabs.forEach(function (tab) {
       if (tab.id === currentTab || !tab.title || !tab.url) {
         return
@@ -57,7 +59,7 @@ var searchOpenTabs = function (text, input, event) {
     }
 
     if (match.task.id !== currentTask.id) {
-      var taskName = match.task.name || l('taskN').replace('%n', (tasks.getIndex(match.task.id) + 1))
+      var taskName = match.task.name || l('taskN').replace('%n', (getTasks().getIndex(match.task.id) + 1))
       data.metadata = [taskName]
     }
 
@@ -89,4 +91,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

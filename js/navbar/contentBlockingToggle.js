@@ -20,7 +20,7 @@ const contentBlockingToggle = {
     }
     setting.exceptionDomains = setting.exceptionDomains.filter(d => d.replace(/^www\./g, '') !== domain.replace(/^www\./g, ''))
     settings.set('filtering', setting)
-    webviews.callAsync(tabs.getSelected(), 'reload')
+    webviews.callAsync(getTabs().getSelected(), 'reload')
   },
   disableBlocking: function (url) {
     if (!url) {
@@ -40,7 +40,7 @@ const contentBlockingToggle = {
       setting.exceptionDomains.push(domain)
     }
     settings.set('filtering', setting)
-    webviews.callAsync(tabs.getSelected(), 'reload')
+    webviews.callAsync(getTabs().getSelected(), 'reload')
   },
   isBlockingEnabled: function (url) {
     try {
@@ -63,7 +63,7 @@ const contentBlockingToggle = {
     return button
   },
   showMenu: function (button) {
-    var url = tabs.get(tabs.getSelected()).url
+    var url = getTabs().get(getTabs().getSelected()).url
     var menu = [
       [
         {
@@ -76,7 +76,7 @@ const contentBlockingToggle = {
             } else {
               contentBlockingToggle.enableBlocking(url)
             }
-            contentBlockingToggle.update(tabs.getSelected(), button)
+            contentBlockingToggle.update(getTabs().getSelected(), button)
           }
         }
       ],
@@ -84,7 +84,7 @@ const contentBlockingToggle = {
         {
           label: l('appMenuReportBug'),
           click: function () {
-            var newTab = tabs.add({ url: 'https://github.com/3webs-org/3webs-browser/issues/new?title=Content%20blocking%20issue%20on%20' + encodeURIComponent(url) })
+            var newTab = getTabs().add({ url: 'https://github.com/3webs-org/3webs-browser/issues/new?title=Content%20blocking%20issue%20on%20' + encodeURIComponent(url) })
             require('browserUI.js').addTab(newTab, { enterEditMode: false })
           }
         }
@@ -93,7 +93,7 @@ const contentBlockingToggle = {
     remoteMenuRenderer.open(menu)
   },
   update: function (tabId, button) {
-    if (!tabs.get(tabId).url.startsWith('http') && !tabs.get(tabId).url.startsWith('https')) {
+    if (!getTabs().get(tabId).url.startsWith('http') && !getTabs().get(tabId).url.startsWith('https')) {
       button.hidden = true
       return
     }
@@ -104,7 +104,7 @@ const contentBlockingToggle = {
     }
 
     button.hidden = false
-    if (contentBlockingToggle.isBlockingEnabled(tabs.get(tabId).url)) {
+    if (contentBlockingToggle.isBlockingEnabled(getTabs().get(tabId).url)) {
       button.style.opacity = 1
     } else {
       button.style.opacity = 0.4

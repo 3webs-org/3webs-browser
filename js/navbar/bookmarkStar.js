@@ -4,6 +4,8 @@ import bookmarkEditor from '../searchbar/bookmarkEditor.js'
 import searchbar from '../searchbar/searchbar.js'
 import searchbarPlugins from '../searchbar/searchbarPlugins.js'
 
+import { getTabs } from '../tabState.js'
+
 const bookmarkStar = {
   create: function () {
     const star = document.createElement('button')
@@ -23,9 +25,9 @@ const bookmarkStar = {
 
     searchbarPlugins.clearAll()
 
-    places.updateItem(tabs.get(tabId).url, {
+    places.updateItem(getTabs().get(tabId).url, {
       isBookmarked: true,
-      title: tabs.get(tabId).title // if this page is open in a private tab, the title may not be saved already, so it needs to be included here
+      title: getTabs().get(tabId).title // if this page is open in a private tab, the title may not be saved already, so it needs to be included here
     }, function () {
       star.classList.remove('carbon:star')
       star.classList.add('carbon:star-filled')
@@ -33,7 +35,7 @@ const bookmarkStar = {
 
       var editorInsertionPoint = document.createElement('div')
       searchbarPlugins.getContainer('simpleBookmarkTagInput').appendChild(editorInsertionPoint)
-      bookmarkEditor.show(tabs.get(tabs.getSelected()).url, editorInsertionPoint, function (newBookmark) {
+      bookmarkEditor.show(getTabs().get(getTabs().getSelected()).url, editorInsertionPoint, function (newBookmark) {
         if (!newBookmark) {
           // bookmark was deleted
           star.classList.add('carbon:star')
@@ -47,7 +49,7 @@ const bookmarkStar = {
   },
   update: function (tabId, star) {
     star.setAttribute('data-tab', tabId)
-    const currentURL = tabs.get(tabId).url
+    const currentURL = getTabs().get(tabId).url
 
     if (!currentURL) { // no url, can't be bookmarked
       star.hidden = true

@@ -14,8 +14,10 @@ import tabAudio from '../tabAudio.js'
 import urlParser from '../util/urlParser.js'
 
 import tabEditor from './tabEditor.js'
-import prograssBar from './progressBar.js'
+import progressBar from './progressBar.js'
 import permissionRequests from './permissionRequests.js'
+
+import { getTabs } from '../tabState.js'
 
 var lastTabDeletion = 0 // TODO get rid of this
 
@@ -96,7 +98,7 @@ const tabBar = {
 
     // click to enter edit mode or switch to a tab
     tabEl.addEventListener('click', function (e) {
-      if (tabs.getSelected() !== data.id) { // else switch to tab if it isn't focused
+      if (getTabs().getSelected() !== data.id) { // else switch to tab if it isn't focused
         tabBar.events.emit('tab-selected', data.id)
       } else { // the tab is focused, edit tab instead
         tabEditor.show(data.id)
@@ -136,7 +138,7 @@ const tabBar = {
     return tabEl
   },
   updateTab: function (tabId, tabEl = tabBar.getTab(tabId)) {
-    var tabData = tabs.get(tabId)
+    var tabData = getTabs().get(tabId)
 
     // update tab title
     var tabTitle
@@ -181,19 +183,19 @@ const tabBar = {
     empty(tabBar.containerInner)
     tabBar.tabElementMap = {}
 
-    tabs.get().forEach(function (tab) {
+    getTabs().get().forEach(function (tab) {
       var el = tabBar.createTab(tab)
       tabBar.containerInner.appendChild(el)
       tabBar.tabElementMap[tab.id] = el
     })
 
-    if (tabs.getSelected()) {
-      tabBar.setActiveTab(tabs.getSelected())
+    if (getTabs().getSelected()) {
+      tabBar.setActiveTab(getTabs().getSelected())
     }
   },
   addTab: function (tabId) {
-    var tab = tabs.get(tabId)
-    var index = tabs.getIndex(tabId)
+    var tab = getTabs().get(tabId)
+    var index = getTabs().getIndex(tabId)
 
     var tabEl = tabBar.createTab(tab)
     tabBar.containerInner.insertBefore(tabEl, tabBar.containerInner.childNodes[index])
@@ -227,17 +229,17 @@ const tabBar = {
         var adjacentTabId = sibling.getAttribute('data-tab')
       }
 
-      var oldTab = tabs.splice(tabs.getIndex(tabId), 1)[0]
+      var oldTab = getTabs().splice(getTabs().getIndex(tabId), 1)[0]
 
       var newIdx
       if (adjacentTabId) {
-        newIdx = tabs.getIndex(adjacentTabId)
+        newIdx = getTabs().getIndex(adjacentTabId)
       } else {
         // tab was inserted at end
-        newIdx = tabs.count()
+        newIdx = getTabs().count()
       }
 
-      tabs.splice(newIdx, 0, oldTab)
+      getTabs().splice(newIdx, 0, oldTab)
     })
   },
   enableTabDragging: function () {
@@ -255,12 +257,12 @@ settings.listen('showDividerBetweenTabs', function (dividerPreference) {
 /* tab loading and progress bar status */
 webviews.bindEvent('did-start-loading', function (tabId) {
   progressBar.update(tabBar.getTab(tabId).querySelector('.progress-bar'), 'start')
-  tabs.update(tabId, { loaded: false })
+  getTabs().update(tabId, { loaded: false })
 })
 
 webviews.bindEvent('did-stop-loading', function (tabId) {
   progressBar.update(tabBar.getTab(tabId).querySelector('.progress-bar'), 'finish')
-  tabs.update(tabId, { loaded: true })
+  getTabs().update(tabId, { loaded: true })
   tabBar.updateTab(tabId)
 })
 
@@ -301,9 +303,9 @@ tabBar.container.addEventListener('drop', e => {
   e.preventDefault()
   var data = e.dataTransfer
   // TODO - avoid recusion and require.
-  require('./browserUI.js').addTab(tabs.add({
+  require('./browserUI.js').addTab(getTabs().add({
     url: data.files[0] ? 'file://' + data.files[0].path : data.getData('text'),
-    private: tabs.get(tabs.getSelected()).private
+    private: getTabs().get(getTabs().getSelected()).private
   }), { enterEditMode: false, openInBackground: !settings.get('openTabsInForeground') })
 })
 

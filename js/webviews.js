@@ -2,7 +2,7 @@ const { ipcRenderer: ipc } = require('electron')
 
 import urlParser from './util/urlParser.js'
 import settings from './util/settings/settings.js'
-import { getTabs } from './tabState.js'
+import { getTabs, getTasks } from './tabState.js'
 
 /* implements selecting webviews, switching between them, and creating new ones. */
 
@@ -13,7 +13,7 @@ var windowIsMaximized = false // affects navbar height on Windows
 var windowIsFullscreen = false
 
 function captureCurrentTab (options) {
-  if (getTabs().get(tabs.getSelected()).private) {
+  if (getTabs().get(getTabs().getSelected()).private) {
     // don't capture placeholders for private tabs
     return
   }
@@ -261,7 +261,7 @@ const webviews = {
     if (webviews.placeholderRequests.length >= 1) {
       // create a new placeholder
 
-      var associatedTab = tasks.getTaskContainingTab(webviews.selectedId).tabs.get(webviews.selectedId)
+      var associatedTab = getTasks().getTaskContainingTab(webviews.selectedId).tabs.get(webviews.selectedId)
       var img = associatedTab.previewImage
       if (img) {
         placeholderImg.src = img
@@ -457,7 +457,7 @@ webviews.bindIPC('setSetting', function (tabId, args) {
 })
 
 settings.listen(function () {
-  tasks.forEach(function (task) {
+  getTasks().forEach(function (task) {
     task.tabs.forEach(function (tab) {
       if (tab.url.startsWith('file://')) {
         try {

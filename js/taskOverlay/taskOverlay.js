@@ -119,13 +119,13 @@ var taskOverlay = {
 
     document.getElementById('task-search-input').value = ''
 
-    this.isShown = true
+    taskOverlay.isShown = true
     taskSwitcherButton.classList.add('active')
 
     taskOverlay.render()
 
     // un-hide the overlay
-    this.overlayElement.hidden = false
+    taskOverlay.overlayElement.hidden = false
 
     // scroll to the selected element and focus it
     var currentTabElement = document.querySelector('.task-tab-item[data-tab="{id}"]'.replace('{id}', tasks.getSelected().tabs.getSelected()))
@@ -136,7 +136,7 @@ var taskOverlay = {
     }
   },
   render: function () {
-    this.tabDragula.containers = [addTaskButton]
+    taskOverlay.tabDragula.containers = [addTaskButton]
     empty(taskContainer)
 
     // show the task elements
@@ -144,7 +144,7 @@ var taskOverlay = {
       const el = createTaskContainer(task, index, {
         tabSelect: function () {
           browserUI.switchToTask(task.id)
-          browserUI.switchToTab(this.getAttribute('data-tab'))
+          browserUI.switchToTab(taskOverlay.getAttribute('data-tab'))
 
           taskOverlay.hide()
         },
@@ -172,9 +172,9 @@ var taskOverlay = {
   },
 
   hide: function () {
-    if (this.isShown) {
-      this.isShown = false
-      this.overlayElement.hidden = true
+    if (taskOverlay.isShown) {
+      taskOverlay.isShown = false
+      taskOverlay.overlayElement.hidden = true
 
       // wait until the animation is complete to remove the tab elements
       setTimeout(function () {
@@ -184,7 +184,7 @@ var taskOverlay = {
         }
       }, 250)
 
-      this.tabDragula.containers = []
+      taskOverlay.tabDragula.containers = []
 
       document.body.classList.remove('task-overlay-is-shown')
 
@@ -216,10 +216,10 @@ var taskOverlay = {
   },
 
   toggle: function () {
-    if (this.isShown) {
-      this.hide()
+    if (taskOverlay.isShown) {
+      taskOverlay.hide()
     } else {
-      this.show()
+      taskOverlay.show()
     }
   },
 
@@ -299,7 +299,7 @@ var taskOverlay = {
     })
   },
   initialize: function () {
-    this.initializeSearch()
+    taskOverlay.initializeSearch()
 
     keyboardNavigationHelper.addToGroup('taskOverlay', taskOverlay.overlayElement)
 

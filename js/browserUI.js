@@ -11,10 +11,12 @@ import tabBar from './navbar/tabBar.js'
 import tabEditor from './navbar/tabEditor.js'
 import searchbar from './searchbar/searchbar.js'
 
+import { getTabs, getTasks } from './tabState.js'
+
 /* creates a new task */
 
 function addTask () {
-  tasks.setSelected(tasks.add())
+  getTasks().setSelected(getTasks().add())
 
   tabBar.updateAll()
   addTab()
@@ -27,15 +29,15 @@ options
   options.enterEditMode - whether to enter editing mode when the tab is created. Defaults to true.
   options.openInBackground - whether to open the tab without switching to it. Defaults to false.
 */
-function addTab (tabId = tabs.add(), options = {}) {
+function addTab (tabId = getTabs().add(), options = {}) {
   /*
   adding a new tab should destroy the current one if either:
   * The current tab is an empty, non-private tab, and the new tab is private
   * The current tab is empty, and the new tab has a URL
   */
 
-  if (!options.openInBackground && !tabs.get(tabs.getSelected()).url && ((!tabs.get(tabs.getSelected()).private && tabs.get(tabId).private) || tabs.get(tabId).url)) {
-    destroyTab(tabs.getSelected())
+  if (!options.openInBackground && !getTabs().get(getTabs().getSelected()).url && ((!getTabs().get(getTabs().getSelected()).private && getTabs().get(tabId).private) || getTabs().get(tabId).url)) {
+    destroyTab(getTabs().getSelected())
   }
 
   tabBar.addTab(tabId)
@@ -53,53 +55,53 @@ function addTab (tabId = tabs.add(), options = {}) {
   }
 }
 
-function moveTabLeft (tabId = tabs.getSelected()) {
-  tabs.moveBy(tabId, -1)
+function moveTabLeft (tabId = getTabs().getSelected()) {
+  getTabs().moveBy(tabId, -1)
   tabBar.updateAll()
 }
 
-function moveTabRight (tabId = tabs.getSelected()) {
-  tabs.moveBy(tabId, 1)
+function moveTabRight (tabId = getTabs().getSelected()) {
+  getTabs().moveBy(tabId, 1)
   tabBar.updateAll()
 }
 
 /* destroys a task object and the associated webviews */
 
 function destroyTask (id) {
-  var task = tasks.get(id)
+  var task = getTasks().get(id)
 
   task.tabs.forEach(function (tab) {
     webviews.destroy(tab.id)
   })
 
-  tasks.destroy(id)
+  getTasks().destroy(id)
 }
 
 /* destroys the webview and tab element for a tab */
 function destroyTab (id) {
   tabBar.removeTab(id)
-  tabs.destroy(id) // remove from state - returns the index of the destroyed tab
+  getTabs().destroy(id) // remove from state - returns the index of the destroyed tab
   webviews.destroy(id) // remove the webview
 }
 
 /* destroys a task, and either switches to the next most-recent task or creates a new one */
 
 function closeTask (taskId) {
-  var previousCurrentTask = tasks.getSelected().id
+  var previousCurrentTask = getTasks().getSelected().id
 
   destroyTask(taskId)
 
   if (taskId === previousCurrentTask) {
     // the current task was destroyed, find another task to switch to
 
-    if (tasks.getLength() === 0) {
+    if (getTasks().getLength() === 0) {
       // there are no tasks left, create a new one
       return addTask()
     } else {
       // switch to the most-recent task
 
-      var recentTaskList = tasks.map(function (task) {
-        return { id: task.id, lastActivity: tasks.getLastActivity(task.id) }
+      var recentTaskList = getTasks().map(function (task) {
+        return { id: task.id, lastActivity: getTasks().getLastActivity(task.id) }
       })
 
       const mostRecent = recentTaskList.reduce(
@@ -120,10 +122,10 @@ function closeTab (tabId) {
     return
   }
 
-  if (tabId === tabs.getSelected()) {
-    var currentIndex = tabs.getIndex(tabs.getSelected())
+  if (tabId === getTabs().getSelected()) {
+    var currentIndex = getTabs().getIndex(getTabs().getSelected())
     var nextTab =
-    tabs.getAtIndex(currentIndex - 1) || tabs.getAtIndex(currentIndex + 1)
+    getTabs().getAtIndex(currentIndex - 1) || getTabs().getAtIndex(currentIndex + 1)
 
     destroyTab(tabId)
 
@@ -140,11 +142,11 @@ function closeTab (tabId) {
 /* changes the currently-selected task and updates the UI */
 
 function switchToTask (id) {
-  tasks.setSelected(id)
+  getTasks().setSelected(id)
 
   tabBar.updateAll()
 
-  var taskData = tasks.get(id)
+  var taskData = getTasks().get(id)
 
   if (taskData.tabs.count() > 0) {
     var selectedTab = taskData.tabs.getSelected()
@@ -170,29 +172,29 @@ function switchToTab (id, options) {
 
   tabEditor.hide()
 
-  tabs.setSelected(id)
+  getTabs().setSelected(id)
   tabBar.setActiveTab(id)
   webviews.setSelected(id, {
     focus: options.focusWebview !== false
   })
-  if (!tabs.get(id).url) {
+  if (!getTabs().get(id).url) {
     document.body.classList.add('is-ntp')
   } else {
     document.body.classList.remove('is-ntp')
   }
 }
 
-tasks.on('tab-updated', function (id, key) {
-  if (key === 'url' && id === tabs.getSelected()) {
+getTasks().on('tab-updated', function (id, key) {
+  if (key === 'url' && id === getTabs().getSelected()) {
     document.body.classList.remove('is-ntp')
   }
 })
 
 webviews.bindEvent('did-create-popup', function (tabId, popupId, initialURL) {
-  var popupTab = tabs.add({
+  var popupTab = getTabs().add({
     // in most cases, initialURL will be overwritten once the popup loads, but if the URL is a downloaded file, it will remain the same
     url: initialURL,
-    private: tabs.get(tabId).private
+    private: getTabs().get(tabId).private
   })
   tabBar.addTab(popupTab)
   webviews.add(popupTab, popupId)
@@ -200,9 +202,9 @@ webviews.bindEvent('did-create-popup', function (tabId, popupId, initialURL) {
 })
 
 webviews.bindEvent('new-tab', function (tabId, url, openInForeground) {
-  var newTab = tabs.add({
+  var newTab = getTabs().add({
     url: url,
-    private: tabs.get(tabId).private // inherit private status from the current tab
+    private: getTabs().get(tabId).private // inherit private status from the current tab
   })
 
   addTab(newTab, {
@@ -216,9 +218,9 @@ webviews.bindIPC('close-window', function (tabId, args) {
 })
 
 ipc.on('set-file-view', function (e, data) {
-  tabs.get().forEach(function (tab) {
+  getTabs().get().forEach(function (tab) {
     if (tab.url === data.url) {
-      tabs.update(tab.id, { isFileView: data.isFileView })
+      getTabs().update(tab.id, { isFileView: data.isFileView })
     }
   })
 })
@@ -230,16 +232,16 @@ searchbar.events.on('url-selected', function (data) {
   }
 
   if (data.background) {
-    var newTab = tabs.add({
+    var newTab = getTabs().add({
       url: data.url,
-      private: tabs.get(tabs.getSelected()).private
+      private: getTabs().get(getTabs().getSelected()).private
     })
     addTab(newTab, {
       enterEditMode: false,
       openInBackground: true
     })
   } else {
-    webviews.update(tabs.getSelected(), data.url)
+    webviews.update(getTabs().getSelected(), data.url)
     tabEditor.hide()
   }
 })

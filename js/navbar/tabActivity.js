@@ -1,12 +1,14 @@
 /* fades out tabs that are inactive */
 import tabBar from './tabBar.js'
 
+import { getTabs, getTasks } from '../tabState.js'
+
 var tabActivity = {
   minFadeAge: 330000,
   refresh: function () {
     requestAnimationFrame(function () {
-      var tabSet = tabs.get()
-      var selected = tabs.getSelected()
+      var tabSet = getTabs().get()
+      var selected = getTabs().getSelected()
       var time = Date.now()
 
       tabSet.forEach(function (tab) {
@@ -25,7 +27,7 @@ var tabActivity = {
   initialize: function () {
     setInterval(tabActivity.refresh, 7500)
 
-    tasks.on('tab-selected', this.refresh)
+    getTasks().on('tab-selected', tabActivity.refresh)
   }
 }
 

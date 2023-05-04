@@ -1,12 +1,12 @@
-var searchbar = require('searchbar/searchbar.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
-var searchbarAutocomplete = require('util/autocomplete.js')
-var urlParser = require('util/urlParser.js')
-var readerDecision = require('readerDecision.js')
+import searchbar from './searchbar.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarUtils from './searchbarUtils.js'
+import searchbarAutocomplete from '../util/autocomplete.js'
+import urlParser from '../util/urlParser.js'
+import readerDecision from '../readerDecision.js'
 
-var places = require('places/places.js')
-var searchEngine = require('util/searchEngine.js')
+import places from '../places/places.js'
+import searchEngine from '../util/searchEngine.js'
 
 var currentResponseSent = 0
 
@@ -136,4 +136,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

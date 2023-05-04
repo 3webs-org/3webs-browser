@@ -1,5 +1,6 @@
 import TabList from './tab.js'
 import TabStack from '../tabRestore.js'
+import { getTabs, setTabs } from '../tabState.js'
 
 class TaskList {
   constructor () {
@@ -80,9 +81,9 @@ class TaskList {
 
   setSelected (id) {
     this.selected = id
-    window.tabs = this.get(id).tabs
+    setTabs(this.get(id).tabs)
     this.emit('task-selected', id)
-    this.emit('tab-selected', tabs.getSelected())
+    this.emit('tab-selected', getTabs().getSelected())
   }
 
   destroy (id) {
@@ -113,9 +114,9 @@ class TaskList {
     var tabs = this.get(id).tabs
     var lastActivity = 0
 
-    for (var i = 0; i < tabs.count(); i++) {
-      if (tabs.getAtIndex(i).lastActivity > lastActivity) {
-        lastActivity = tabs.getAtIndex(i).lastActivity
+    for (var i = 0; i < getTabs().count(); i++) {
+      if (getTabs().getAtIndex(i).lastActivity > lastActivity) {
+        lastActivity = getTabs().getAtIndex(i).lastActivity
       }
     }
 

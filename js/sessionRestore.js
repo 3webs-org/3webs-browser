@@ -1,14 +1,29 @@
-var browserUI = require('browserUI.js')
-var webviews = require('webviews.js')
-var tabEditor = require('navbar/tabEditor.js')
-var tabState = require('tabState.js')
-var settings = require('util/settings/settings.js')
+const fs = require('fs')
+const os = require('os')
+
+import browserUI from './browserUI.js'
+import webviews from './webviews.js'
+import tabEditor from './navbar/tabEditor.js'
+import { getTasks, initialize as initializeTabState } from './tabState.js'
+import settings from './util/settings/settings.js'
+
+let userDataPath = undefined;
+
+if (os.platform() === 'darwin') {
+  userDataPath = os.homedir() + '/Library/Application Support/3WebsBrowser'
+} else if (os.platform() === 'win32') {
+  userDataPath = process.env.APPDATA + '\\3WebsBrowser'
+} else {
+  userDataPath = os.homedir() + '/.config/3WebsBrowser'
+}
+
+console.log('userDataPath', userDataPath)
 
 const sessionRestore = {
-  savePath: window.globalArgs['user-data-path'] + (platformType === 'windows' ? '\\sessionRestore.json' : '/sessionRestore.json'),
+  savePath: userDataPath + (platformType === 'windows' ? '\\sessionRestore.json' : '/sessionRestore.json'),
   previousState: null,
   save: function (forceSave, sync) {
-    var stateString = JSON.stringify(tasks.getStringifyableState())
+    var stateString = JSON.stringify(getTasks().getStringifyableState())
     var data = {
       version: 2,
       state: JSON.parse(stateString),
@@ -73,7 +88,7 @@ const sessionRestore = {
     try {
       // first run, show the tour
       if (!savedStringData) {
-        tasks.setSelected(tasks.add()) // create a new task
+        getTasks().setSelected(getTasks().add()) // create a new task
         
         return // TODO - Create a new tour page
         var newTab = tasks.getSelected().tabs.add({
@@ -89,9 +104,9 @@ const sessionRestore = {
 
       // the data isn't restorable
       if ((data.version && data.version !== 2) || (data.state && data.state.tasks && data.state.tasks.length === 0)) {
-        tasks.setSelected(tasks.add())
+        getTasks().setSelected(getTasks().add())
 
-        browserUI.addTab(tasks.getSelected().tabs.add())
+        browserUI.addTab(getTasks().getSelected().tabs.add())
         return
       }
 
@@ -99,28 +114,28 @@ const sessionRestore = {
 
       data.state.tasks.forEach(function (task) {
         // restore the task item
-        tasks.add(task)
+        getTasks().add(task)
 
         /*
         If the task contained only private tabs, none of the tabs will be contained in the session restore data, but tasks must always have at least 1 tab, so create a new empty tab if the task doesn't have any.
         */
         if (task.tabs.length === 0) {
-          tasks.get(task.id).tabs.add()
+          getTasks().get(task.id).tabs.add()
         }
       })
-      tasks.setSelected(data.state.selectedTask)
+      getTasks().setSelected(data.state.selectedTask)
 
       // switch to the previously selected tasks
 
-      if (tasks.getSelected().tabs.isEmpty() || startupConfigOption === 1) {
+      if (getTasks().getSelected().tabs.isEmpty() || startupConfigOption === 1) {
         browserUI.switchToTask(data.state.selectedTask)
-        if (tasks.getSelected().tabs.isEmpty()) {
-          tabEditor.show(tasks.getSelected().tabs.getSelected())
+        if (getTasks().getSelected().tabs.isEmpty()) {
+          tabEditor.show(getTasks().getSelected().tabs.getSelected())
         }
       } else {
         window.createdNewTaskOnStartup = true
         // try to reuse a previous empty task
-        var lastTask = tasks.byIndex(tasks.getLength() - 1)
+        var lastTask = getTasks().byIndex(getTasks().getLength() - 1)
         if (lastTask && lastTask.tabs.isEmpty() && !lastTask.name) {
           browserUI.switchToTask(lastTask.id)
           tabEditor.show(lastTask.tabs.getSelected())
@@ -158,16 +173,16 @@ const sessionRestore = {
 
       console.error('restoring session failed: ', e)
 
-      var backupSavePath = require('path').join(window.globalArgs['user-data-path'], 'sessionRestoreBackup-' + Date.now() + '.json')
+      var backupSavePath = require('path').join(userDataPath, 'sessionRestoreBackup-' + Date.now() + '.json')
 
       fs.writeFileSync(backupSavePath, savedStringData)
 
       // destroy any tabs that were created during the restore attempt
-      tabState.initialize()
+      initializeTabState()
 
       // create a new tab with an explanation of what happened
-      var newTask = tasks.add()
-      var newSessionErrorTab = tasks.get(newTask).tabs.add({
+      var newTask = getTasks().add()
+      var newSessionErrorTab = getTasks().get(newTask).tabs.add({
         url: 'file://' + __dirname + '/pages/sessionRestoreError/index.html?backupLoc=' + encodeURIComponent(backupSavePath)
       })
 
@@ -184,4 +199,4 @@ const sessionRestore = {
   }
 }
 
-module.exports = sessionRestore
+export default sessionRestore

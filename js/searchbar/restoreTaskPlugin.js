@@ -1,8 +1,9 @@
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarUtils from './searchbarUtils.js'
 
-var browserUI = require('browserUI.js')
-const { l } = require('../localization/localizationHelpers.js')
+import browserUI from '../browserUI.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 function getFormattedTitle (tab) {
   if (tab.title) {
@@ -52,4 +53,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

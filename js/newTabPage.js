@@ -1,12 +1,25 @@
+const { ipcRenderer: ipc } = require('electron')
 const path = require('path')
-const statistics = require('js/statistics.js')
+const os = require('os')
+
+import statistics from './statistics.js'
+
+let userDataPath = undefined;
+
+if (os.platform() === 'darwin') {
+  userDataPath = os.homedir() + '/Library/Application Support/3WebsBrowser'
+} else if (os.platform() === 'win32') {
+  userDataPath = process.env.APPDATA + '\\3WebsBrowser'
+} else {
+  userDataPath = os.homedir() + '/.config/3WebsBrowser'
+}
 
 const newTabPage = {
   background: document.getElementById('ntp-background'),
   hasBackground: false,
   picker: document.getElementById('ntp-image-picker'),
   deleteBackground: document.getElementById('ntp-image-remove'),
-  imagePath: path.join(window.globalArgs['user-data-path'], 'newTabBackground'),
+  imagePath: path.join(userDataPath, 'newTabBackground'),
   reloadBackground: function () {
     newTabPage.background.src = newTabPage.imagePath + '?t=' + Date.now()
     function onLoad () {
@@ -57,6 +70,4 @@ const newTabPage = {
   }
 }
 
-window.ntp = newTabPage
-
-module.exports = newTabPage
+export default newTabPage

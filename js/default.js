@@ -162,9 +162,9 @@ await initialize([
   './defaultKeybindings.js',
   './pdfViewer.js',
   './autofillSetup.js',
-  './passwordManager/passwordManager.js',
-  './passwordManager/passwordCapture.js',
-  './passwordManager/passwordViewer.js',
+ './passwordManager/passwordManager.js',
+ './passwordManager/passwordCapture.js',
+ './passwordManager/passwordViewer.js',
   './util/theme.js',
   './userscripts.js',
   './statistics.js',
@@ -195,4 +195,5 @@ await initialize([
 ])
 
 // once everything's loaded, start the session
-(await import('./sessionRestore.js')).restore()
+let sessionRestorePlugin = (await import('./sessionRestore.js')).default
+sessionRestorePlugin.restore()

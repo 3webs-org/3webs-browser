@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Portuguese (Portugal)",
   "identifier": "pt-PT",
   "translations": {

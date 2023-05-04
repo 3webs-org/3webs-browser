@@ -1,7 +1,7 @@
 const { app, ipcMain: ipc } = require('electron')
 const fs = require('fs')
 var userDataPath = app.getPath('userData')
-const getMainWindow = require('../../../main/getMainWindow')
+const sharedMain = require('../../../main/sharedMain')
 
 var settings = {
   filePath: userDataPath + (process.platform === 'win32' ? '\\' : '/') + 'settings.json',
@@ -57,8 +57,8 @@ var settings = {
     settings.writeFile()
     settings.runChangeCallbacks(key)
 
-    if (getMainWindow.get()) {
-      getMainWindow.get().webContents.send('settingChanged', key, value)
+    if (sharedMain.getProp('mainWindow')) {
+      sharedMain.getProp('mainWindow').webContents.send('settingChanged', key, value)
     }
   },
   initialize: function () {

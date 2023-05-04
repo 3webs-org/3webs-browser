@@ -1,4 +1,5 @@
-const getMainWindow = require('./getMainWindow')
+const sharedMain = require('./sharedMain')
+const { app, ipcMain: ipc } = require('electron')
 var pendingPermissions = []
 var grantedPermissions = []
 var nextPermissionId = 1
@@ -9,7 +10,7 @@ it will figure out what updates to make
 */
 function sendPermissionsToRenderer () {
   // remove properties that can't be serialized over IPC
-  sendIPCToWindow(getMainWindow.get(), 'updatePermissions', pendingPermissions.concat(grantedPermissions).map(p => {
+  sendIPCToWindow(sharedMain.getProp('mainWindow'), 'updatePermissions', pendingPermissions.concat(grantedPermissions).map(p => {
     return {
       permissionId: p.permissionId,
       tabId: p.tabId,
@@ -161,7 +162,7 @@ function pagePermissionRequestHandler (webContents, permission, callback, detail
     })
     webContents.once('destroyed', function () {
       // check whether the app is shutting down to avoid an electron crash (TODO remove this)
-      if (getMainWindow.get()) {
+      if (sharedMain.getProp('mainWindow')) {
         removePermissionsForContents(webContents)
       }
     })

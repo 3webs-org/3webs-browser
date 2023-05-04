@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Arabic",
   "identifier": "ar",
   "rtl": true,

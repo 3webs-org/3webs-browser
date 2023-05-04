@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Português (Brasil)",
   "identifier": "pt-BR",
   "translations": {

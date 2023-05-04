@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Bulgarian",
   "identifier": "bg",
   "translations": {

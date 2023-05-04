@@ -1,9 +1,9 @@
-const { sendIPCToWindow } = require('./utils')
-const getMainWindow = require('./getMainWindow')
+const sharedMain = require('./sharedMain')
+const { sendIPCToWindow } = sharedMain
 
 const TouchBar = require('electron').TouchBar
 const nativeImage = require('electron').nativeImage
-const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
+const { TouchBarButton, TouchBarSpacer } = TouchBar
 
 function buildTouchBar () {
   if (process.platform !== 'darwin') {
@@ -25,14 +25,14 @@ function buildTouchBar () {
         accessibilityLabel: l('goBack'),
         icon: getTouchBarIcon('NSImageNameTouchBarGoBackTemplate'),
         click: function () {
-          sendIPCToWindow(getMainWindow.get(), 'goBack')
+          sendIPCToWindow(sharedMain.getProp('mainWindow'), 'goBack')
         }
       }),
       new TouchBarButton({
         accessibilityLabel: l('goForward'),
         icon: getTouchBarIcon('NSImageNameTouchBarGoForwardTemplate'),
         click: function () {
-          sendIPCToWindow(getMainWindow.get(), 'goForward')
+          sendIPCToWindow(sharedMain.getProp('mainWindow'), 'goForward')
         }
       }),
       new TouchBarSpacer({ size: 'flexible' }),
@@ -42,7 +42,7 @@ function buildTouchBar () {
         // TODO this is really hacky, find a better way to set the size
         label: '    ' + l('searchbarPlaceholder') + '                     ',
         click: function () {
-          sendIPCToWindow(getMainWindow.get(), 'openEditor')
+          sendIPCToWindow(sharedMain.getProp('mainWindow'), 'openEditor')
         }
       }),
       new TouchBarSpacer({ size: 'flexible' }),
@@ -50,16 +50,20 @@ function buildTouchBar () {
         icon: getTouchBarIcon('NSImageNameTouchBarAdd'),
         accessibilityLabel: l('newTabAction'),
         click: function () {
-          sendIPCToWindow(getMainWindow.get(), 'addTab')
+          sendIPCToWindow(sharedMain.getProp('mainWindow'), 'addTab')
         }
       }),
       new TouchBarButton({
         accessibilityLabel: l('viewTasks'),
         icon: getTouchBarIcon('NSImageNameTouchBarListViewTemplate'),
         click: function () {
-          sendIPCToWindow(getMainWindow.get(), 'toggleTaskOverlay')
+          sendIPCToWindow(sharedMain.getProp('mainWindow'), 'toggleTaskOverlay')
         }
       })
     ]
   })
+}
+
+module.exports = {
+  buildTouchBar
 }

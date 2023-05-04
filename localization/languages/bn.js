@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "বাংলা",
   "identifier": "bn",
   "translations": {

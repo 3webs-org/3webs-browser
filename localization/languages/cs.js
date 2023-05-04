@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Česky",
   "identifier": "cs",
   "translations": {

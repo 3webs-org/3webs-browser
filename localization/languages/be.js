@@ -1,4 +1,4 @@
-{
+module.exports = {
     "name": "Беларуская",
     "identifier": "be",
     "translations": {

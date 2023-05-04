@@ -1,9 +1,17 @@
+const electron = require('electron')
 const { app, BrowserWindow, ipcMain: ipc, Menu, crashReporter } = require('electron')
 const fs = require('fs')
 const path = require('path')
 const settings = require('../js/util/settings/settingsMain')
-const getMainWindow = require('./getMainWindow')
+const sharedMain = require('./sharedMain')
+const { sendIPCToWindow } = sharedMain
 require('../js/util/proxy')
+const { buildTouchBar } = require('./touchbar')
+const { buildAppMenu, createDockMenu } = require('./menu')
+const {
+  destroyAllViews,
+} = require('./viewManager')
+const { registerCustomProtocols } = require('./customProtocols')
 
 crashReporter.start({
   submitURL: 'https://minbrowser.org/',
@@ -50,7 +58,7 @@ app.commandLine.appendSwitch('disable-backgrounding-occluded-windows', 'true')
 
 var userDataPath = app.getPath('userData')
 
-const browserPage = 'file://' + __dirname + '/index.html'
+const browserPage = app.getAppPath() + '/index.html'
 
 var mainWindow = null
 var mainWindowIsMinimized = false // workaround for https://github.com/minbrowser/min/issues/1074
@@ -72,29 +80,6 @@ var saveWindowBounds = function () {
       maximized: mainWindow.isMaximized()
     })
     fs.writeFileSync(path.join(userDataPath, 'windowBounds.json'), JSON.stringify(bounds))
-  }
-}
-
-function sendIPCToWindow (window, action, data) {
-  if (window && window.webContents && window.webContents.isLoadingMainFrame()) {
-    // immediately after a did-finish-load event, isLoading can still be true,
-    // so wait a bit to confirm that the page is really loading
-    setTimeout(function() {
-      if (window.webContents.isLoadingMainFrame()) {
-        window.webContents.once('did-finish-load', function () {
-          window.webContents.send(action, data || {})
-        })
-      } else {
-        window.webContents.send(action, data || {})
-      }
-    }, 0)
-  } else if (window) {
-    window.webContents.send(action, data || {})
-  } else {
-    var window = createWindow()
-    window.webContents.once('did-finish-load', function () {
-      window.webContents.send(action, data || {})
-    })
   }
 }
 
@@ -192,7 +177,7 @@ function createWindowWithBounds (bounds) {
       ]
     }
   })
-  getMainWindow.set(mainWindow)
+  sharedMain.setProp('mainWindow', mainWindow)
 
   // windows and linux always use a menu button in the upper-left corner instead
   // if frame: false is set, this won't have any effect, but it does apply on Linux if "use separate titlebar" is enabled
@@ -293,6 +278,11 @@ function createWindowWithBounds (bounds) {
   })
 
   mainWindow.setTouchBar(buildTouchBar())
+
+  if (isDevelopmentMode) {
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools()
+  }
 
   return mainWindow
 }
@@ -408,16 +398,4 @@ ipc.on('quit', function () {
   app.quit()
 })
 
-require('./customProtocols')
-require('./download')
-require('./filtering')
-require('./keychainService')
-require('./menu')
-require('./permissionManager')
-require('./prompt')
-require('./registryConfig')
-require('./remoteMenu')
-require('./themeMain')
-require('./touchbar')
-require('./UAswitcher')
-require('./viewManager')
+registerCustomProtocols()

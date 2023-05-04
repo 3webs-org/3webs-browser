@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "한국어",
   "identifier": "ko",
   "translations": {

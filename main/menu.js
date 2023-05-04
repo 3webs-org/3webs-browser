@@ -1,4 +1,7 @@
 const { app, Menu } = require('electron')
+const { l } = require('../localization/localizationHelpers')
+const settings = require('../js/util/settings/settingsMain')
+const { sendIPCToWindow } = require('./sharedMain')
 
 function buildAppMenu (options = {}) {
   function getFormattedKeyMapEntry (keybinding) {
@@ -449,4 +452,9 @@ function createDockMenu () {
     var dockMenu = Menu.buildFromTemplate(template)
     app.dock.setMenu(dockMenu)
   }
+}
+
+module.exports = {
+  buildAppMenu,
+  createDockMenu
 }

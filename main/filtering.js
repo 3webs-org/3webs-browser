@@ -1,4 +1,7 @@
 const { app, webContents } = require('electron')
+const settings = require('../js/util/settings/settingsMain')
+const path = require('path')
+const fs = require('fs')
 
 var defaultFilteringSettings = {
   blockingLevel: 1,

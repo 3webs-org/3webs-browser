@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Italiano",
   "identifier": "it",
   "translations": {

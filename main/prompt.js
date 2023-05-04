@@ -1,5 +1,6 @@
 const { BrowserWindow, ipcMain: ipc } = require('electron')
-const getMainWindow = require('./getMainWindow')
+const sharedMain = require('./sharedMain')
+const settings = require('../js/util/settings/settingsMain')
 /* Simple input prompt. */
 
 var promptAnswer
@@ -12,7 +13,7 @@ function createPrompt (options, callback) {
   var promptWindow = new BrowserWindow({
     width: width,
     height: height,
-    parent: parent != null ? parent : getMainWindow.get(),
+    parent: parent != null ? parent : sharedMain.getProp('mainWindow'),
     show: false,
     modal: true,
     alwaysOnTop: true,

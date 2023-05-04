@@ -1,6 +1,6 @@
-const { app, BrowserView } = require('electron')
-const BrowserView = electron.BrowserView
-const getMainWindow = require('./getMainWindow')
+const { app, BrowserView, ipcMain: ipc } = require('electron')
+const sharedMain = require('./sharedMain')
+const settings = require('../js/util/settings/settingsMain')
 
 var viewMap = {} // id: view
 var viewStateMap = {} // id: view state
@@ -45,7 +45,7 @@ function createView (existingViewId, id, webPreferencesString, boundsString, eve
     view.webContents.on(event, function (e) {
       var args = Array.prototype.slice.call(arguments).slice(1)
 
-      getMainWindow.get().webContents.send('view-event', {
+      sharedMain.getProp('mainWindow').webContents.send('view-event', {
         viewId: id,
         event: event,
         args: args
@@ -67,7 +67,7 @@ function createView (existingViewId, id, webPreferencesString, boundsString, eve
       (https://github.com/minbrowser/min/issues/1835)
     */
     if (!details.features) {
-      getMainWindow.get().webContents.send('view-event', {
+      sharedMain.getProp('mainWindow').webContents.send('view-event', {
         viewId: id,
         event: 'new-tab',
         args: [details.url, !(details.disposition === 'background-tab')]
@@ -94,7 +94,7 @@ function createView (existingViewId, id, webPreferencesString, boundsString, eve
     var popupId = Math.random().toString()
     temporaryPopupViews[popupId] = view
 
-    getMainWindow.get().webContents.send('view-event', {
+    sharedMain.getProp('mainWindow').webContents.send('view-event', {
       viewId: id,
       event: 'did-create-popup',
       args: [popupId, url]
@@ -110,7 +110,7 @@ function createView (existingViewId, id, webPreferencesString, boundsString, eve
       console.warn('dropping message because senderFrame is destroyed', channel, data, err)
       return
     }
-    getMainWindow.get().webContents.send('view-ipc', {
+    sharedMain.getProp('mainWindow').webContents.send('view-ipc', {
       id: id,
       name: channel,
       data: data,
@@ -193,8 +193,8 @@ function destroyView (id) {
     return
   }
 
-  if (viewMap[id] === getMainWindow.get().getBrowserView()) {
-    getMainWindow.get().setBrowserView(null)
+  if (viewMap[id] === sharedMain.getProp('mainWindow').getBrowserView()) {
+    sharedMain.getProp('mainWindow').setBrowserView(null)
     selectedView = null
   }
   viewMap[id].webContents.destroy()
@@ -212,11 +212,11 @@ function destroyAllViews () {
 function setView (id) {
   // setBrowserView causes flickering, so we only want to call it if the view is actually changing
   // see https://github.com/minbrowser/min/issues/1966
-  if (getMainWindow.get().getBrowserView() !== viewMap[id]) {
+  if (sharedMain.getProp('mainWindow').getBrowserView() !== viewMap[id]) {
     if (viewStateMap[id].loadedInitialURL) {
-      getMainWindow.get().setBrowserView(viewMap[id])
+      sharedMain.getProp('mainWindow').setBrowserView(viewMap[id])
     } else {
-      getMainWindow.get().setBrowserView(null)
+      sharedMain.getProp('mainWindow').setBrowserView(null)
     }
     selectedView = id
   }
@@ -233,15 +233,15 @@ function focusView (id) {
   // also, make sure the view exists, since it might not if the app is shutting down
   if (viewMap[id] && (viewMap[id].webContents.getURL() !== '' || viewMap[id].webContents.isLoading())) {
     viewMap[id].webContents.focus()
-  } else if (getMainWindow.get()) {
-    getMainWindow.get().webContents.focus()
+  } else if (sharedMain.getProp('mainWindow')) {
+    sharedMain.getProp('mainWindow').webContents.focus()
   }
 }
 
 function hideCurrentView () {
-  getMainWindow.get().setBrowserView(null)
+  sharedMain.getProp('mainWindow').setBrowserView(null)
   selectedView = null
-  getMainWindow.get().webContents.focus()
+  sharedMain.getProp('mainWindow').webContents.focus()
 }
 
 function getView (id) {
@@ -294,7 +294,7 @@ ipc.on('loadURLInView', function (e, args) {
     viewMap[args.id].setBackgroundColor('#fff')
     // If the view has no URL, it won't be attached yet
     if (args.id === selectedView) {
-      getMainWindow.get().setBrowserView(viewMap[args.id])
+      sharedMain.getProp('mainWindow').setBrowserView(viewMap[args.id])
     }
   }
   viewMap[args.id].webContents.loadURL(args.url)
@@ -323,16 +323,16 @@ ipc.on('callViewMethod', function (e, data) {
   if (result instanceof Promise) {
     result.then(function (result) {
       if (data.callId) {
-        getMainWindow.get().webContents.send('async-call-result', { callId: data.callId, error: null, result })
+        sharedMain.getProp('mainWindow').webContents.send('async-call-result', { callId: data.callId, error: null, result })
       }
     })
     result.catch(function (error) {
       if (data.callId) {
-        getMainWindow.get().webContents.send('async-call-result', { callId: data.callId, error, result: null })
+        sharedMain.getProp('mainWindow').webContents.send('async-call-result', { callId: data.callId, error, result: null })
       }
     })
   } else if (data.callId) {
-    getMainWindow.get().webContents.send('async-call-result', { callId: data.callId, error, result })
+    sharedMain.getProp('mainWindow').webContents.send('async-call-result', { callId: data.callId, error, result })
   }
 })
 
@@ -349,7 +349,7 @@ ipc.on('getCapture', function (e, data) {
       return
     }
     img = img.resize({ width: data.width, height: data.height })
-    getMainWindow.get().webContents.send('captureData', { id: data.id, url: img.toDataURL() })
+    sharedMain.getProp('mainWindow').webContents.send('captureData', { id: data.id, url: img.toDataURL() })
   })
 })
 
@@ -365,3 +365,15 @@ ipc.on('saveViewCapture', function (e, data) {
 })
 
 global.getView = getView
+
+module.exports = {
+  createView,
+  destroyView,
+  destroyAllViews,
+  setView,
+  setBounds,
+  focusView,
+  hideCurrentView,
+  getView,
+  getViewIDFromWebContents
+}

@@ -1,4 +1,4 @@
-{
+module.exports ={
   "name": "English (United States)",
   "identifier": "en-US",
   "translations": {

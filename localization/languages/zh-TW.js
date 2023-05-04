@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "中文 (繁體中文)",
   "identifier": "zh-TW",
   "translations": {

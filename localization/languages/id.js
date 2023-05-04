@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Indonesian",
   "identifier": "id",
   "translations": {

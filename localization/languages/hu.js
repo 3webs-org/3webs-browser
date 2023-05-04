@@ -1,4 +1,4 @@
-{
+module.exports = {
   "name": "Hungarian (Hungary)",
   "identifier": "hu",
   "translations": {

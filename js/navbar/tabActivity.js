@@ -1,6 +1,5 @@
 /* fades out tabs that are inactive */
-
-var tabBar = require('navbar/tabBar.js')
+import tabBar from './tabBar.js'
 
 var tabActivity = {
   minFadeAge: 330000,
@@ -30,4 +29,4 @@ var tabActivity = {
   }
 }
 
-module.exports = tabActivity
+export default tabActivity

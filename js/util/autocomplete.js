@@ -1,6 +1,6 @@
-var urlParser = require('util/urlParser.js')
+import urlParser from "./urlParser.js"
 
-function autocomplete (input, strings) {
+function autocompleteFun (input, strings) {
   // if there is text after the selection, we can never autocomplete
   if (input.selectionEnd !== input.value.length) {
     return {
@@ -50,7 +50,7 @@ function autocompleteURL (input, url) {
       url
     ]
 
-    var autocompleteResult = autocomplete(input, possibleAutocompletions)
+    var autocompleteResult = autocompleteFun(input, possibleAutocompletions)
 
     if (!autocompleteResult.valid) {
       return -1
@@ -64,4 +64,9 @@ function autocompleteURL (input, url) {
   }
 }
 
-module.exports = { autocomplete, autocompleteURL }
+let autocomplete = {
+  autocomplete: autocompleteFun,
+  autocompleteURL
+}
+
+export default autocomplete

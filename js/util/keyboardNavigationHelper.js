@@ -83,4 +83,4 @@ const keyboardNavigationHelper = {
   }
 }
 
-module.exports = keyboardNavigationHelper
+export default keyboardNavigationHelper

@@ -1,5 +1,5 @@
-var webviews = require('webviews.js')
-var keybindings = require('keybindings.js')
+import webviews from './webviews.js'
+import keybindings from './keybindings.js'
 
 var tabAudio = {
   muteIcon: 'carbon:volume-mute',
@@ -63,4 +63,4 @@ var tabAudio = {
 
 tabAudio.initialize()
 
-module.exports = tabAudio
+export default tabAudio

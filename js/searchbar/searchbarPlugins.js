@@ -1,5 +1,5 @@
+import searchbarUtils from './searchbarUtils.js'
 var searchbar = document.getElementById('searchbar')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
 
 var plugins = [] // format is {name, container, trigger, showResults}
 var results = {} // format is {pluginName: [results]}
@@ -184,4 +184,4 @@ const searchbarPlugins = {
   }
 }
 
-module.exports = searchbarPlugins
+export default searchbarPlugins

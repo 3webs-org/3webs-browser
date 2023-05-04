@@ -1,9 +1,5 @@
 /* Determines whether a page should redirect to reader view based on visit history */
-
-if (typeof require !== 'undefined') {
-  // running in UI process
-  var settings = require('util/settings/settings.js')
-}
+import settings from "./util/settings/settings.js"
 
 const readerDecision = {
   trimURL: function (url) {
@@ -128,6 +124,4 @@ settings.listen('readerData', function (data) {
   }
 })
 
-if (typeof module !== 'undefined') {
-  module.exports = readerDecision
-}
+export default readerDecision

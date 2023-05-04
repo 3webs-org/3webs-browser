@@ -1,16 +1,15 @@
-var statistics = require('js/statistics.js')
-var searchEngine = require('js/util/searchEngine.js')
-var urlParser = require('js/util/urlParser.js')
-const { l } = require('../localization/localizationHelpers.js')
+import urlParser from './util/urlParser.js'
+import searchEngine from './util/searchEngine.js'
+import statistics from './statistics.js'
 
 /* common actions that affect different parts of the UI (webviews, tabstrip, etc) */
 
-var settings = require('util/settings/settings.js')
-var webviews = require('webviews.js')
-var focusMode = require('focusMode.js')
-var tabBar = require('navbar/tabBar.js')
-var tabEditor = require('navbar/tabEditor.js')
-var searchbar = require('searchbar/searchbar.js')
+import settings from './util/settings/settings.js'
+import webviews from './webviews.js'
+import focusMode from './focusMode.js'
+import tabBar from './navbar/tabBar.js'
+import tabEditor from './navbar/tabEditor.js'
+import searchbar from './searchbar/searchbar.js'
 
 /* creates a new task */
 
@@ -253,7 +252,7 @@ tabBar.events.on('tab-closed', function (id) {
   closeTab(id)
 })
 
-module.exports = {
+export default {
   addTask,
   addTab,
   destroyTask,

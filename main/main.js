@@ -12,6 +12,16 @@ const {
   destroyAllViews,
 } = require('./viewManager')
 const { registerCustomProtocols } = require('./customProtocols')
+require('./download')
+require('./filtering')
+require('./keychainService')
+require('./permissionManager')
+require('./prompt')
+require('./registryConfig')
+require('./remoteActions')
+require('./remoteMenu')
+require('./themeMain')
+require('./UASwitcher')
 
 crashReporter.start({
   submitURL: 'https://minbrowser.org/',

@@ -78,4 +78,4 @@ const permissionRequests = {
 
 permissionRequests.initialize()
 
-module.exports = permissionRequests
+export default permissionRequests

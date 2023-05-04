@@ -1,8 +1,8 @@
-const { l } = require('../localization/localizationHelpers.js')
-const places = require('places/places.js')
-const bookmarkEditor = require('searchbar/bookmarkEditor.js')
-const searchbar = require('searchbar/searchbar.js')
-const searchbarPlugins = require('searchbar/searchbarPlugins.js')
+import { l } from '../../localization/localizationHelpers.js'
+import places from '../places/places.js'
+import bookmarkEditor from '../searchbar/bookmarkEditor.js'
+import searchbar from '../searchbar/searchbar.js'
+import searchbarPlugins from '../searchbar/searchbarPlugins.js'
 
 const bookmarkStar = {
   create: function () {
@@ -75,4 +75,4 @@ searchbarPlugins.register('simpleBookmarkTagInput', {
   index: 0
 })
 
-module.exports = bookmarkStar
+export default bookmarkStar

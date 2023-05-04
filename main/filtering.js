@@ -1,4 +1,4 @@
-const { app, webContents } = require('electron')
+const { app, webContents, session } = require('electron')
 const settings = require('../js/util/settings/settingsMain')
 const path = require('path')
 const fs = require('fs')
@@ -267,3 +267,17 @@ settings.listen('filtering', function (value) {
 
   setFilteringSettings(value)
 })
+
+module.exports = {
+  filterPopups,
+  setFilteringSettings,
+  initFilterList,
+  removeWWW,
+  requestIsThirdParty,
+  requestDomainIsException,
+  registerFiltering,
+  handleRequest,
+  removeTrackingParams,
+  setFilteringSettings,
+  handleRequest
+}

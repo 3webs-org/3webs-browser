@@ -2,6 +2,7 @@
 Passes a context menu template to the main process (where the menu is created)
 and listens for click events on it.
 */
+const { ipcRenderer: ipc } = require('electron')
 
 var menuCallbacks = {}
 
@@ -46,4 +47,4 @@ ipc.on('context-menu-will-close', function (e, data) {
   }, 16)
 })
 
-module.exports = { open }
+export default { open }

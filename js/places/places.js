@@ -1,14 +1,15 @@
 /* global Worker tabs */
 
-var webviews = require('webviews.js')
-const searchEngine = require('util/searchEngine.js')
-const urlParser = require('util/urlParser.js')
+import webviews from '../webviews.js'
+import searchEngine from '../util/searchEngine.js'
+import urlParser from '../util/urlParser.js'
+import { getTabs } from '../tabState.js'
 
 const places = {
   savePage: function (tabId, extractedText) {
     /* this prevents pages that are immediately left from being saved to history, and also gives the page-favicon-updated event time to fire (so the colors saved to history are correct). */
     setTimeout(function () {
-      const tab = tabs.get(tabId)
+      const tab = getTabs().get(tabId)
       if (tab) {
         const data = {
           url: urlParser.getSourceURL(tab.url), // for PDF viewer and reader mode, save the original page URL and not the viewer URL
@@ -30,7 +31,7 @@ const places = {
   receiveHistoryData: function (tabId, args) {
     // called when js/preload/textExtractor.js returns the page's text content
 
-    var tab = tabs.get(tabId)
+    var tab = getTabs().get(tabId)
     var data = args[0]
 
     if (tab.url.startsWith('data:') || tab.url.length > 5000) {
@@ -212,4 +213,5 @@ const places = {
 }
 
 places.initialize()
-module.exports = places
+
+export default places

@@ -1,19 +1,21 @@
 const EventEmitter = require('events')
-
-const { l } = require('../localization/localizationHelpers.js')
-
-const webviews = require('webviews.js')
-const focusMode = require('focusMode.js')
-const readerView = require('readerView.js')
-const tabAudio = require('tabAudio.js')
 const dragula = require('dragula')
-const settings = require('util/settings/settings.js')
-const urlParser = require('util/urlParser.js')
-const keybindings = require('keybindings.js')
 
-const tabEditor = require('navbar/tabEditor.js')
-const progressBar = require('navbar/progressBar.js')
-const permissionRequests = require('navbar/permissionRequests.js')
+import { l } from '../../localization/localizationHelpers.js'
+
+import settings from '../util/settings/settings.js'
+
+import webviews from '../webviews.js'
+import focusMode from '../focusMode.js'
+import readerView from '../readerView.js'
+import keybindings from '../keybindings.js'
+import tabAudio from '../tabAudio.js'
+
+import urlParser from '../util/urlParser.js'
+
+import tabEditor from './tabEditor.js'
+import prograssBar from './progressBar.js'
+import permissionRequests from './permissionRequests.js'
 
 var lastTabDeletion = 0 // TODO get rid of this
 
@@ -304,4 +306,4 @@ tabBar.container.addEventListener('drop', e => {
   }), { enterEditMode: false, openInBackground: !settings.get('openTabsInForeground') })
 })
 
-module.exports = tabBar
+export default tabBar

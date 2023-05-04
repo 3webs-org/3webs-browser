@@ -1,5 +1,6 @@
 const { app, session, ipcMain: ipc } = require('electron')
 const sharedMain = require('./sharedMain')
+const { sendIPCToWindow } = sharedMain
 
 const currrentDownloadItems = {}
 
@@ -105,3 +106,8 @@ app.on('session-created', function (session) {
   session.on('will-download', downloadHandler)
   listenForDownloadHeaders(session)
 })
+
+module.exports = {
+  downloadHandler,
+  listenForDownloadHeaders
+}

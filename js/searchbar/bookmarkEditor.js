@@ -1,8 +1,10 @@
-var places = require('places/places.js')
-var autocomplete = require('util/autocomplete.js')
-const remoteMenu = require('remoteMenuRenderer.js')
-var { ipcRenderer } = require('electron')
-const { l } = require('../localization/localizationHelpers.js')
+const { ipcRenderer } = require('electron')
+
+import { l } from '../../localization/localizationHelpers.js'
+
+import places from '../places/places.js'
+import autocomplete from '../util/autocomplete.js'
+import remoteMenu from '../remoteMenuRenderer.js'
 
 const bookmarkEditor = {
   currentInstance: null,
@@ -232,4 +234,4 @@ const bookmarkEditor = {
   }
 }
 
-module.exports = bookmarkEditor
+export default bookmarkEditor

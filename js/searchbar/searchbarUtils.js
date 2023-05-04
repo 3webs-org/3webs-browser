@@ -1,4 +1,4 @@
-var urlParser = require('util/urlParser.js')
+import urlParser from "../util/urlParser.js"
 
 var lastItemDeletion = Date.now() // TODO get rid of this
 
@@ -268,4 +268,11 @@ function createLazyList (scrollRoot) {
   }
 }
 
-module.exports = { createItem, createLazyList, createHeading, getRealTitle }
+let searchbarUtils = {
+  createItem,
+  createLazyList,
+  createHeading,
+  getRealTitle
+}
+
+export default searchbarUtils

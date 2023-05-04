@@ -1,3 +1,5 @@
+const { ipcRenderer: ipc } = require('electron')
+
 var isFocusMode = false
 
 ipc.on('enterFocusMode', function () {
@@ -14,7 +16,7 @@ ipc.on('exitFocusMode', function () {
   document.body.classList.remove('is-focus-mode')
 })
 
-module.exports = {
+export default {
   enabled: function () {
     return isFocusMode
   },

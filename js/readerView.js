@@ -1,9 +1,9 @@
-var webviews = require('webviews.js')
-var keybindings = require('keybindings.js')
-var urlParser = require('util/urlParser.js')
-const { l } = require('../localization/localizationHelpers.js')
+import webviews from './webviews.js'
+import keybindings from './keybindings.js'
+import urlParser from './util/urlParser.js'
+import { l } from '../localization/localizationHelpers.js'
 
-var readerDecision = require('readerDecision.js')
+import readerDecision from './readerDecision.js'
 
 var readerView = {
   readerURL: urlParser.getFileURL(__dirname + '/reader/index.html'),
@@ -117,4 +117,4 @@ var readerView = {
 
 readerView.initialize()
 
-module.exports = readerView
+export default readerView

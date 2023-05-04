@@ -1,5 +1,5 @@
 const sharedMain = require('./sharedMain')
-const { app, ipcMain: ipc } = require('electron')
+const { app, ipcMain: ipc, session } = require('electron')
 var pendingPermissions = []
 var grantedPermissions = []
 var nextPermissionId = 1

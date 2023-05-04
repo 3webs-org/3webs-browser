@@ -162,4 +162,5 @@ function initialize () {
 
 initialize()
 
-export default { defineShortcut }
+let keybindings = { defineShortcut }
+export default keybindings

@@ -35,4 +35,4 @@ const progressBar = {
   }
 }
 
-module.exports = progressBar
+export default progressBar

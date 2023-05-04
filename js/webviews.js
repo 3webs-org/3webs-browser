@@ -1,5 +1,6 @@
 import urlParser from './util/urlParser.js'
 import settings from './util/settings/settings.js'
+import { getTabs } from './tabState.js'
 
 /* implements selecting webviews, switching between them, and creating new ones. */
 
@@ -10,7 +11,7 @@ var windowIsMaximized = false // affects navbar height on Windows
 var windowIsFullscreen = false
 
 function captureCurrentTab (options) {
-  if (tabs.get(tabs.getSelected()).private) {
+  if (getTabs().get(tabs.getSelected()).private) {
     // don't capture placeholders for private tabs
     return
   }
@@ -30,7 +31,7 @@ function captureCurrentTab (options) {
 // called whenever a new page starts loading, or an in-page navigation occurs
 function onPageURLChange (tab, url) {
   let secureSchemes = ['https', 'about', 'chrome', 'file', 'browser', 'web3'];
-  tabs.update(tab, {
+  getTabs().update(tab, {
     secure: url.includes(':') && secureSchemes.includes(url.split(':')[0]),
     url: url
   })
@@ -47,7 +48,7 @@ function onNavigate (tabId, url, isInPlace, isMainFrame, frameProcessId, frameRo
 // called whenever the page finishes loading
 function onPageLoad (tabId) {
   // capture a preview image if a new page has been loaded
-  if (tabId === tabs.getSelected()) {
+  if (tabId === getTabs().getSelected()) {
     setTimeout(function () {
       // sometimes the page isn't visible until a short time after the did-finish-load event occurs
       captureCurrentTab()
@@ -175,7 +176,7 @@ const webviews = {
     }
   },
   add: function (tabId, existingViewId) {
-    var tabData = tabs.get(tabId)
+    var tabData = getTabs().get(tabId)
 
     // needs to be called before the view is created to that its listeners can be registered
     if (tabData.scrollPosition) {
@@ -317,7 +318,7 @@ const webviews = {
     TODO we want to do the same thing for reader mode as well, but only if the last page was redirected to reader mode (since it could also be an unrelated page)
     */
 
-    var url = tabs.get(id).url
+    var url = getTabs().get(id).url
 
     if (url.startsWith(urlParser.parse('browser:error'))) {
       webviews.callAsync(id, 'canGoToOffset', -2, function (err, result) {
@@ -413,7 +414,7 @@ webviews.bindEvent('did-navigate', function (tabId, url, httpResponseCode, httpS
 webviews.bindEvent('did-finish-load', onPageLoad)
 
 webviews.bindEvent('page-title-updated', function (tabId, title, explicitSet) {
-  tabs.update(tabId, {
+  getTabs().update(tabId, {
     title: title
   })
 })
@@ -425,9 +426,9 @@ webviews.bindEvent('did-fail-load', function (tabId, errorCode, errorDesc, valid
 })
 
 webviews.bindEvent('crashed', function (tabId, isKilled) {
-  var url = tabs.get(tabId).url
+  var url = getTabs().get(tabId).url
 
-  tabs.update(tabId, {
+  getTabs().update(tabId, {
     url: webviews.internalPages.error + '?ec=crash&url=' + encodeURIComponent(url)
   })
 
@@ -435,19 +436,19 @@ webviews.bindEvent('crashed', function (tabId, isKilled) {
   webviews.destroy(tabId)
   webviews.add(tabId)
 
-  if (tabId === tabs.getSelected()) {
+  if (tabId === getTabs().getSelected()) {
     webviews.setSelected(tabId)
   }
 })
 
 webviews.bindIPC('getSettingsData', function (tabId, args) {
-  if (!urlParser.isInternalURL(tabs.get(tabId).url)) {
+  if (!urlParser.isInternalURL(getTabs().get(tabId).url)) {
     throw new Error()
   }
   webviews.callAsync(tabId, 'send', ['receiveSettingsData', settings.list])
 })
 webviews.bindIPC('setSetting', function (tabId, args) {
-  if (!urlParser.isInternalURL(tabs.get(tabId).url)) {
+  if (!urlParser.isInternalURL(getTabs().get(tabId).url)) {
     throw new Error()
   }
   settings.set(args[0].key, args[0].value)
@@ -468,7 +469,7 @@ settings.listen(function () {
 })
 
 webviews.bindIPC('scroll-position-change', function (tabId, args) {
-  tabs.update(tabId, {
+  getTabs().update(tabId, {
     scrollPosition: args[0]
   })
 })
@@ -499,7 +500,7 @@ setInterval(function () {
 }, 15000)
 
 ipc.on('captureData', function (e, data) {
-  tabs.update(data.id, { previewImage: data.url })
+  getTabs().update(data.id, { previewImage: data.url })
   if (data.id === webviews.selectedId && webviews.placeholderRequests.length > 0) {
     placeholderImg.src = data.url
     placeholderImg.hidden = false

@@ -1,4 +1,4 @@
-const settings = require('util/settings/settings.js')
+import settings from "./util/settings/settings.js"
 
 const statistics = {
   envGetters: [],
@@ -103,4 +103,4 @@ const statistics = {
   }
 }
 
-module.exports = statistics
+export default statistics

@@ -1,4 +1,4 @@
-var browserUI = require('browserUI.js')
+import browserUI from '../browserUI.js'
 
 var addTabButton = document.getElementById('add-tab-button')
 
@@ -8,4 +8,4 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default { initialize }

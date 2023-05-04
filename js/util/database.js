@@ -1,7 +1,8 @@
 // defines schema for the browsingData database
 // requires Dexie.min.js
 
-const { l } = require('../localization/localizationHelpers.js')
+// This is sometimes called outside of a browser, so need to use require() instead of import
+//const { l } = require('../../localization/localizationHelpers.js')
 
 if (typeof Dexie === 'undefined' && typeof require !== 'undefined') {
   var Dexie = require('dexie')
@@ -29,7 +30,7 @@ db.open().then(function () {
   console.log('database opened ', performance.now())
 }).catch(function (error) {
   if (error.message.indexOf(dbErrorMessage) !== -1 && !dbErrorAlertShown) {
-    window && window.alert && window.alert(l('multipleInstancesErrorMessage'))
+    window && window.alert && window.alert(('multipleInstancesErrorMessage'))
     ipc.send('quit')
 
     dbErrorAlertShown = true

@@ -1,12 +1,12 @@
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../../localization/localizationHelpers.js'
 
-var searchbar = require('searchbar/searchbar.js')
-var webviews = require('webviews.js')
-var modalMode = require('modalMode.js')
-var urlParser = require('util/urlParser.js')
-var keyboardNavigationHelper = require('util/keyboardNavigationHelper.js')
-var bookmarkStar = require('navbar/bookmarkStar.js')
-var contentBlockingToggle = require('navbar/contentBlockingToggle.js')
+import searchbar from '../searchbar/searchbar.js'
+import webviews from '../webviews.js'
+import modalMode from '../modalMode.js'
+import urlParser from '../util/urlParser.js'
+import keyboardNavigationHelper from '../util/keyboardNavigationHelper.js'
+import bookmarkStar from './bookmarkStar.js'
+import contentBlockingToggle from './contentBlockingToggle.js'
 
 const tabEditor = {
   container: document.getElementById('tab-editor'),
@@ -140,4 +140,4 @@ const tabEditor = {
 
 tabEditor.initialize()
 
-module.exports = tabEditor
+export default tabEditor

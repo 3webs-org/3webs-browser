@@ -1,8 +1,8 @@
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../../localization/localizationHelpers.js'
 
-const webviews = require('webviews.js')
-const settings = require('util/settings/settings.js')
-const remoteMenu = require('remoteMenuRenderer.js')
+import webviews from '../webviews.js'
+import settings from '../util/settings/settings.js'
+import remoteMenuRenderer from '../remoteMenuRenderer.js'
 
 const contentBlockingToggle = {
   enableBlocking: function (url) {
@@ -90,7 +90,7 @@ const contentBlockingToggle = {
         }
       ]
     ]
-    remoteMenu.open(menu)
+    remoteMenuRenderer.open(menu)
   },
   update: function (tabId, button) {
     if (!tabs.get(tabId).url.startsWith('http') && !tabs.get(tabId).url.startsWith('https')) {
@@ -112,4 +112,4 @@ const contentBlockingToggle = {
   }
 }
 
-module.exports = contentBlockingToggle
+export default contentBlockingToggle

@@ -1,10 +1,10 @@
 const EventEmitter = require('events')
 
-var webviews = require('webviews.js')
-var keybindings = require('keybindings.js')
-var urlParser = require('util/urlParser.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var keyboardNavigationHelper = require('util/keyboardNavigationHelper.js')
+import webviews from '../webviews.js'
+import keybindings from '../keybindings.js'
+import urlParser from '../util/urlParser.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import keyboardNavigationHelper from '../util/keyboardNavigationHelper.js'
 
 function openURLInBackground (url) { // used to open a url in the background, without leaving the searchbar
   searchbar.events.emit('url-selected', { url: url, background: true })
@@ -82,4 +82,4 @@ keybindings.defineShortcut('completeSearchbar', function () {
 
 searchbarPlugins.initialize(searchbar.openURL)
 
-module.exports = searchbar
+export default searchbar

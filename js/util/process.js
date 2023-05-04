@@ -109,4 +109,4 @@ class ProcessSpawner {
   }
 }
 
-module.exports = ProcessSpawner
+export default ProcessSpawner

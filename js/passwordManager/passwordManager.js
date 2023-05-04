@@ -1,14 +1,15 @@
 const { ipcRenderer } = require('electron')
 
-const settings = require('util/settings/settings.js')
-const webviews = require('webviews.js')
-const keybindings = require('keybindings.js')
-const statistics = require('js/statistics.js')
+import settings from '../util/settings/settings.js'
+import webviews from '../webviews.js'
+import keybindings from '../keybindings.js'
+import statistics from '../statistics.js'
 
-const Bitwarden = require('js/passwordManager/bitwarden.js')
-const OnePassword = require('js/passwordManager/onePassword.js')
-const Keychain = require('js/passwordManager/keychain.js')
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../../localization/localizationHelpers.js'
+
+import Bitwarden from './bitwarden.js'
+import OnePassword from './onePassword.js'
+import Keychain from './keychain.js'
 
 const PasswordManagers = {
   // List of supported password managers. Each password manager is expected to
@@ -132,4 +133,4 @@ const PasswordManagers = {
   }
 }
 
-module.exports = PasswordManagers
+export default PasswordManagers

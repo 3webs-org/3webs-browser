@@ -61,4 +61,4 @@ var navigationButtons = {
   }
 }
 
-module.exports = navigationButtons
+export default navigationButtons

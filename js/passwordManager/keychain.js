@@ -60,4 +60,4 @@ class Keychain {
   }
 }
 
-module.exports = Keychain
+export default Keychain

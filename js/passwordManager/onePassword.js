@@ -1,10 +1,12 @@
-const ProcessSpawner = require('util/process.js')
 const path = require('path')
 const fs = require('fs')
 var { ipcRenderer } = require('electron')
-const compareVersions = require('util/compareVersions.js')
-const settings = require('util/settings/settings.js')
-const { l } = require('../localization/localizationHelpers.js')
+
+import ProcessSpawner from '../util/process.js'
+import compareVersions from '../util/compareVersions.js'
+import settings from '../util/settings/settings.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 // 1Password password manager. Requires session key to unlock the vault.
 class OnePassword {
@@ -240,4 +242,4 @@ class OnePassword {
   }
 }
 
-module.exports = OnePassword
+export default OnePassword

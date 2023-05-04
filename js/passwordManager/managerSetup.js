@@ -1,13 +1,13 @@
-var { ipcRenderer } = require('electron')
 var fs = require('fs')
 var path = require('path')
-const { l } = require('../localization/localizationHelpers.js')
 
-var webviews = require('webviews.js')
-var settings = require('util/settings/settings.js')
-var browserUI = require('browserUI.js')
-var modalMode = require('modalMode.js')
-var ProcessSpawner = require('util/process.js')
+import { l } from '../../localization/localizationHelpers.js'
+
+import webviews from '../webviews.js'
+import settings from '../util/settings/settings.js'
+import browserUI from '../browserUI.js'
+import modalMode from '../modalMode.js'
+import ProcessSpawner from '../util/process.js'
 
 var dialog = document.getElementById('manager-setup-dialog')
 
@@ -189,4 +189,4 @@ function afterInstall (toolPath) {
 
 setupDialog.initialize()
 
-module.exports = setupDialog
+export default setupDialog

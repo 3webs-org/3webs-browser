@@ -19,4 +19,4 @@ function compareVersions (v1, v2) {
   return 0
 }
 
-module.exports = compareVersions
+export default compareVersions

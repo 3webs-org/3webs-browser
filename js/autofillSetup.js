@@ -1,7 +1,6 @@
-const setupDialog = require('passwordManager/managerSetup.js')
-const settings = require('util/settings/settings.js')
-const PasswordManagers = require('passwordManager/passwordManager.js')
-const { l } = require('../localization/localizationHelpers.js')
+import setupDialog from './passwordManager/managerSetup.js'
+import settings from './util/settings/settings.js'
+import PasswordManagers from './passwordManager/passwordManager.js'
 
 const AutofillSetup = {
   checkSettings: function () {
@@ -28,4 +27,4 @@ const AutofillSetup = {
   }
 }
 
-module.exports = AutofillSetup
+export default AutofillSetup

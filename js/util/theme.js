@@ -1,6 +1,4 @@
-if (typeof require !== 'undefined') {
-  var settings = require('util/settings/settings.js')
-}
+import settings from "./settings/settings.js"
 
 function enableDarkMode () {
   document.body.classList.add('dark-mode')
@@ -29,8 +27,6 @@ function initialize () {
   settings.listen('darkThemeIsActive', themeChanged)
 }
 
-if (typeof module !== 'undefined') {
-  module.exports = { initialize }
-} else {
-  initialize()
+export default {
+  initialize,
 }

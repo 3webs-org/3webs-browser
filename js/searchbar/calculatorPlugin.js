@@ -3,13 +3,15 @@
 */
 
 const { clipboard } = require('electron')
-const searchbarPlugins = require('searchbar/searchbarPlugins.js')
 const Parser = require('expr-eval').Parser
+
+import searchbarPlugins from './searchbarPlugins.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 const math = new Parser()
 math.consts.pi = Math.PI
 math.consts.e = Math.E
-const { l } = require('../localization/localizationHelpers.js')
 
 // get all expr-eval tokens (operators, constants, etc.)
 const mathOps = {
@@ -85,4 +87,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

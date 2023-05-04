@@ -1,5 +1,5 @@
-const searchbar = require('searchbar/searchbar.js')
-const searchbarPlugins = require('searchbar/searchbarPlugins.js')
+import searchbar from "./searchbar.js"
+import searchbarPlugins from "./searchbarPlugins.js"
 
 const shortcuts = [
   {
@@ -46,4 +46,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

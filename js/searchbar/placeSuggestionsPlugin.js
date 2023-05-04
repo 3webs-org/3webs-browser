@@ -1,8 +1,8 @@
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
-var urlParser = require('util/urlParser.js')
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarUtils from './searchbarUtils.js'
+import urlParser from '../util/urlParser.js'
 
-var places = require('places/places.js')
+import places from '../places/places.js'
 
 function showPlaceSuggestions (text, input, event) {
   // use the current tab's url for history suggestions, or the previous tab if the current tab is empty
@@ -49,4 +49,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

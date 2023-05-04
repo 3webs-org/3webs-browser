@@ -3,20 +3,20 @@
 const { ipcRenderer } = require('electron')
 const fs = require('fs')
 
-const bangsPlugin = require('searchbar/bangsPlugin.js')
+import bangsPlugin from './bangsPlugin.js'
 
-const webviews = require('webviews.js')
-const browserUI = require('browserUI.js')
-const focusMode = require('focusMode.js')
-const places = require('places/places.js')
-const contentBlockingToggle = require('navbar/contentBlockingToggle.js')
-const taskOverlay = require('taskOverlay/taskOverlay.js')
-const bookmarkConverter = require('bookmarkConverter.js')
-const searchbarPlugins = require('searchbar/searchbarPlugins.js')
-const tabEditor = require('navbar/tabEditor.js')
-const formatRelativeDate = require('util/relativeDate.js')
+import webviews from '../webviews.js'
+import browserUI from '../browserUI.js'
+import focusMode from '../focusMode.js'
+import places from '../places/places.js'
+import contentBlockingToggle from '../navbar/contentBlockingToggle.js'
+import taskOverlay from '../taskOverlay/taskOverlay.js'
+import bookmarkConverter from '../bookmarkConverter.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import tabEditor from '../navbar/tabEditor.js'
+import { formatRelativeDate } from '../util/relativeDate.js'
 
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../../localization/localizationHelpers.js'
 
 function moveToTaskCommand (taskId) {
   // remove the tab from the current task
@@ -366,4 +366,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

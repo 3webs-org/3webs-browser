@@ -1,14 +1,14 @@
-var searchbar = require('searchbar/searchbar.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
-var bangsPlugin = require('searchbar/bangsPlugin.js')
-var places = require('places/places.js')
-var urlParser = require('util/urlParser.js')
-var formatRelativeDate = require('util/relativeDate.js')
+import searchbar from './searchbar.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarUtils from './searchbarUtils.js'
+import bangsPlugin from './bangsPlugin.js'
+import places from '../places/places.js'
+import urlParser from '../util/urlParser.js'
+import { formatRelativeDate } from '../util/relativeDate.js'
 
-var tabEditor = require('navbar/tabEditor.js')
-var bookmarkEditor = require('searchbar/bookmarkEditor.js')
-const { l } = require('../localization/localizationHelpers.js')
+import tabEditor from '../navbar/tabEditor.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 const maxTagSuggestions = 12
 
@@ -208,4 +208,4 @@ const bookmarkManager = {
   }
 }
 
-module.exports = bookmarkManager
+export default bookmarkManager

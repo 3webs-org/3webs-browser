@@ -1,4 +1,4 @@
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
+import searchbarPlugins from "./searchbarPlugins.js"
 
 function initialize () {
   searchbarPlugins.register('developmentModeNotification', {
@@ -15,4 +15,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

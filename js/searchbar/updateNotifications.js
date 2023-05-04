@@ -1,10 +1,11 @@
 const UPDATE_URL = 'https://minbrowser.github.io/min/updates/latestVersion.json' // TODO - change this to the new URL
 
-const { l } = require('../localization/localizationHelpers.js')
-var settings = require('util/settings/settings.js')
+import { l } from '../../localization/localizationHelpers.js'
 
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var compareVersions = require('util/compareVersions.js')
+import settings from '../util/settings/settings.js'
+
+import searchbarPlugins from './searchbarPlugins.js'
+import compareVersions from '../util/compareVersions.js'
 
 function getUpdateRandomNum () {
   /* the update JSON might indicate that the update is only available to a % of clients, in order to avoid notifying everyone to update to a new version until there's time to report bugs.
@@ -89,4 +90,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

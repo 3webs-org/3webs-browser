@@ -1,7 +1,7 @@
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
+import searchbarPlugins from './searchbarPlugins.js'
 
-var urlParser = require('util/urlParser.js')
-var searchEngine = require('util/searchEngine.js')
+import urlParser from '../util/urlParser.js'
+import searchEngine from '../util/searchEngine.js'
 
 function showSearchSuggestions (text, input, event) {
     const suggestionsURL = searchEngine.getCurrent().suggestionsURL
@@ -59,4 +59,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

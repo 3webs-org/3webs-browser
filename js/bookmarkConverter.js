@@ -1,11 +1,10 @@
 /* Handles importing / exporting bookmarks to HTML */
+const path = require('path')
+const fs = require('fs')
 
-var places = require('places/places.js')
-var urlParser = require('util/urlParser.js')
-var settings = require('util/settings/settings.js')
-var path = require('path')
-var fs = require('fs')
-const { l } = require('../localization/localizationHelpers.js')
+import places from './places/places.js'
+import urlParser from './util/urlParser.js'
+import settings from './util/settings/settings.js'
 
 const bookmarkConverter = {
   import: function (data) {
@@ -115,4 +114,4 @@ const bookmarkConverter = {
   }
 }
 
-module.exports = bookmarkConverter
+export default bookmarkConverter

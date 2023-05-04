@@ -185,7 +185,7 @@ const downloadManager = {
     }
   },
   initialize: function () {
-    this.closeButton.addEventListener('click', function () {
+    downloadManager.closeButton.addEventListener('click', function () {
       downloadManager.hide()
     })
 

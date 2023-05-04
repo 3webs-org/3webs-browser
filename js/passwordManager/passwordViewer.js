@@ -1,8 +1,9 @@
-const webviews = require('webviews.js')
-const settings = require('util/settings/settings.js')
-const PasswordManagers = require('passwordManager/passwordManager.js')
-const modalMode = require('modalMode.js')
-const { l } = require('../localization/localizationHelpers.js')
+import webviews from '../webviews.js'
+import settings from '../util/settings/settings.js'
+import PasswordManagers from './passwordManager.js'
+import modalMode from '../modalMode.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 const passwordViewer = {
   container: document.getElementById('password-viewer'),
@@ -123,4 +124,4 @@ const passwordViewer = {
   }
 }
 
-module.exports = passwordViewer
+export default passwordViewer

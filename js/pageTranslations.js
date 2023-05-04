@@ -142,7 +142,7 @@ const pageTranslations = {
       })
   },
   initialize: function () {
-    webviews.bindIPC('translation-request', this.makeTranslationRequest)
+    webviews.bindIPC('translation-request', pageTranslations.makeTranslationRequest)
   }
 }
 

@@ -1,5 +1,4 @@
-
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from "../../localization/localizationHelpers.js"
 
 // creating formatters is slow, so we we reuse the same one for every call
 const formatterInstance = new Intl.DateTimeFormat(navigator.language, { year: 'numeric', month: 'long' })
@@ -32,4 +31,4 @@ function formatRelativeDate (date) {
   return formatterInstance.format(new Date(date))
 }
 
-module.exports = formatRelativeDate
+export { formatRelativeDate }

@@ -62,4 +62,4 @@ var runNetwork = function anonymous (input) {
   return output
 }
 
-module.exports = runNetwork
+export default runNetwork

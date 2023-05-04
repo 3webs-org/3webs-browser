@@ -1,11 +1,11 @@
-var webviews = require('webviews.js')
-var settings = require('util/settings/settings.js')
+import webviews from '../webviews.js'
+import settings from '../util/settings/settings.js'
+
+import textColorNN from '../../ext/textColor/textColor.js'
 
 const colorExtractorImage = document.createElement('img')
 const colorExtractorCanvas = document.createElement('canvas')
 const colorExtractorContext = colorExtractorCanvas.getContext('2d')
-
-const textColorNN = require('ext/textColor/textColor.js')
 
 const defaultColors = {
   private: ['rgb(58, 44, 99)', 'white'],

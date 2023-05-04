@@ -1,13 +1,14 @@
-var searchbar = require('searchbar/searchbar.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
-var bangsPlugin = require('searchbar/bangsPlugin.js')
-var places = require('places/places.js')
-var urlParser = require('util/urlParser.js')
-var formatRelativeDate = require('util/relativeDate.js')
-const { l } = require('../localization/localizationHelpers.js')
+import searchbar from './searchbar.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarUtils from './searchbarUtils.js'
+import bangsPlugin from './bangsPlugin.js'
+import places from '../places/places.js'
+import urlParser from '../util/urlParser.js'
+import { formatRelativeDate } from '../util/relativeDate.js'
 
-module.exports = {
+import { l } from '../../localization/localizationHelpers.js'
+
+export default {
   initialize: function () {
     bangsPlugin.registerCustomBang({
       phrase: '!history',

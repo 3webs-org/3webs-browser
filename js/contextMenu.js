@@ -1,8 +1,9 @@
-const remoteMenu = require('remoteMenuRenderer.js')
-const searchbar = require('searchbar/searchbar.js')
-const { l } = require('../localization/localizationHelpers.js')
+import remoteMenu from './remoteMenuRenderer.js'
+import searchbar from './searchbar/searchbar.js'
 
-module.exports = {
+import { l } from '../localization/localizationHelpers.js'
+
+export default {
   initialize: function () {
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault()

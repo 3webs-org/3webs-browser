@@ -1,6 +1,6 @@
 /* Handoff support for macOS */
 
-module.exports = {
+export default {
   initialize: function () {
     if (window.platformType === 'mac') {
       tasks.on('tab-selected', function (id) {

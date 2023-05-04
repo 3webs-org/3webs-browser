@@ -55,9 +55,9 @@ var navigationButtons = {
       navigationButtons.tabsList.classList.remove('disable-scroll')
     })
 
-    tasks.on('tab-selected', this.update)
-    webviews.bindEvent('did-navigate', this.update)
-    webviews.bindEvent('did-navigate-in-page', this.update)
+    tasks.on('tab-selected', navigationButtons.update)
+    webviews.bindEvent('did-navigate', navigationButtons.update)
+    webviews.bindEvent('did-navigate-in-page', navigationButtons.update)
   }
 }
 

@@ -1,11 +1,11 @@
-const { app, Menu } = require('electron')
-const { l } = require('../localization/localizationHelpers')
-const settings = require('../js/util/settings/settingsMain')
-const { sendIPCToWindow } = require('./sharedMain')
+import { app, Menu } from 'electron'
+import { l } from '../localization/localizationHelpers.js'
+import settings from '../js/util/settings/settingsMain.js'
+import { sendIPCToWindow } from './sharedMain.js'
 
 function buildAppMenu (options = {}) {
   function getFormattedKeyMapEntry (keybinding) {
-    const value = settings.get('keyMap')?.[keybinding]
+    const value = settings.get('keyMap') && settings.get('keyMap')[keybinding] // ?. not supported by esm module
 
     if (value) {
       if (Array.isArray(value)) {

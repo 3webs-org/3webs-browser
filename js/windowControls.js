@@ -1,4 +1,4 @@
-var settings = require('util/settings/settings.js')
+import settings from './util/settings/settings.js'
 
 function initialize () {
   if (settings.get('useSeparateTitlebar') === true) {
@@ -96,4 +96,4 @@ function initialize () {
   }
 }
 
-module.exports = { initialize }
+export { initialize }

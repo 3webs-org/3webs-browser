@@ -209,7 +209,7 @@ function initialize () {
 
       // use the first search result
       // if there is no search text or no result, need to create a new task
-      let task = searchAndSortTasks(text)[0]?.task
+      let task = searchAndSortTasks(text)[0] && searchAndSortTasks(text)[0].task // ?. is not supported in the esm module
       if (!text || !task) {
         task = tasks.get(tasks.add(undefined, tasks.getIndex(tasks.getSelected().id) + 1))
         task.name = text

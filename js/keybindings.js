@@ -5,12 +5,12 @@ There are three possible ways that keybindings can be handled.
   - If a BrowserView is focused, shortcuts are handled by the before-input-event listener.
   */
 
-const Mousetrap = require('mousetrap')
-const keyMapModule = require('util/keyMap.js')
+const Mousetrap = require('mousetrap') // Node requires require instead of import
+import keyMapModule from './util/keyMap.js'
 
-var webviews = require('webviews.js')
-var modalMode = require('modalMode.js')
-var settings = require('util/settings/settings.js')
+import webviews from './webviews.js'
+import modalMode from './modalMode.js'
+import settings from './util/settings/settings.js'
 
 var keyMap = keyMapModule.userKeyMap(settings.get('keyMap'))
 
@@ -162,4 +162,4 @@ function initialize () {
 
 initialize()
 
-module.exports = { defineShortcut }
+export default { defineShortcut }

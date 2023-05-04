@@ -1,5 +1,5 @@
 /* provides helper functions for using localized strings */
-let languages = require('./languages/all')
+import languages from './languages/all.js'
 
 function getCurrentLanguage () {
   // TODO add a setting to change the language to something other than the default
@@ -20,30 +20,33 @@ function getCurrentLanguage () {
 var userLanguage = null
 
 function l (stringId) {
-  if (!userLanguage) {
-    userLanguage = getCurrentLanguage()
-  }
-
-  // If the string is available in the user's language, use it
-  if (languages[userLanguage] && languages[userLanguage][stringId]) {
-    return languages[userLanguage][stringId]
-  }
-  // If general language unavailable but specific dialect is, use it
-  for (let lang in languages) {
-    if (lang.startsWith(userLanguage.split('-')[0]) && languages[lang][stringId]) {
-      return languages[lang][stringId]
+  try {
+    if (!userLanguage) {
+      userLanguage = getCurrentLanguage()
     }
+
+    // If the string is available in the user's language, use it
+    if (languages[userLanguage] && languages[userLanguage][stringId]) {
+      return languages[userLanguage][stringId]
+    }
+    // If general language unavailable but specific dialect is, use it
+    for (let lang in languages) {
+      if (lang.startsWith(userLanguage.split('-')[0]) && languages[lang][stringId]) {
+        return languages[lang][stringId]
+      }
+    }
+    // If the specific dialect is unavailable, use the general language
+    if (languages[userLanguage.split('-')[0]] && languages[userLanguage.split('-')[0]][stringId]) {
+      return languages[userLanguage.split('-')[0]][stringId]
+    }
+    // If the string is unavailable in the user's language, use the default
+    if (languages['en-US'][stringId]) {
+      return languages['en-US'][stringId]
+    }
+  } catch (e) { } finally {
+    // If the string is unavailable in the default language, use the stringId
+    return stringId
   }
-  // If the specific dialect is unavailable, use the general language
-  if (languages[userLanguage.split('-')[0]] && languages[userLanguage.split('-')[0]][stringId]) {
-    return languages[userLanguage.split('-')[0]][stringId]
-  }
-  // If the string is unavailable in the user's language, use the default
-  if (languages['en-US'][stringId]) {
-    return languages['en-US'][stringId]
-  }
-  // If the string is unavailable in the default language, use the stringId
-  return stringId
 }
 
 /* for static HTML pages
@@ -88,4 +91,5 @@ if (typeof window !== 'undefined') {
   window.userLanguage = userLanguage
   window.getCurrentLanguage = getCurrentLanguage
 }
-exports.l = l
+
+export { l }

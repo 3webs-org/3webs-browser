@@ -6,7 +6,7 @@
   "shortDescription": "The Ethereum-native browser",
   "description": "The 3Webs is the state-of-the-art Ethereum-native browser with built-in Web3 and decentralized app support.",
   "electronVersion": "25.0.0",
-  "main": "main/main.js",
+  "main": "main/mainWrapper.cjs",
   "standard": {
     "globals": [
       "l",
@@ -33,6 +33,7 @@
     "dexie": "^3.0.3",
     "dragula": "github:minbrowser/dragula",
     "electron-squirrel-startup": "^1.0.0",
+    "esm": "^3.2.25",
     "expr-eval": "^2.0.2",
     "mousetrap": "^1.5.3",
     "node-abi": "^3.8.0",

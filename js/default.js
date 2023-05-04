@@ -1,7 +1,7 @@
 window.globalArgs = {}
 
 process.argv.forEach(function (arg) {
-  if (arg.startsWith('--')) {
+  if (arg.startsWith('--.js')) {
     var key = arg.split('=')[0].replace('--', '')
     var value = arg.split('=')[1]
     globalArgs[key] = value
@@ -127,50 +127,66 @@ window.addEventListener('load', function () {
   }, true)
 })
 
-require('tabState.js').initialize()
-require('windowControls.js').initialize()
-require('navbar/menuButton.js').initialize()
+async function initialize(mods) {
+  return await Promise.all(mods.map(async (mod) => {
+    try {
+      const ret = (await import(mod)).initialize()
+      console.log('Initialized module', mod)
+      return ret
+    } catch (e) {
+      console.error('Failed to initialize module', mod, e)
+    }
+  }))
+}
 
-require('navbar/addTabButton.js').initialize()
-require('navbar/tabActivity.js').initialize()
-require('navbar/tabColor.js').initialize()
-require('navbar/navigationButtons.js').initialize()
-require('downloadManager.js').initialize()
-require('webviewMenu.js').initialize()
-require('contextMenu.js').initialize()
-require('menuRenderer.js').initialize()
-require('defaultKeybindings.js').initialize()
-require('pdfViewer.js').initialize()
-require('autofillSetup.js').initialize()
-require('passwordManager/passwordManager.js').initialize()
-require('passwordManager/passwordCapture.js').initialize()
-require('passwordManager/passwordViewer.js').initialize()
-require('util/theme.js').initialize()
-require('userscripts.js').initialize()
-require('statistics.js').initialize()
-require('taskOverlay/taskOverlay.js').initialize()
-require('pageTranslations.js').initialize()
-require('sessionRestore.js').initialize()
-require('bookmarkConverter.js').initialize()
-require('newTabPage.js').initialize()
-require('macHandoff.js').initialize()
+await initialize([
+  './tabState.js',
+  './windowControls.js',
+  './navbar/menuButton.js'
+])
+await initialize([
+  './navbar/addTabButton.js',
+  './navbar/tabActivity.js',
+  './navbar/tabColor.js',
+  './navbar/navigationButtons.js',
+  './downloadManager.js',
+  './webviewMenu.js',
+  './contextMenu.js',
+  './menuRenderer.js',
+  './defaultKeybindings.js',
+  './pdfViewer.js',
+  './autofillSetup.js',
+  './passwordManager/passwordManager.js',
+  './passwordManager/passwordCapture.js',
+  './passwordManager/passwordViewer.js',
+  './util/theme.js',
+  './userscripts.js',
+  './statistics.js',
+  './taskOverlay/taskOverlay.js',
+  './pageTranslations.js',
+  './sessionRestore.js',
+  './bookmarkConverter.js',
+  './newTabPage.js',
+  './macHandoff.js',
+])
 
 // default searchbar plugins
-
-require('searchbar/placesPlugin.js').initialize()
-require('searchbar/instantAnswerPlugin.js').initialize()
-require('searchbar/openTabsPlugin.js').initialize()
-require('searchbar/bangsPlugin.js').initialize()
-require('searchbar/customBangs.js').initialize()
-require('searchbar/searchSuggestionsPlugin.js').initialize()
-require('searchbar/placeSuggestionsPlugin.js').initialize()
-require('searchbar/updateNotifications.js').initialize()
-require('searchbar/restoreTaskPlugin.js').initialize()
-require('searchbar/bookmarkManager.js').initialize()
-require('searchbar/historyViewer.js').initialize()
-require('searchbar/developmentModeNotification.js').initialize()
-require('searchbar/shortcutButtons.js').initialize()
-require('searchbar/calculatorPlugin.js').initialize()
+await initialize([
+  './searchbar/placesPlugin.js',
+  './searchbar/instantAnswerPlugin.js',
+  './searchbar/openTabsPlugin.js',
+  './searchbar/bangsPlugin.js',
+  './searchbar/customBangs.js',
+  './searchbar/searchSuggestionsPlugin.js',
+  './searchbar/placeSuggestionsPlugin.js',
+  './searchbar/updateNotifications.js',
+  './searchbar/restoreTaskPlugin.js',
+  './searchbar/bookmarkManager.js',
+  './searchbar/historyViewer.js',
+  './searchbar/developmentModeNotification.js',
+  './searchbar/shortcutButtons.js',
+  './searchbar/calculatorPlugin.js'
+])
 
 // once everything's loaded, start the session
-require('sessionRestore.js').restore()
+(await import('./sessionRestore.js')).restore()

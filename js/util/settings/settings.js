@@ -53,4 +53,4 @@ var settings = {
 }
 
 settings.initialize()
-module.exports = settings
+export default settings

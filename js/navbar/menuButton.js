@@ -1,7 +1,7 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron') // Because electron is stupid and doesn't like being imported
 
-var keybindings = require('keybindings.js')
-var settings = require('util/settings/settings.js')
+import keybindings from '../keybindings.js'
+import settings from '../util/settings/settings.js'
 
 var menuButton = document.getElementById('menu-button')
 
@@ -26,4 +26,4 @@ function initialize () {
   })
 }
 
-module.exports = { initialize, showSecondaryMenu }
+export { initialize, showSecondaryMenu }

@@ -1,7 +1,4 @@
-if (typeof require !== 'undefined') {
-  var settings = require('util/settings/settings.js')
-}
-// otherwise, assume window.settings exists already
+import settings from "./settings/settings.js"
 
 var currentSearchEngine = {
   name: '',
@@ -130,6 +127,6 @@ var searchEngine = {
 
 if (typeof module === 'undefined') {
   window.currentSearchEngine = currentSearchEngine
-} else {
-  module.exports = searchEngine
 }
+
+export default searchEngine

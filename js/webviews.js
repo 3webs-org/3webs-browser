@@ -1,5 +1,5 @@
-var urlParser = require('util/urlParser.js')
-var settings = require('util/settings/settings.js')
+import urlParser from './util/urlParser.js'
+import settings from './util/settings/settings.js'
 
 /* implements selecting webviews, switching between them, and creating new ones. */
 
@@ -514,4 +514,4 @@ ipc.on('windowFocus', function () {
   }
 })
 
-module.exports = webviews
+export default webviews

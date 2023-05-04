@@ -1,3 +1,4 @@
+const fs = require('fs')
 var hosts = []
 
 var HOSTS_FILE = process.platform === 'win32'
@@ -33,4 +34,4 @@ fs.readFile(HOSTS_FILE, 'utf8', function (err, data) {
   })
 })
 
-module.exports = hosts
+export default hosts

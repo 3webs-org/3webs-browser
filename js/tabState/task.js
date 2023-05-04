@@ -1,5 +1,5 @@
-const TabList = require('tabState/tab.js')
-const TabStack = require('tabRestore.js')
+import TabList from './tab.js'
+import TabStack from '../tabRestore.js'
 
 class TaskList {
   constructor () {
@@ -156,4 +156,4 @@ class TaskList {
   }
 }
 
-module.exports = TaskList
+export default TaskList

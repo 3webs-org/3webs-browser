@@ -32,4 +32,4 @@ overlay.addEventListener('click', function () {
   }
 })
 
-module.exports = modalMode
+export default modalMode

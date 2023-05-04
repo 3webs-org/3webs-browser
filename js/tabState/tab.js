@@ -197,4 +197,4 @@ class TabList {
   }
 }
 
-module.exports = TabList
+export default TabList

@@ -1,14 +1,14 @@
 const clipboard = electron.clipboard
 
-const webviews = require('webviews.js')
-const browserUI = require('browserUI.js')
-const searchEngine = require('util/searchEngine.js')
-const userscripts = require('userscripts.js')
-const settings = require('util/settings/settings.js')
-const pageTranslations = require('pageTranslations.js')
-const { l } = require('../localization/localizationHelpers.js')
+import webviews from './webviews.js'
+import browserUI from './browserUI.js'
+import searchEngine from './util/searchEngine.js'
+import userscripts from './userscripts.js'
+import settings from './util/settings/settings.js'
+import pageTranslations from './pageTranslations.js'
+import { l } from '../localization/localizationHelpers.js'
 
-const remoteMenu = require('remoteMenuRenderer.js')
+import remoteMenu from './remoteMenuRenderer.js'
 
 const webviewMenu = {
   menuData: null,
@@ -346,4 +346,4 @@ const webviewMenu = {
   }
 }
 
-module.exports = webviewMenu
+export default webviewMenu

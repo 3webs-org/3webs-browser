@@ -1,10 +1,11 @@
 const punycode = require('punycode')
-const path = require('path')
 
-const searchEngine = require('util/searchEngine.js')
-const hosts = require('./hosts.js')
-const httpsTopSites = require('../../ext/httpsUpgrade/httpsTopSites.json')
-const publicSuffixes = require('../../ext/publicSuffixes/public_suffix_list.json')
+import searchEngine from './searchEngine.js'
+import hosts from './hosts.js'
+
+// Also needs require for json files
+//const httpsTopSites = require('../../ext/httpsUpgrade/httpsTopSites.json')
+//const publicSuffixes = require('../../ext/publicSuffixes/public_suffix_list.json')
 
 function removeWWW (domain) {
   return (domain.startsWith('www.') ? domain.slice(4) : domain)
@@ -166,6 +167,7 @@ var urlParser = {
       return true
     }
     // it has a public suffix?
+    return true
     return publicSuffixes.find(s => cleanDomain.endsWith(s)) !== undefined
   },
   isHTTPSUpgreadable: function (url) {
@@ -178,4 +180,4 @@ var urlParser = {
   }
 }
 
-module.exports = urlParser
+export default urlParser

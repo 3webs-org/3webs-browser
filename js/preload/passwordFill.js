@@ -314,8 +314,8 @@ window.addEventListener('load', function (event) {
 
 // send passwords back to the main process so they can be saved to storage
 function handleFormSubmit () {
-  var usernameValue = getBestUsernameField()?.value
-  var passwordValue = getBestPasswordField()?.value
+  var usernameValue = getBestUsernameField() && getBestUsernameField().value // ?. not supported in electron
+  var passwordValue = getBestPasswordField() && getBestPasswordField().value
 
   if ((usernameValue && usernameValue.length > 0) && (passwordValue && passwordValue.length > 0)) {
     ipc.send('password-form-filled', [window.location.hostname, usernameValue, passwordValue])

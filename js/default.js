@@ -127,14 +127,20 @@ window.addEventListener('load', function () {
   }, true)
 })
 
-async function initialize(mods) {
-  return await Promise.all(mods.map(async (mod) => {
+async function initialize(moduleNames) {
+  return await Promise.all(moduleNames.map(async (moduleName) => {
     try {
-      const ret = (await import(mod)).initialize()
-      console.log('Initialized module', mod)
+      const theModule = await import(moduleName)
+      const initialize = theModule.initialize || theModule.default.initialize
+      console.log('Loaded module', moduleName, theModule, initialize)
+      let ret = initialize()
+      if (ret instanceof Promise) {
+        ret = await ret
+      }
+      console.log('Initialized module', moduleName, ret)
       return ret
     } catch (e) {
-      console.error('Failed to initialize module', mod, e)
+      console.error('Failed to initialize module', moduleName, e)
     }
   }))
 }
@@ -142,9 +148,9 @@ async function initialize(mods) {
 await initialize([
   './tabState.js',
   './windowControls.js',
-  './navbar/menuButton.js'
-])
-await initialize([
+  './navbar/menuButton.js',
+//])
+//await initialize([
   './navbar/addTabButton.js',
   './navbar/tabActivity.js',
   './navbar/tabColor.js',
@@ -168,10 +174,10 @@ await initialize([
   './bookmarkConverter.js',
   './newTabPage.js',
   './macHandoff.js',
-])
-
+//])
+//
 // default searchbar plugins
-await initialize([
+//await initialize([
   './searchbar/placesPlugin.js',
   './searchbar/instantAnswerPlugin.js',
   './searchbar/openTabsPlugin.js',
@@ -185,7 +191,7 @@ await initialize([
   './searchbar/historyViewer.js',
   './searchbar/developmentModeNotification.js',
   './searchbar/shortcutButtons.js',
-  './searchbar/calculatorPlugin.js'
+  './searchbar/calculatorPlugin.js',
 ])
 
 // once everything's loaded, start the session

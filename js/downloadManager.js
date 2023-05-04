@@ -1,6 +1,9 @@
-var webviews = require('webviews.js')
-const remoteMenu = require('remoteMenuRenderer.js')
-const { l } = require('../localization/localizationHelpers.js')
+const { ipcRenderer: ipc, shell: electron } = require('electron')
+
+import { l } from '../localization/localizationHelpers.js'
+
+import webviews from './webviews.js'
+import remoteMenu from './remoteMenuRenderer.js'
 
 
 function getFileSizeString (bytes) {
@@ -212,4 +215,4 @@ const downloadManager = {
   }
 }
 
-module.exports = downloadManager
+export default downloadManager

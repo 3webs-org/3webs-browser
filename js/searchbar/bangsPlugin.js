@@ -1,12 +1,13 @@
-var tabEditor = require('navbar/tabEditor.js')
-var settings = require('util/settings/settings.js')
+import tabEditor from '../navbar/tabEditor.js'
+import settings from '../util/settings/settings.js'
 
-var searchbar = require('searchbar/searchbar.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarAutocomplete = require('util/autocomplete.js')
+import searchbar from './searchbar.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarAutocomplete from '../util/autocomplete.js'
 
-var searchEngine = require('util/searchEngine.js')
-const { l } = require('../localization/localizationHelpers.js')
+import searchEngine from '../util/searchEngine.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 // format is {phrase, snippet, score, icon, fn, isCustom, isAction} to match https://ac.duckduckgo.com/ac?q=!
 
@@ -231,4 +232,7 @@ function initialize () {
   }
 }
 
-module.exports = { initialize, registerCustomBang }
+export default {
+  initialize,
+  registerCustomBang
+}

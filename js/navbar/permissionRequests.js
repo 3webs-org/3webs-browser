@@ -1,5 +1,6 @@
 const { ipcRenderer } = require('electron')
-const webviews = require('webviews.js')
+
+import webviews from '../webviews.js'
 
 const permissionRequests = {
   requests: [],

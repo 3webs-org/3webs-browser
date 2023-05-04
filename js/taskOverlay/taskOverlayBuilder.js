@@ -1,8 +1,9 @@
-var browserUI = require('browserUI.js')
-var searchbarUtils = require('searchbar/searchbarUtils.js')
-var urlParser = require('util/urlParser.js')
-var searchEngine = require('util/searchEngine.js')
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../../localization/localizationHelpers.js'
+
+import browserUI from '../browserUI.js'
+import searchbarUtils from '../searchbar/searchbarUtils.js'
+import urlParser from '../util/urlParser.js'
+import searchEngine from '../util/searchEngine.js'
 
 const faviconMinimumLuminance = 70 // minimum brightness for a "light" favicon
 
@@ -293,6 +294,6 @@ var TaskOverlayBuilder = {
 // extend with other helper functions?
 }
 
-module.exports = function createTaskContainer (task, index, events) {
+export function createTaskContainer (task, index, events) {
   return TaskOverlayBuilder.create.task.container(task, index, events)
 }

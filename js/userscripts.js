@@ -1,14 +1,14 @@
 /* implements userscript support */
+import webviews from './webviews.js'
+import settings from './util/settings/settings.js'
+import bangsPlugin from './searchbar/bangsPlugin.js'
+import tabEditor from './navbar/tabEditor.js'
+import searchbarPlugins from './searchbar/searchbarPlugins.js'
+import urlParser from './util/urlParser.js'
 
-var webviews = require('webviews.js')
-var settings = require('util/settings/settings.js')
-var bangsPlugin = require('searchbar/bangsPlugin.js')
-var tabEditor = require('navbar/tabEditor.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var urlParser = require('util/urlParser.js')
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../localization/localizationHelpers.js'
 
-var statistics = require('js/statistics.js')
+import statistics from './statistics.js'
 
 function parseTampermonkeyFeatures (content) {
   var parsedFeatures = {}
@@ -209,4 +209,4 @@ const userscripts = {
   }
 }
 
-module.exports = userscripts
+export default userscripts

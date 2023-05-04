@@ -1,6 +1,6 @@
-const webviews = require('webviews.js')
-const statistics = require('js/statistics.js')
-const settings = require('util/settings/settings.js')
+import webviews from './webviews.js'
+import statistics from './statistics.js'
+import settings from './util/settings/settings.js'
 
 const pageTranslations = {
   apiURL: 'https://translate-api.minbrowser.org/translate',
@@ -146,4 +146,4 @@ const pageTranslations = {
   }
 }
 
-module.exports = pageTranslations
+export default pageTranslations

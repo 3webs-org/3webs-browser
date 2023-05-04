@@ -1,4 +1,4 @@
-const webviews = require('webviews.js')
+import webviews from "../webviews.js"
 
 var navigationButtons = {
   tabsList: document.getElementById('tabs-inner'),

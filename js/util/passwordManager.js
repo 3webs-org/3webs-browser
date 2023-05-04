@@ -1,6 +1,4 @@
-if (typeof require !== 'undefined') {
-  var settings = require('util/settings.js')
-}
+import settings from "./settings/settings.js"
 
 var passwordManagers = {
   none: {
@@ -27,3 +25,10 @@ settings.listen('passwordManager', function (value) {
 })
 
 window.currentPasswordManager = currentPasswordManager
+
+export default {
+  passwordManagers,
+  get currentPasswordManager () {
+    return currentPasswordManager
+  }
+}

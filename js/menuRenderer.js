@@ -1,17 +1,18 @@
 /* Handles messages that get sent from the menu bar in the main process */
+const { ipcRenderer: ipc } = require('electron')
 
-var webviews = require('webviews.js')
-var webviewGestures = require('webviewGestures.js')
-var browserUI = require('browserUI.js')
-var focusMode = require('focusMode.js')
-var modalMode = require('modalMode.js')
-var findinpage = require('findinpage.js')
-var PDFViewer = require('pdfViewer.js')
-var tabEditor = require('navbar/tabEditor.js')
-var readerView = require('readerView.js')
-var taskOverlay = require('taskOverlay/taskOverlay.js')
+import webviews from './webviews.js'
+import webviewGestures from './webviewGestures.js'
+import browserUI from './browserUI.js'
+import focusMode from './focusMode.js'
+import modalMode from './modalMode.js'
+import findinpage from './findinpage.js'
+import PDFViewer from './pdfViewer.js'
+import tabEditor from './navbar/tabEditor.js'
+import readerView from './readerView.js'
+import taskOverlay from './taskOverlay/taskOverlay.js'
 
-module.exports = {
+export default {
   initialize: function () {
     ipc.on('zoomIn', function () {
       webviewGestures.zoomWebviewIn(tabs.getSelected())

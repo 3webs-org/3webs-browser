@@ -1,3 +1,5 @@
+const { ipcRenderer: ipc } = require('electron')
+
 import urlParser from './util/urlParser.js'
 import settings from './util/settings/settings.js'
 import { getTabs } from './tabState.js'

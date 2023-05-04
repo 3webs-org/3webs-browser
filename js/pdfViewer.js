@@ -1,7 +1,6 @@
 /* handles viewing pdf files using pdf.js. Recieves events from main.js will-download */
-
-const webviews = require('webviews.js')
-const urlParser = require('util/urlParser.js')
+import webviews from "./webviews.js";
+import urlParser from "./util/urlParser.js";
 
 const PDFViewer = {
   url: {
@@ -58,4 +57,4 @@ const PDFViewer = {
   }
 }
 
-module.exports = PDFViewer
+export default PDFViewer

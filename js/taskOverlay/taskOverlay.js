@@ -1,17 +1,19 @@
 const { ipcRenderer } = require('electron')
-const { l } = require('../localization/localizationHelpers.js')
+const dragula = require('dragula')
 
-var webviews = require('webviews.js')
-var keybindings = require('keybindings.js')
-var browserUI = require('browserUI.js')
-var tabBar = require('navbar/tabBar.js')
-var tabEditor = require('navbar/tabEditor.js')
-var focusMode = require('focusMode.js')
-var modalMode = require('modalMode.js')
-var keyboardNavigationHelper = require('util/keyboardNavigationHelper.js')
-var dragula = require('dragula')
+import { l } from '../../localization/localizationHelpers.js'
 
-const createTaskContainer = require('taskOverlay/taskOverlayBuilder.js')
+import webviews from '../webviews.js'
+import keybindings from '../keybindings.js'
+import browserUI from '../browserUI.js'
+import tabBar from '../navbar/tabBar.js'
+import tabEditor from '../navbar/tabEditor.js'
+import focusMode from '../focusMode.js'
+import modalMode from '../modalMode.js'
+
+import keyboardNavigationHelper from '../util/keyboardNavigationHelper.js'
+
+import { createTaskContainer } from './taskOverlayBuilder.js'
 
 var taskContainer = document.getElementById('task-area')
 var taskSwitcherButton = document.getElementById('switch-task-button')
@@ -471,4 +473,4 @@ var taskOverlay = {
   }
 }
 
-module.exports = taskOverlay
+export default taskOverlay

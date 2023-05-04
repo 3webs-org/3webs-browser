@@ -1,7 +1,8 @@
-var webviews = require('webviews.js')
-var keybindings = require('keybindings.js')
-var PDFViewer = require('pdfViewer.js')
-const { l } = require('../localization/localizationHelpers.js')
+import { l } from '../localization/localizationHelpers.js'
+
+import webviews from './webviews.js'
+import keybindings from './keybindings.js'
+import PDFViewer from './pdfViewer.js'
 
 var findinpage = {
   container: document.getElementById('findinpage-bar'),
@@ -126,4 +127,4 @@ keybindings.defineShortcut({ keys: 'esc' }, function (e) {
   findinpage.end()
 })
 
-module.exports = findinpage
+export default findinpage

@@ -1,4 +1,4 @@
-var webviews = require('webviews.js')
+import webviews from "./webviews.js"
 
 var webviewGestures = {
   showBackArrow: function () {
@@ -178,4 +178,4 @@ webviews.bindIPC('wheel-event', function (tabId, e) {
   }
 })
 
-module.exports = webviewGestures
+export default webviewGestures

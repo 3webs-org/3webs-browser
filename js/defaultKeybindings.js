@@ -1,9 +1,11 @@
-const keybindings = require('keybindings.js')
-var webviews = require('webviews.js')
-var browserUI = require('browserUI.js')
-var focusMode = require('focusMode.js')
-var modalMode = require('modalMode.js')
-var tabEditor = require('navbar/tabEditor.js')
+const { ipcRenderer: ipc } = require('electron')
+
+import keybindings from './keybindings.js'
+import webviews from './webviews.js'
+import browserUI from './browserUI.js'
+import focusMode from './focusMode.js'
+import modalMode from './modalMode.js'
+import tabEditor from './navbar/tabEditor.js'
 
 const defaultKeybindings = {
   initialize: function () {
@@ -277,4 +279,4 @@ const defaultKeybindings = {
   }
 }
 
-module.exports = defaultKeybindings
+export default defaultKeybindings

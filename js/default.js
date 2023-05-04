@@ -197,3 +197,11 @@ await initialize([
 // once everything's loaded, start the session
 let sessionRestorePlugin = (await import('./sessionRestore.js')).default
 sessionRestorePlugin.restore()
+
+// Fixes a strange UI bug
+setTimeout(() => {
+  // Get the first text node in the document
+  let node = document.body.firstChild
+  // Delete it
+  document.body.removeChild(node)
+}, 100)

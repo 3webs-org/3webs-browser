@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "name": "Arabic",
   "identifier": "ar",
   "rtl": true,

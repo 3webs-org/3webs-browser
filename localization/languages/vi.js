@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "name": "Tiếng Việt",
   "identifier": "vi",
   "translations": {

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "name": "中文 (简体中文)",
   "identifier": "zh-CN",
   "translations": {

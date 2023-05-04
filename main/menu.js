@@ -2,6 +2,7 @@ import { app, Menu } from 'electron'
 import { l } from '../localization/localizationHelpers.js'
 import settings from '../js/util/settings/settingsMain.js'
 import { sendIPCToWindow } from './sharedMain.js'
+import { destroyAllViews } from './viewManager.js'
 
 function buildAppMenu (options = {}) {
   function getFormattedKeyMapEntry (keybinding) {

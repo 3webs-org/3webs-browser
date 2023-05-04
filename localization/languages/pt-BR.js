@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "name": "Português (Brasil)",
   "identifier": "pt-BR",
   "translations": {

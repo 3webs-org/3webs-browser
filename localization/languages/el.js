@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "name": "Greek",
   "identifier": "el",
   "translations": {

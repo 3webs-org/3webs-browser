@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "name": "Indonesian",
   "identifier": "id",
   "translations": {

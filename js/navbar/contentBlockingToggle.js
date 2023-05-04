@@ -4,6 +4,8 @@ import webviews from '../webviews.js'
 import settings from '../util/settings/settings.js'
 import remoteMenuRenderer from '../remoteMenuRenderer.js'
 
+import { getTabs } from '../tabState.js'
+
 const contentBlockingToggle = {
   enableBlocking: function (url) {
     if (!url) {

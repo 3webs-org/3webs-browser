@@ -1,10 +1,11 @@
-var searchbar = require('searchbar/searchbar.js')
-var searchbarPlugins = require('searchbar/searchbarPlugins.js')
-var searchbarAutocomplete = require('util/autocomplete.js')
+import searchbar from './searchbar.js'
+import searchbarPlugins from './searchbarPlugins.js'
+import searchbarAutocomplete from '../util/autocomplete.js'
 
-var urlParser = require('util/urlParser.js')
-var searchEngine = require('util/searchEngine.js')
-const { l } = require('../localization/localizationHelpers.js')
+import urlParser from '../util/urlParser.js'
+import searchEngine from '../util/searchEngine.js'
+
+import { l } from '../../localization/localizationHelpers.js'
 
 var ddgAttribution = l('resultsFromDDG')
 
@@ -192,4 +193,6 @@ function initialize () {
   })
 }
 
-module.exports = { initialize }
+export default {
+  initialize
+}

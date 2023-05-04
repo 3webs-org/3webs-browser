@@ -4,12 +4,14 @@ import urlParser from '../util/urlParser.js'
 
 import places from '../places/places.js'
 
+import { getTabs } from '../tabState.js'
+
 function showPlaceSuggestions (text, input, event) {
   // use the current tab's url for history suggestions, or the previous tab if the current tab is empty
-  var url = tabs.get(tabs.getSelected()).url
+  var url = getTabs().get(getTabs().getSelected()).url
 
   if (!url) {
-    var previousTab = tabs.getAtIndex(tabs.getIndex(tabs.getSelected()) - 1)
+    var previousTab = getTabs().getAtIndex(getTabs().getIndex(getTabs().getSelected()) - 1)
     if (previousTab) {
       url = previousTab.url
     }
@@ -18,7 +20,7 @@ function showPlaceSuggestions (text, input, event) {
   places.getPlaceSuggestions(url, function (results) {
     searchbarPlugins.reset('placeSuggestions')
 
-    var tabList = tabs.get().map(function (tab) {
+    var tabList = getTabs().get().map(function (tab) {
       return tab.url
     })
 

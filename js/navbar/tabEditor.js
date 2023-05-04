@@ -8,6 +8,8 @@ import keyboardNavigationHelper from '../util/keyboardNavigationHelper.js'
 import bookmarkStar from './bookmarkStar.js'
 import contentBlockingToggle from './contentBlockingToggle.js'
 
+import { getTabs } from '../tabState.js'
+
 const tabEditor = {
   container: document.getElementById('tab-editor'),
   input: document.getElementById('tab-editor-input'),
@@ -27,7 +29,7 @@ const tabEditor = {
 
     document.body.classList.add('is-edit-mode')
 
-    var currentURL = urlParser.getSourceURL(tabs.get(tabId).url)
+    var currentURL = urlParser.getSourceURL(getTabs().get(tabId).url)
     if (currentURL === 'browser:newtab') {
       currentURL = ''
     }
@@ -51,7 +53,7 @@ const tabEditor = {
     }
 
     /* animation */
-    if (tabs.count() > 1) {
+    if (getTabs().count() > 1) {
       requestAnimationFrame(function () {
         var item = document.querySelector(`.tab-item[data-tab="${tabId}"]`)
         var originCoordinates = item.getBoundingClientRect()

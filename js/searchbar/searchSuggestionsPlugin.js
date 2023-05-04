@@ -3,6 +3,8 @@ import searchbarPlugins from './searchbarPlugins.js'
 import urlParser from '../util/urlParser.js'
 import searchEngine from '../util/searchEngine.js'
 
+import { getTabs } from '../tabState.js'
+
 function showSearchSuggestions (text, input, event) {
     const suggestionsURL = searchEngine.getCurrent().suggestionsURL
 
@@ -53,7 +55,7 @@ function initialize () {
   searchbarPlugins.register('searchSuggestions', {
     index: 4,
     trigger: function (text) {
-      return !!text && text.indexOf('!') !== 0 && !tabs.get(tabs.getSelected()).private
+      return !!text && text.indexOf('!') !== 0 && !getTabs().get(getTabs().getSelected()).private
     },
     showResults: debounce(showSearchSuggestions, 50)
   })

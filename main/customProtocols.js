@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 const { app, protocol } = require('electron')
 
 function registerCustomProtocols () {
@@ -52,10 +54,10 @@ function registerCustomProtocols () {
     session.protocol.handle('browser', async (request) => {
       try {
         let urlObj = new URL(request.url)
-        if (['ext', 'dist', 'icons', 'js', 'css'].includes(urlObj.hostname)) {
+        if (['ext', 'dist', 'icons', 'js', 'css', 'localization'].includes(urlObj.hostname)) {
           return new Response(
             fs.readFileSync(
-              path.join(__dirname, urlObj.hostname, urlObj.pathname), 'utf8'
+              path.join(app.getAppPath(), urlObj.hostname, urlObj.pathname), 'utf8'
             ), {
               headers: { 'Content-Type': mimeTypes[urlObj.pathname.split('.').pop()] }
             }
@@ -64,7 +66,7 @@ function registerCustomProtocols () {
         if (urlObj.pathname == '/') {
           return new Response(
             fs.readFileSync(
-              path.join(__dirname, 'pages', urlObj.hostname, 'index.html'), 'utf8'
+              path.join(app.getAppPath(), 'pages', urlObj.hostname, 'index.html'), 'utf8'
             ), {
               headers: { 'Content-Type': mimeTypes['html'] }
             }
@@ -72,7 +74,7 @@ function registerCustomProtocols () {
         }
         return new Response(
           fs.readFileSync(
-            path.join(__dirname, 'pages', urlObj.hostname, urlObj.pathname), 'utf8'
+            path.join(app.getAppPath(), 'pages', urlObj.hostname, urlObj.pathname), 'utf8'
           ), {
             headers: { 'Content-Type': mimeTypes[urlObj.pathname.split('.').pop()] }
           }
@@ -80,7 +82,7 @@ function registerCustomProtocols () {
       } catch {
         return new Response(
           fs.readFileSync(
-            path.join(__dirname, 'pages', 'error', 'index.html'), 'utf8'
+            path.join(app.getAppPath(), 'pages', 'error', 'index.html'), 'utf8'
           ), {
             headers: { 'Content-Type': mimeTypes['html'] }
           }

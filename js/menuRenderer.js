@@ -12,29 +12,31 @@ import tabEditor from './navbar/tabEditor.js'
 import readerView from './readerView.js'
 import taskOverlay from './taskOverlay/taskOverlay.js'
 
+import { getTabs } from './tabState.js'
+
 export default {
   initialize: function () {
     ipc.on('zoomIn', function () {
-      webviewGestures.zoomWebviewIn(tabs.getSelected())
+      webviewGestures.zoomWebviewIn(getTabs().getSelected())
     })
 
     ipc.on('zoomOut', function () {
-      webviewGestures.zoomWebviewOut(tabs.getSelected())
+      webviewGestures.zoomWebviewOut(getTabs().getSelected())
     })
 
     ipc.on('zoomReset', function () {
-      webviewGestures.resetWebviewZoom(tabs.getSelected())
+      webviewGestures.resetWebviewZoom(getTabs().getSelected())
     })
 
     ipc.on('print', function () {
-      if (PDFViewer.isPDFViewer(tabs.getSelected())) {
-        PDFViewer.printPDF(tabs.getSelected())
-      } else if (readerView.isReader(tabs.getSelected())) {
-        readerView.printArticle(tabs.getSelected())
+      if (PDFViewer.isPDFViewer(getTabs().getSelected())) {
+        PDFViewer.printPDF(getTabs().getSelected())
+      } else if (readerView.isReader(getTabs().getSelected())) {
+        readerView.printArticle(getTabs().getSelected())
       } else if (webviews.placeholderRequests.length === 0) {
         // work around #1281 - calling print() when the view is hidden crashes on Linux in Electron 12
         // TODO figure out why webContents.print() doesn't work in Electron 4
-        webviews.callAsync(tabs.getSelected(), 'executeJavaScript', 'window.print()')
+        webviews.callAsync(getTabs().getSelected(), 'executeJavaScript', 'window.print()')
       }
     })
 
@@ -48,19 +50,19 @@ export default {
     })
 
     ipc.on('inspectPage', function () {
-      webviews.callAsync(tabs.getSelected(), 'toggleDevTools')
+      webviews.callAsync(getTabs().getSelected(), 'toggleDevTools')
     })
 
     ipc.on('openEditor', function () {
-      tabEditor.show(tabs.getSelected())
+      tabEditor.show(getTabs().getSelected())
     })
 
     ipc.on('showBookmarks', function () {
-      tabEditor.show(tabs.getSelected(), '!bookmarks ')
+      tabEditor.show(getTabs().getSelected(), '!bookmarks ')
     })
 
     ipc.on('showHistory', function () {
-      tabEditor.show(tabs.getSelected(), '!history ')
+      tabEditor.show(getTabs().getSelected(), '!history ')
     })
 
     ipc.on('duplicateTab', function (e) {
@@ -73,7 +75,7 @@ export default {
         return
       }
 
-      browserUI.duplicateTab(tabs.getSelected())
+      browserUI.duplicateTab(getTabs().getSelected())
     })
 
     ipc.on('addTab', function (e, data) {
@@ -88,7 +90,7 @@ export default {
         return
       }
 
-      var newTab = tabs.add({
+      var newTab = getTabs().add({
         url: data.url || ''
       })
 
@@ -98,7 +100,7 @@ export default {
     })
 
     ipc.on('saveCurrentPage', async function () {
-      var currentTab = tabs.get(tabs.getSelected())
+      var currentTab = getTabs().get(getTabs().getSelected())
 
       // new tabs cannot be saved
       if (!currentTab.url) {
@@ -106,13 +108,13 @@ export default {
       }
 
       // if the current tab is a PDF, let the PDF viewer handle saving the document
-      if (PDFViewer.isPDFViewer(tabs.getSelected())) {
-        PDFViewer.savePDF(tabs.getSelected())
+      if (PDFViewer.isPDFViewer(getTabs().getSelected())) {
+        PDFViewer.savePDF(getTabs().getSelected())
         return
       }
 
-      if (tabs.get(tabs.getSelected()).isFileView) {
-        webviews.callAsync(tabs.getSelected(), 'downloadURL', [tabs.get(tabs.getSelected()).url])
+      if (getTabs().get(getTabs().getSelected()).isFileView) {
+        webviews.callAsync(getTabs().getSelected(), 'downloadURL', [getTabs().get(getTabs().getSelected()).url])
       } else {
         var savePath = await ipc.invoke('showSaveDialog', {
           defaultPath: currentTab.title.replace(/[/\\]/g, '_')
@@ -123,7 +125,7 @@ export default {
           if (!savePath.endsWith('.html')) {
             savePath = savePath + '.html'
           }
-          webviews.callAsync(tabs.getSelected(), 'savePage', [savePath, 'HTMLComplete'])
+          webviews.callAsync(getTabs().getSelected(), 'savePage', [savePath, 'HTMLComplete'])
         }
       }
     })
@@ -140,7 +142,7 @@ export default {
         return
       }
 
-      browserUI.addTab(tabs.add({
+      browserUI.addTab(getTabs().add({
         private: true
       }))
     })
@@ -150,11 +152,11 @@ export default {
     })
 
     ipc.on('goBack', function () {
-      webviews.callAsync(tabs.getSelected(), 'goBack')
+      webviews.callAsync(getTabs().getSelected(), 'goBack')
     })
 
     ipc.on('goForward', function () {
-      webviews.callAsync(tabs.getSelected(), 'goForward')
+      webviews.callAsync(getTabs().getSelected(), 'goForward')
     })
   }
 }

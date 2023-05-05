@@ -7,6 +7,8 @@ import searchEngine from '../util/searchEngine.js'
 
 import { l } from '../../localization/localizationHelpers.js'
 
+import { getTabs } from '../tabState.js'
+
 var ddgAttribution = l('resultsFromDDG')
 
 function removeTags (text) {
@@ -187,7 +189,7 @@ function initialize () {
   searchbarPlugins.register('instantAnswers', {
     index: 4,
     trigger: function (text) {
-      return text.length > 3 && !urlParser.isPossibleURL(text) && !tabs.get(tabs.getSelected()).private
+      return text.length > 3 && !urlParser.isPossibleURL(text) && !getTabs().get(getTabs().getSelected()).private
     },
     showResults: debounce(showSearchbarInstantAnswers, 150)
   })

@@ -1,3 +1,11 @@
+import { l } from "browser://localization/localizationHelpers.js"
+
+import searchEngine from "browser://js/util/searchEngine.js"
+import settings from "browser://js/util/settings/settings.js"
+import theme from "browser://js/util/theme.js"
+import passwordManager from "browser://js/util/passwordManager.js"
+import keyMap from "browser://js/util/keyMap.js"
+
 document.title = l('settingsPreferencesHeading') + ' | 3Webs Browser'
 
 var contentTypeBlockingContainer = document.getElementById('content-type-blocking')
